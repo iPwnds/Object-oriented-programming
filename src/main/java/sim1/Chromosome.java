@@ -44,7 +44,7 @@ public class Chromosome
     }
 
     /**
-     * index should be 0 <= index <= Cst.CHROM_SIZE
+     * index should be 0 <= index < Cst.CHROM_SIZE
      */
     public int getGene(int index)
     {
