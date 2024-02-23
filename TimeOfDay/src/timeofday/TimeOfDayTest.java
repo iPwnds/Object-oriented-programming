@@ -8,22 +8,20 @@ class TimeOfDayTest {
 
 	@Test
 	void test() {
-		TimeOfDay ogpStart = new TimeOfDay(8, 0);
-		TimeOfDay ogpEind = new TimeOfDay(10, 30);
+		TimeOfDay tenThirty = new TimeOfDay(-10, 30);
+		assertEquals(10, tenThirty.getHours());
+		assertEquals(30, tenThirty.getMinutes());
+		assertEquals(630, tenThirty.getMinutesSinceMidnight());
 		
-		int ogpStartMinutenSindsMiddernacht = ogpStart.getHours() * 60 + ogpStart.getMinutes();
-		int ogpEindMinutenSindsMiddernacht = ogpEind.getHours() * 60 + ogpEind.getMinutes();
-		int ogpDuur = ogpEindMinutenSindsMiddernacht - ogpStartMinutenSindsMiddernacht;
+		TimeOfDay elevenThirty = new TimeOfDay(11, tenThirty.getMinutes());
+		assertEquals(11, elevenThirty.getHours());
+		assertEquals(30, elevenThirty.getMinutes());
+		assertEquals(690, elevenThirty.getMinutesSinceMidnight());
 		
-		assertEquals(150, ogpDuur);
-		
-		ogpStart.setHours(9);
-		assertEquals(9, ogpStart.getHours());
-		assertEquals(0, ogpStart.getMinutes());
-		
-		ogpStart.setMinutes(30);
-		assertEquals(9, ogpStart.getHours());
-		assertEquals(30, ogpStart.getMinutes());
+		TimeOfDay elevenFortyFive = elevenThirty.withMinutes(45);
+		assertEquals(11, elevenFortyFive.getHours());
+		assertEquals(45, elevenFortyFive.getMinutes());
+		assertEquals(705, elevenFortyFive.getMinutesSinceMidnight());
 	}
 
 }

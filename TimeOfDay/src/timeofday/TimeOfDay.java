@@ -1,75 +1,65 @@
 package timeofday;
 
-// 1. Abstractie definiëren = API definiëren =
-//    hoe de klant de abstractie zal gebruiken
-//
-//    1.1. Rauwe abstractetoestandsruimte definiëren
-//         = de getters declareren
-//    1.2. Geldige abstractetoestandsruimte definiëren
-//         = de abstractetoestandsinvarianten noteren
-//    1.3. Constructoren en mutatoren declareren
-//         en documenteren
-//
-// 2. Abstractie implementeren
-//
-//    2.1. Rauwe concretetoestandsruimte definiëren
-//         = de velden definiëren
-//    2.2. Geldige concretetoestandsruimte definiëren
-//         = de representatie-invarianten noteren
-//    2.3. Afbeelding concrete toestanden op abstracte toestanden definiëren
-//         = de getters implementeren
-//    2.4. De constructoren en mutatoren implementeren
+// Hoe ontwikkel ik een data-abstractie?
+// 1. De API definiëren: hoe kunnen & moeten klanten de abstractie gebruiken?
+//    a. Korte informele documentatie bij klasse zelf: wat slaat een instantie op (mutable abstraction) of stelt een instantie voor (immutable abstraction)?
+//    b. De rauwe abstractetoestandsruimte definiëren: de inspectoren (= getters) declareren
+//    c. De geldige abstractetoestandsruimte definiëren: de abstractetoestandsinvarianten definiëren
+//    d. De constructoren en mutatoren declareren
+// 2. De abstractie implementeren in termen van Java-constructies: velden en method/constructor bodies toevoegen.
 
 /**
- * Each instance of this class stores a time of day.
+ * Elke instantie van deze klasse stelt een tijdstip voor, gegeven door een aantal uren sinds middernacht en een aantal minuten binnen het uur.
  * 
+ * @invar | getMinutesSinceMidnight() == getHours() * 60 + getMinutes()
  * @invar | 0 <= getHours() && getHours() <= 23
  * @invar | 0 <= getMinutes() && getMinutes() <= 59
+ * 
+ * @immutable
  */
 public class TimeOfDay {
 	
 	/**
-	 * @invar | 0 <= minutesSinceMidnight
-	 * @invar | minutesSinceMidnight < 24 * 60
+	 * @invar | 0 <= minutesSinceMidnight && minutesSinceMidnight < 24 * 60
 	 */
 	private int minutesSinceMidnight;
-
+	
 	public int getHours() { return minutesSinceMidnight / 60; }
+	
 	public int getMinutes() { return minutesSinceMidnight % 60; }
 	
+	public int getMinutesSinceMidnight() { return minutesSinceMidnight; }
+
 	/**
-	 * @throws IllegalArgumentException | !(0 <= hours && hours <= 23)
-	 * @throws IllegalArgumentException | !(0 <= minutes && minutes <= 59)
+	 * Initialiseert het nieuwe object met de gegeven uren en minuten.
 	 * 
-	 * @post | getHours() == hours
-	 * @post | getMinutes() == minutes
+	 * @throws IllegalArgumentException | !(0 <= initialHours && initialHours <= 23)
+	 * @throws IllegalArgumentException | !(0 <= initialMinutes && initialMinutes <= 59)
+	 * 
+	 * @post | getHours() == initialHours
+	 * @post | getMinutes() == initialMinutes
 	 */
-	public TimeOfDay(int hours, int minutes) {
-		if (hours < 0 || 23 < hours)
-			throw new IllegalArgumentException("`hours` out of range");
-		if (minutes < 0 || 59 < minutes)
-			throw new IllegalArgumentException("`minutes` out of range");
-		this.minutesSinceMidnight = hours * 60 + minutes;
+	public TimeOfDay(int initialHours, int initialMinutes) {
+		if (initialHours < 0)
+			throw new IllegalArgumentException("`initialHours` is less than zero");
+		if (initialHours > 23)
+			throw new IllegalArgumentException("`initialHours` is greater than 59");
+		if (initialMinutes < 0 || 59 < initialMinutes)
+			throw new IllegalArgumentException("`initialMinutes` is out of range");
+		
+		minutesSinceMidnight = initialHours * 60 + initialMinutes;
 	}
 	
 	/**
-	 * @pre | 0 <= hours && hours <= 23
-	 * @mutates | this
-	 * @post | getHours() == hours
-	 * @post | getMinutes() == old(getMinutes())
+	 * Returns a new TimeOfDay object whose minutes are the given minutes and whose hours are this object's hours.
+	 * 
+	 * @pre | 0 <= newMinutes && newMinutes < 60
+	 * @post | result != null
+	 * @post | result.getHours() == getHours()
+	 * @post | result.getMinutes() == newMinutes 
 	 */
-	public void setHours(int hours) {
-		minutesSinceMidnight = hours * 60 + minutesSinceMidnight % 60;
-	}
-	
-	/**
-	 * @pre | 0 <= minutes && minutes <= 59
-	 * @mutates | this
-	 * @post | getHours() == old(getHours())
-	 * @post | getMinutes() == minutes
-	 */
-	public void setMinutes(int minutes) {
-		minutesSinceMidnight = 60 * (minutesSinceMidnight / 60) + minutes;
+	public TimeOfDay withMinutes(int newMinutes) {
+		throw new RuntimeException("Not yet implemented");
 	}
 	
 }
