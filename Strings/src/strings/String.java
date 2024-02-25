@@ -1,25 +1,36 @@
 package strings;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 /**
  * Elke instantie van deze klasse stelt een stuk tekst (=een reeks tekens) voor.
  * 
  * @immutable
  */
 public class String {
-
+	
+	/**
+	 * @invar | contents != null
+	 */
+	private char[] contents;
+	
 	/**
 	 * @inspects | this
 	 * 
 	 * @post | result != null
 	 */
-	public char[] toArray() { throw new RuntimeException("Not yet implemented");}
+	public char[] toArray() { 
+		//return contents; //FOUT! REPRESENTATION EXPOSURE! LEAKS REPRESENTATION OBJECT
+		return contents.clone();
+	}
 	
 	/**
 	 * @inspect | this
 	 * 
-	 * @ post | result == toArray().length
+	 * @post | result == toArray().length
 	 */
-	public int length() { throw new RuntimeException("Not yet implemented");}
+	public int length() { return contents.length; }
 	
 	/**
 	 * @inspect | this
@@ -27,7 +38,7 @@ public class String {
 	 * @pre | 0 <= index && index < length()
 	 * @post | result == toArray()[index]
 	 */
-	public char charAt(int index) { throw new RuntimeException("Not yet implemented");}
+	public char charAt(int index) { return contents[index]; }
 	
 	/**
 	 * @pre contents != null
@@ -36,7 +47,10 @@ public class String {
 	 * 
 	 * Alternative postcondities:
 	 * @post | this.length() == contents.length
-	 * @post | IntStream.range(0, contents.length).allMatch(i -> this.charAt(i) -- contents[i])
+	 * @post | IntStream.range(0, contents.length).allMatch(i -> this.charAt(i) == contents[i])
 	 */
-	public String(char[] contents) { throw new RuntimeException("Not yet implemented");}
+	public String(char[] contents) { 
+		//this.contents = contents; // FOUT! REPRESENTATION EXPOSURE!
+		this.contents = contents.clone();
+	}
 }
