@@ -45,4 +45,43 @@ public class JLearner {
 			result++;
 		return result;
 	}
+	
+	/**
+	*@pre list != null
+	*@post count <= list.length
+	*/
+	static int count(int[] list) {
+		int count = 0;
+		for (int i = 0; i < list.length; i++) {
+			if (list[i] == 0) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	/**
+	 * @pre list != null
+	 * @post result == -list
+	 */
+	static int[] negation(int[] list) {
+		for (int i = 0; i < list.length; i++) {
+			list[i] = -list[i];
+		}
+		return list;
+	}
+	
+	/**
+	 * @pre list != null
+	 * @post negationList == -list
+	 */
+	static int[] negationClone(int[] list) {
+		int[] negationList = list;
+		for (int i = 0; i < list.length; i++) {
+			negationList[i] = -list[i];
+		}
+		return negationList;
+	}
+	
+	
 }
