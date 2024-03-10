@@ -33,9 +33,9 @@ class Polygon extends Shape {
 	}
 }
 
-class DrawingTest {
+class Drawing {
 	Object[] shapes;
-	DrawingTest(Object[] shapes) { this.shapes = shapes.clone(); }
+	Drawing(Object[] shapes) { this.shapes = shapes.clone(); }
 	
 	String toSVG() {
 		String result = "<svg xmlns=\"http://w3c.org/2000/SVG\"";
@@ -64,7 +64,7 @@ class DrawingsTest {
 
 	@Test
 	void test() {
-		DrawingTest myDrawing = new DrawingTest(new Shape[] {
+		Drawing myDrawing = new Drawing(new Shape[] {
 			new Circle(new Point(10, 20), 5),
 			new Polygon(new Point[] {new Point(10, 20), new Point(20, 20), new Point(20, 10)})
 		});
