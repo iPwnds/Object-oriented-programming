@@ -5,13 +5,28 @@ import util.RandomUtil;
 
 public class BehaviorB
 {
-
-	/**
-	 * See overview in assignment
-	 */
     public void applyBehavior(World world, CreatureB creature)
     {
-    	
-    	RandomUtil.bool();
+    	boolean shouldMoveForward = RandomUtil.bool();
+
+        if (shouldMoveForward) 
+        {
+            creature.moveForward(world);
+        } 
+        
+        else 
+        {
+            boolean turnClockwise = RandomUtil.bool();
+            
+            if (turnClockwise) 
+            {
+                creature.turnClockwise();
+            } 
+            
+            else 
+            {
+                creature.turnCounterclockwise();
+            }
+        }
     }
 }
