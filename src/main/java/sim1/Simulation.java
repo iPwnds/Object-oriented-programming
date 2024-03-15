@@ -59,20 +59,6 @@ public class Simulation
      * @post | result.getHeight() == size
      * @post | result.getPopulationA().length == numA
      * @post | result.getPopulationB().length == numB
-     * @post | Arrays.stream(result.getPopulationA()).allMatch(creature ->
-     *          |    creature.getPosition().getX() >= 0 &&
-     *          |    creature.getPosition().getX() < size &&
-     *          |    creature.getPosition().getY() >= 0 &&
-     *          |    creature.getPosition().getY() < size)
-     * @post | Arrays.stream(result.getPopulationB()).allMatch(creature ->
-     *          |    creature.getPosition().getX() >= 0 &&
-     *          |    creature.getPosition().getX() < size &&
-     *          |    creature.getPosition().getY() >= 0 &&
-     *          |    creature.getPosition().getY() < size)
-     * @post | Arrays.stream(result.getPopulationA()).allMatch(creature ->
-     *          |    creature.getChromosome() != null &&
-     *          |    creature.getBehavior() != null &&
-     *          |    creature.getOrientation() != null)
      */
     public static World createRandWorldWith(int size, int popuSize, int numA, int numB, Chromosome[] chromsA) 
     {	

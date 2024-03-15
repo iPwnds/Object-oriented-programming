@@ -25,14 +25,15 @@ class BehaviorBTest
         behaviorB.applyBehavior(createDummyWorld(), creature);
 
         // Assertions
-        assertNotNull(creature.getPosition(), "Creature position should not be null after applying behavior");
-        assertNotNull(creature.getOrientation(), "Creature orientation should not be null after applying behavior");
+        assertNotNull(creature.getPosition());
+        assertNotNull(creature.getOrientation());
     }
 
     private CreatureB createDummyCreatureB() 
     {
     	Point point = new Point(0, 0);
         Orientation orientation = Orientation.north();
+        
         return new CreatureB(new BehaviorB(), point, orientation);
     }
 
@@ -40,8 +41,10 @@ class BehaviorBTest
     {
         CreatureA[] populationA = new CreatureA[0];
         CreatureB[] populationB = new CreatureB[1];
+        
         int width = 100;
         int height = 100;
+        
         return new World(width, height, populationA, populationB);
     }
 }
