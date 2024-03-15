@@ -8,6 +8,31 @@ import util.Point;
 
 class WorldTest 
 {
+	@Test
+    void constructor() 
+	{
+        CreatureA[] populationA =
+        {
+                new CreatureA(null, null, null, null),
+                new CreatureA(null, null, null, null)
+        };
+
+        CreatureB[] populationB = 
+        {
+                new CreatureB(null, null, null),
+                new CreatureB(null, null, null),
+                new CreatureB(null, null, null)
+        };
+
+        World world = new World(10, 20, populationA, populationB);
+
+        assertEquals(10, world.getWidth());
+        assertEquals(20, world.getHeight());
+
+        assertArrayEquals(populationA, world.getPopulationA());
+        assertArrayEquals(populationB, world.getPopulationB());
+    }
+	
     @Test
     void isInside() 
     {
@@ -83,6 +108,7 @@ class WorldTest
 
         assertFalse(world.isFree(new Point(5, 5)));
     }
+    
     
     BehaviorA behaviorA = new BehaviorA();
     Chromosome chromosomeA = new Chromosome(null);

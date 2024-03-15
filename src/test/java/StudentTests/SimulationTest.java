@@ -16,6 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SimulationTest 
 {
+	@Test
+    void constructor() 
+	{
+        int size = 10;
+        int populationSize = 20;
+        int numA = 10;
+        Simulation simulation = new Simulation(size, populationSize, numA);
+
+        assertEquals(populationSize, simulation.getPopulationSize());
+    }
+	
     @Test
     void createRandWorldWith() 
     {
@@ -109,5 +120,20 @@ public class SimulationTest
         Chromosome[] result = (Chromosome[]) method.invoke(simulation, parentGeneration, 2);
 
         assertEquals(2, result.length);
+    }
+    
+    @Test
+    void isInSouthEastZone() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException 
+    {
+        Simulation simulation = new Simulation(10, 10, 0);
+
+        Method method = Simulation.class.getDeclaredMethod("isInSouthEastZone", Point.class);
+        method.setAccessible(true);
+
+        Point insideZone1 = new Point(8, 8);
+        assertTrue((boolean) method.invoke(simulation, insideZone1));
+
+        Point insideZone2 = new Point(10, 10);
+        assertTrue((boolean) method.invoke(simulation, insideZone2));
     }
 }

@@ -96,7 +96,8 @@ public class Simulation
  	 * @post | result.getPopulationA() != null
  	 * @post | result.getPopulationB() != null
      */
-    public World getWorld() {
+    public World getWorld() 
+    {
     	CreatureA[] popA = world.getPopulationA();
     	CreatureB[] popB = world.getPopulationB();
     	return new World(world.getWidth(), world.getHeight(), popA, popB);
@@ -154,7 +155,8 @@ public class Simulation
  	 * @return | result >= 0
  	 * @post | result <= world.getPopulationA().length
      */
-    private int countSurvivingCreatureB() {
+    private int countSurvivingCreatureB() 
+    {
     	int count = 0;
         CreatureA[] populationA = world.getPopulationA();
         
@@ -238,8 +240,6 @@ public class Simulation
      * @post | result != null
      * @post | result.length == count
      * @post | Arrays.stream(result).allMatch(c -> c != null)
-     * @post | Arrays.stream(result).allMatch(c -> parentGeneration.contains(c))
-     * @post | Arrays.stream(result).allMatch(c -> RandomUtil.integer(100) < Constants.MUT_RATE || c.isEqual(parentGeneration.get(0)))
      */
     private Chromosome[] computeOffspring(ArrayList<Chromosome> parentGeneration, int count)
     {
