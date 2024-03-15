@@ -88,14 +88,14 @@ public class Chromosome
      */
     public Chromosome crossover(Chromosome other, int index)
     {
-        int[] offspringGenes = new int[Constants.CHROM_SIZE];
+    	int[] offspringGenes = new int[Constants.CHROM_SIZE];
 
-        for ( int i = 0; i < Constants.CHROM_SIZE / 2 ; ++i )
+        for (int i = 0; i < index && i < Constants.CHROM_SIZE; i++) 
         {
             offspringGenes[i] = this.getGene(i);
         }
 
-        for ( int i = Constants.CHROM_SIZE / 2 ; i != Constants.CHROM_SIZE; ++i )
+        for (int i = index; i < Constants.CHROM_SIZE && i < other.weights.length; i++) 
         {
             offspringGenes[i] = other.getGene(i);
         }
