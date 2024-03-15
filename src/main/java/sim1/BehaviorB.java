@@ -11,6 +11,9 @@ public class BehaviorB
 	 * 
 	 * @pre | world != null
 	 * @pre | creature != null
+	 * 
+	 * @post | creature.getPosition() != null
+	 * @post | creature.getOrientation() != null
 	 */
     public void applyBehavior(World world, CreatureB creature)
     {

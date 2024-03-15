@@ -1,27 +1,33 @@
 package sim1;
 
-
 import util.Orientation;
 import util.RandomUtil;
+import util.Vector;
+
 
 /**
  * @immutable
- *
  */
 public class BehaviorA
 {
-
 	/**
+	 * @param world
+	 * @param creature
+	 * 
 	 * @inspects | world
 	 * @mutates | creature
+	 * 
+	 * @pre | world != null
+	 * @pre | creature != null
+	 * 
+	 * @post | creature.getPosition() != null
+	 * @post | creature.getOrientation() != null
 	 */
     public void applyBehavior(World world, CreatureA creature)
     {
-    	
-        
-        var drift = computeFavoriteOrientation(creature.getChromosome()).toVector();
-        RandomUtil.bool();
-        
+    	Orientation favoriteOrientation = computeFavoriteOrientation(creature.getChromosome());
+        Vector drift = favoriteOrientation.toVector();
+        creature.moveForward(world, drift);        
     }
     
 	/**
@@ -46,9 +52,5 @@ public class BehaviorA
     	
     	return Orientation.orientations().get(res);
     	
-    }
-    
-    
-    
-    
+    } 
 }
