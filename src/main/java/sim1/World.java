@@ -113,7 +113,20 @@ public class World
      */
     public boolean isFree(Point position)
     {
-        return false;
+    	if (!isInside(position)) {
+            return false;
+        }
+        for (CreatureA creatureA : populationA) {
+            if (creatureA.getPosition().equals(position)) {
+                return false;
+            }
+        }
+        for (CreatureB creatureB : populationB) {
+            if (creatureB.getPosition().equals(position)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
