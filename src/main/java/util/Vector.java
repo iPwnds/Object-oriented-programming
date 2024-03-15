@@ -3,7 +3,6 @@ package util;
 
 public class Vector
 {
-
     private int x;
     private int y;
 
@@ -32,16 +31,15 @@ public class Vector
      * mult. both components by fac
      */
     public Vector scaleWith(int fac) {
-    	return null;
+    	return new Vector(this.x * fac, this.y * fac);
     }
     
     /**
      * sum of this vector and other
      */
     public Vector plus(Vector other) {
-    	return null;
+    	return new Vector(this.x + other.getX(), this.y + other.getY());
     }
-
 
     @Override
     /**
