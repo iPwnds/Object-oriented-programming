@@ -5,21 +5,15 @@ import java.util.Arrays;
 import util.Point;
 
 
-
 public class World
 {
-
     private final int width;
-
-
     private final int height;
-
     /**
      * @representationObject
      * @representationObjects
      */
     private final CreatureA[] populationA;
-
     /**
      * @representationObject
      * @representationObjects
@@ -36,23 +30,20 @@ public class World
 
     }
 
-
-    public int getWidth() {
+    public int getWidth() 
+    {
     	return this.width;
     }
 
-
-    public int getHeight() {
+    public int getHeight() 
+    {
     	return this.height;
     }
 
-
     public CreatureA[] getPopulationA()
     {
-
         return populationA;
     }
-
 
     public CreatureB[] getPopulationB()
     {
@@ -60,6 +51,9 @@ public class World
     }
 
     /**
+     * @param position
+     * @return
+     * 
      * @pre | position != null
      */
     public boolean isInside(Point position)
@@ -67,17 +61,18 @@ public class World
     	return Point.isWithin(position, width, height);
     }
     
-
-    
     /**
+     * @param pos
+     * @return
+     * 
      * @pre | pos != null
      * Returns true iff pos is 1 unit away from a wall (and inside the world)
      */
-    public boolean isLimPos(Point pos) {
-    	return false;
+    public boolean isLimPos(Point pos) 
+    {
+        return Point.isWithin(pos, width - 1, height - 1);
     }
 
-    
     /**
      * LEGIT 
      * @pre | array1 != null && array2 != null
@@ -90,7 +85,6 @@ public class World
     	}
     	return res;
     }
-    
     
     /**
      * LEGIT 
@@ -105,27 +99,37 @@ public class World
     	return res;
     }
     
-
     /**
      * true iff position is inside the world and no creature sits there
+     * 
+     * @param position
+     * @return
      * 
      * @pre | position != null
      */
     public boolean isFree(Point position)
     {
-    	if (!isInside(position)) {
+    	if (!isInside(position)) 
+    	{
             return false;
         }
-        for (CreatureA creatureA : populationA) {
-            if (creatureA.getPosition().equals(position)) {
+    	
+        for (CreatureA creatureA : populationA) 
+        {
+            if (creatureA.getPosition().equals(position)) 
+            {
                 return false;
             }
         }
-        for (CreatureB creatureB : populationB) {
-            if (creatureB.getPosition().equals(position)) {
+        
+        for (CreatureB creatureB : populationB) 
+        {
+            if (creatureB.getPosition().equals(position)) 
+            {
                 return false;
             }
         }
+        
         return true;
     }
 
@@ -134,7 +138,6 @@ public class World
      */
     public void step()
     {
-    	
         for (int i = 0 ; i < populationB.length ; i ++)
         {
             populationB[i].performAction(this);
@@ -144,13 +147,5 @@ public class World
         {
             populationA[i].performAction(this);
         }
-
-
-    }
-    
-
-    	
-    }
-    
-
-
+    }	
+}
