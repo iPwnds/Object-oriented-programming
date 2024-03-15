@@ -95,9 +95,7 @@ public class Movie extends JComponent
         var elapsedSinceLastUpdate = timer.update(elapsedNanoseconds);
         if ( elapsedSinceLastUpdate.isPresent() )
         {
-           
-            //(?)
-
+            renderCreatures();
         }
         else
         {
