@@ -1,7 +1,5 @@
 package sim1;
 
-import java.util.Arrays;
-
 import util.Point;
 
 
@@ -70,7 +68,9 @@ public class World
      */
     public boolean isLimPos(Point pos) 
     {
-        return Point.isWithin(pos, width - 1, height - 1);
+    	int x = pos.getX();
+        int y = pos.getY();
+        return (x == 1 || x == width - 2 || y == 1 || y == height - 2);
     }
 
     /**
