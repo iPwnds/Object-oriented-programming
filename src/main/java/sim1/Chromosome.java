@@ -8,13 +8,12 @@ import util.RandomUtil;
 
 public class Chromosome
 {
-
     /**
      * @representationObject
      */
     private int[] weights;
 
-
+    
 	public Chromosome(int[] weights)
 	{
 		this.weights = weights;
@@ -37,33 +36,55 @@ public class Chromosome
 
 	/**
 	 * Gives `count` randomly generated chromosomes
+	 * 
+	 * @param count
+	 * @return
 	 */
     public static Chromosome[] createRandom(int count)
     {
-    	return null;
+    	Chromosome[] chromosomes = new Chromosome[count];
+    	
+        for (int i = 0; i < count; i++) 
+        {
+            chromosomes[i] = createRandom();
+        }
+        
+        return chromosomes;
     }
 
     /**
      * index should be 0 <= index < Cst.CHROM_SIZE
+     * 
+     * @param index
+     * @return
      */
     public int getGene(int index)
     {
     	return weights[index];
-
     }
     
-
-    public void setGene(int index, int val) {
-    	
+    /**
+     * @param index
+     * @param val
+     */
+    public void setGene(int index, int val) 
+    {
+        weights[index] = val;
     }
 
     /**
      * Returns a Chromosome whose weights are derived from `this` and `other` weights
      *  
+     * @param other
+     * @param index
+     * @return
+     * 
+     * @pre | other != null
+     * @pre | 0 <= index && index < Constants.CHROM_SIZE
      * 
      * @post The result starts with the first `index` genes from `this`
      * and finishes with (0 <=) genes picked in `other`.  
-     * 
+     * @post | result != null
      */
     public Chromosome crossover(Chromosome other, int index)
     {
@@ -85,13 +106,20 @@ public class Chromosome
     /**
      * Gene #index is set to gene + delta if that modification remains within gene bounds.
      * 
+     * @param index
+     * @param delta
+     * 
+     * @pre | 0 <= index && index < Constants.CHROM_SIZE
      */
     public void mutate(int index, int delta)
     {
-
-
+    	int newValue = weights[index] + delta;
+        
+    	if (newValue >= Constants.GENE_MIN && newValue <= Constants.GENE_MAX) 
+        {
+            weights[index] = newValue;
+        }
     }
-
 
     public void randomlyMutate()
     {
@@ -101,9 +129,14 @@ public class Chromosome
         this.mutate(index, delta);
     }
     
-
+    /**
+     * @return
+     * 
+     * @creates | result
+     */
     public Chromosome giveCopy() {
-    	return null;
+    	int[] copy = Arrays.copyOf(weights, weights.length);
+        return new Chromosome(copy);
     }
     
     /**
