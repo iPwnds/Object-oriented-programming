@@ -35,11 +35,16 @@ public class CreatureB
      * Changes the position of `this` if `world` is free at the target pos.
      * The orientation remains unchanged in any case.
      * 
+     * @param world
+     * 
+     * @pre | world != null
 	 */
     public void moveForward(World world) 
     {
     	Point targetPosition = this.position.move(this.orientation.toVector());
-        if (world.isFree(targetPosition)) {
+    	
+        if (world.isFree(targetPosition)) 
+        {
             this.position = targetPosition;
         }
     }
@@ -52,6 +57,9 @@ public class CreatureB
     	this.orientation = this.orientation.turnClockwise(1);
     }
 
+    /**
+     * @post | getOrientation().isEqual(old(getOrientation().turnCounterclockwise(1)))
+     */
     public void turnCounterclockwise() 
     {
         this.orientation = this.orientation.turnCounterclockwise(1);
