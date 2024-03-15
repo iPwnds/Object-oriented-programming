@@ -49,7 +49,7 @@ public class CreatureA
      */
     public void moveForward(World world, Vector drift)
     {
-    	position = position.move(orientation.toVector()).move(drift);
+        position = position.move(orientation.toVector()).move(drift);
     }
 
     /**

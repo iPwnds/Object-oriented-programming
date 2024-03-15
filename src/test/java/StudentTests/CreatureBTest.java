@@ -1,15 +1,14 @@
 package StudentTests;
 
 import org.junit.jupiter.api.Test;
-
 import sim1.BehaviorB;
 import sim1.CreatureA;
 import sim1.CreatureB;
 import sim1.World;
 import util.Orientation;
 import util.Point;
-
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class CreatureBTest 
 {	
@@ -18,8 +17,8 @@ class CreatureBTest
         BehaviorB behavior = new BehaviorB();
         CreatureB creatureB = new CreatureB(behavior, new Point(0, 0), Orientation.east());
         
-        CreatureA[] populationA = new CreatureA[0]; // You need to initialize this array properly
-    	CreatureB[] populationB = new CreatureB[0]; // You need to initialize this array properly
+        CreatureA[] populationA = new CreatureA[0];
+    	CreatureB[] populationB = new CreatureB[0];
 
     	World world = new World(10, 10, populationA, populationB);
 
