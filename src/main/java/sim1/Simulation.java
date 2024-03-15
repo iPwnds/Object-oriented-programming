@@ -131,31 +131,31 @@ public class Simulation
     {
     	int survA = countSurvivingCreatureA();
         int survB = countSurvivingCreatureB();
-        
+
         int nextCountA = 0;
         int nextCountB = 0;
-        
-        if (survA + survB == 0) 
-        {
+
+        if (survA + survB == 0) {
             nextCountA = Constants.INIT_CREAT_A;
             nextCountB = populationSize - nextCountA;
-        } 
-        
-        else 
-        {
+        } else {
             nextCountA = (int) Math.floor(((double) survA / (survA + survB)) * populationSize);
             nextCountB = populationSize - nextCountA;
         }
-        
+
         ArrayList<Chromosome> survivingDNA = selectSurvivingDNA();
         Chromosome[] offspring = computeOffspring(survivingDNA, nextCountA);
-        
+
         CreatureA[] newPopA = new CreatureA[nextCountA];
         CreatureB[] newPopB = new CreatureB[populationSize - nextCountA];
-        
-        World newWorld = new World(world.getWidth(), world.getHeight(), newPopA, newPopB);
-        
-        this.world = newWorld;
+        // Initialize new populations here using appropriate methods or constructors
+
+        // Create a new World object with updated population counts
+        CreatureA[] popA = new CreatureA[nextCountA];
+        CreatureB[] popB = new CreatureB[populationSize - nextCountA];
+        // Initialize new populations here based on newPopA and newPopB
+
+        this.world = new World(world.getWidth(), world.getHeight(), popA, popB);
     }
     
     /**
@@ -164,8 +164,6 @@ public class Simulation
      * @pre | world != null
      * @pre | world.getPopulationA() != null
  	 * @pre | world.getPopulationA().length >= 0
- 	 * @pre | world.getPopulationB().length == world.getPopulationA().length
- 	 * @pre | world.getPopulationB().length == world.getPopulationA().length
  	 * 
  	 * @return | result >= 0
  	 * @post | result <= world.getPopulationA().length
@@ -191,8 +189,6 @@ public class Simulation
      * @pre | world != null
      * @pre | world.getPopulationB() != null
      * @pre | world.getPopulationB().length >= 0
-     * @pre | world.getPopulationB().length == world.getPopulationA().length
-     * @pre | world.getPopulationB().length == world.getPopulationA().length
      * 
      * @return | result >= 0
      * @post | result <= world.getPopulationB().length
