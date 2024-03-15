@@ -1,9 +1,7 @@
 package StudentTests;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
-
 import sim1.BehaviorA;
 import sim1.Chromosome;
 import sim1.CreatureA;
@@ -13,10 +11,11 @@ import util.Orientation;
 import util.Point;
 
 
-class BehaviorATest {
-	
+class BehaviorATest 
+{
 	@Test
-    void applyBehavior() {
+    void applyBehavior() 
+	{
 		// Create a dummy creature
         CreatureA creature = createDummyCreatureA();
 
@@ -31,7 +30,8 @@ class BehaviorATest {
         assertNotNull(creature.getOrientation());
     }
 
-    private CreatureA createDummyCreatureA() {
+    private CreatureA createDummyCreatureA() 
+    {
         Chromosome chromosome = new Chromosome(new int[]{1, 2, 3});
 
         BehaviorA behaviorA = new BehaviorA();
@@ -41,7 +41,8 @@ class BehaviorATest {
         return new CreatureA(behaviorA, point, orientation, chromosome);
     }
 
-    private World createDummyWorld() {
+    private World createDummyWorld() 
+    {
         CreatureA[] populationA = new CreatureA[1];
         CreatureB[] populationB = new CreatureB[0];
 
