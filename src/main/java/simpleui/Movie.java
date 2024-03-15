@@ -12,12 +12,12 @@ import sim1.Simulation;
 import util.Chronometer;
 import util.Color;
 import util.FrameRateTimer;
+import util.Point;
 
 @SuppressWarnings("serial")
-public class Movie extends JComponent {
-	
+public class Movie extends JComponent 
+{
     public final static int NANOSECONDS_PER_MILLISECOND = 1000000;
-
     /**
      * bfiRenderer is an aux object drawing 2x2-pixel squares on bufferedImage
      * bfiRenderer uses the same scale than world
@@ -27,13 +27,11 @@ public class Movie extends JComponent {
      */
     private final BufferedImage bufferedImage;
     private final BufferedImageRenderer bfiRenderer;
-
     private final FrameRateTimer timer;
-
     private final Chronometer chronometer;
-    
     private final Simulation sim;
 
+    
     /**
      * LEGIT
      * 
@@ -72,7 +70,6 @@ public class Movie extends JComponent {
     {
         this.timer.setTargetFrameRate(targetFrameRate);
     }
-    
     
     @Override
     /**
@@ -121,12 +118,27 @@ public class Movie extends JComponent {
      * Draws creatures on this.bufferedImage
      * See this.bfiRenderer.renderCreature
      */
-    private void renderCreatures() {
+    private void renderCreatures() 
+    {
     	this.bfiRenderer.clearPixels(bufferedImage);
-    	
-    	
-    }
-    
 
-    
+        CreatureA[] populationA = this.sim.getWorld().getPopulationA();
+        CreatureB[] populationB = this.sim.getWorld().getPopulationB();
+
+        for (CreatureA creature : populationA) 
+        {
+            Point position = creature.getPosition();
+            Color color = Color.RED;
+
+            this.bfiRenderer.renderCreature(bufferedImage, position, color);
+        }
+
+        for (CreatureB creature : populationB) 
+        {
+            Point position = creature.getPosition();
+            Color color = Color.BLUE;
+
+            this.bfiRenderer.renderCreature(bufferedImage, position, color);
+        }
+    }
 }
