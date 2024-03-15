@@ -11,7 +11,7 @@ import util.Vector;
 class PointTest 
 {
 	@Test
-    public void testCreateRandom() 
+    public void createRandom() 
 	{
         int maxX = 10;
         int maxY = 10;
@@ -21,21 +21,21 @@ class PointTest
     }
 
     @Test
-    public void testGetX() 
+    public void getX() 
     {
         Point point = new Point(3, 4);
         assertEquals(3, point.getX());
     }
 
     @Test
-    public void testGetY() 
+    public void getY() 
     {
         Point point = new Point(3, 4);
         assertEquals(4, point.getY());
     }
 
     @Test
-    public void testMove() 
+    public void move() 
     {
         Point point = new Point(3, 4);
         Vector displacement = new Vector(2, 3);
@@ -44,7 +44,7 @@ class PointTest
     }
 
     @Test
-    public void testDistanceSquared() 
+    public void distanceSquared() 
     {
         Point point1 = new Point(3, 4);
         Point point2 = new Point(6, 8);
@@ -52,7 +52,7 @@ class PointTest
     }
 
     @Test
-    public void testEquals() 
+    public void equals() 
     {
         Point point1 = new Point(3, 4);
         Point point2 = new Point(3, 4);
@@ -60,14 +60,14 @@ class PointTest
     }
 
     @Test
-    public void testToString() 
+    public void toStringT() 
     {
         Point point = new Point(3, 4);
         assertEquals("(3, 4)", point.toString());
     }
 
     @Test
-    public void testIsWithin() 
+    public void isWithin() 
     {
         Point point1 = new Point(3, 4);
         assertTrue(Point.isWithin(point1, 5, 5));

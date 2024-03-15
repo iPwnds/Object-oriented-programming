@@ -10,14 +10,14 @@ import util.Color;
 class ColorTest 
 {
 	@Test
-    public void testConstructor() 
+    public void constructor() 
 	{
         Color color = new Color(100, 150, 200);
         assertEquals(0xFF6496C8, color.asInteger());
     }
 
     @Test
-    public void testIsValidColorComponent() 
+    public void isValidColorComponent() 
     {
         assertTrue(Color.isValidColorComponent(0));
         assertTrue(Color.isValidColorComponent(255));
@@ -26,7 +26,7 @@ class ColorTest
     }
 
     @Test
-    public void testEquals() 
+    public void equals() 
     {
         Color color1 = new Color(100, 150, 200);
         Color color2 = new Color(100, 150, 200);
@@ -34,14 +34,14 @@ class ColorTest
     }
 
     @Test
-    public void testHashCode() 
+    public void hashCodeT() 
     {
         Color color = new Color(100, 150, 200);
         assertEquals(0xFF6496C8, color.hashCode());
     }
 
     @Test
-    public void testConstants() 
+    public void constants() 
     {
         assertEquals(0xFFFFFFFF, Color.WHITE.asInteger());
         assertEquals(0xFFFF0000, Color.RED.asInteger());
