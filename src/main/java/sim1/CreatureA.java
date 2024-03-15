@@ -7,8 +7,6 @@ import util.Vector;
 
 public class CreatureA
 {
-
-	
     private Point position;
     private Orientation orientation;
     private final BehaviorA behavior;
@@ -20,29 +18,29 @@ public class CreatureA
 
     public CreatureA(BehaviorA behavior, Point position, Orientation orientation, Chromosome chrom)
     {
-
         this.behavior = behavior;
         this.position = position;
         this.orientation = orientation;
         this.chrom = chrom;
     }
 
-
     public Point getPosition()
     {
         return this.position;
     }
 
-
-    public Orientation getOrientation() { return this.orientation; }
+    public Orientation getOrientation() 
+    { 
+    	return this.orientation; 
+    }
     
-
-    public BehaviorA getBehavior() {
+    public BehaviorA getBehavior() 
+    {
     	return this.behavior;
     }
     
-
-    public Chromosome getChromosome() {
+    public Chromosome getChromosome() 
+    {
     	return chrom;
     }
 
@@ -54,16 +52,20 @@ public class CreatureA
     	position = position.move(orientation.toVector()).move(drift);
     }
 
-    
-    public void turnClockwise()
+    /**
+     * @post | getOrientation().isEqual(old(getOrientation().turnClockwise(1)))
+     */
+    public void turnClockwise() 
     {
-        
+    	this.orientation = this.orientation.turnClockwise(1);
     }
-    
 
-    public void turnCounterclockwise()
+    /**
+     * @post | getOrientation().isEqual(old(getOrientation().turnCounterclockwise(1)))
+     */
+    public void turnCounterclockwise() 
     {
-        
+        this.orientation = this.orientation.turnCounterclockwise(1);
     }
 
     /**
@@ -77,15 +79,19 @@ public class CreatureA
     
     /**
      * true iff same position and orient. and chromosome
+     * 
+     * @param other
+     * @return
      */
     public boolean isEqual(CreatureA other) {
-    	return false;
+    	if (other == null) return false;
+        return position.equals(other.getPosition()) && orientation.isEqual(other.getOrientation()) && chrom.equals(other.getChromosome());
     }
     
     /**
      * @creates | result
      */
     public CreatureA giveCopy() {
-    	return null;
+    	return new CreatureA(behavior, new Point(position.getX(), position.getY()), orientation, chrom);
     }
 }

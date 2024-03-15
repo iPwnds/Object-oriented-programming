@@ -6,11 +6,8 @@ import util.Point;
 
 public class CreatureB
 {
-
     private Point position;
-    
     private Orientation orientation;
-    
     private final BehaviorB behavior;
 
     
