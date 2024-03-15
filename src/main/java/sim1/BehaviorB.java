@@ -5,26 +5,33 @@ import util.RandomUtil;
 
 public class BehaviorB
 {
+	/**
+	 * @param world
+	 * @param creature
+	 * 
+	 * @pre | world != null
+	 * @pre | creature != null
+	 */
     public void applyBehavior(World world, CreatureB creature)
     {
-    	boolean shouldMoveForward = RandomUtil.bool();
+    	if (world == null) {
+            throw new IllegalArgumentException("The 'world' parameter must not be null.");
+        }
 
-        if (shouldMoveForward) 
-        {
+        if (creature == null) {
+            throw new IllegalArgumentException("The 'creature' parameter must not be null.");
+        }
+
+        boolean shouldMoveForward = RandomUtil.bool();
+
+        if (shouldMoveForward) {
             creature.moveForward(world);
-        } 
-        
-        else 
-        {
+        } else {
             boolean turnClockwise = RandomUtil.bool();
-            
-            if (turnClockwise) 
-            {
+
+            if (turnClockwise) {
                 creature.turnClockwise();
-            } 
-            
-            else 
-            {
+            } else {
                 creature.turnCounterclockwise();
             }
         }
