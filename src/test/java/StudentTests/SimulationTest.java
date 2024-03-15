@@ -1,7 +1,6 @@
 package StudentTests;
 
 import org.junit.jupiter.api.Test;
-
 import sim1.Chromosome;
 import sim1.CreatureA;
 import sim1.CreatureB;
@@ -9,10 +8,10 @@ import sim1.Simulation;
 import sim1.World;
 import util.Orientation;
 import util.Point;
-
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Arrays;
 
 
 public class SimulationTest 
@@ -66,5 +65,49 @@ public class SimulationTest
 
         Point outsideSurvivalZone = new Point(5, 5);
         assertFalse(simulation.survives(outsideSurvivalZone));
+    }
+    
+    @Test
+    void countSurvivingCreatureA() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException 
+    {
+        Simulation simulation = new Simulation(10, 10, 0);
+        World world = new World(10, 10, new CreatureA[]{}, new CreatureB[]{});
+
+        Method method = Simulation.class.getDeclaredMethod("countSurvivingCreatureA");
+        method.setAccessible(true);
+
+        int result = (int) method.invoke(simulation);
+
+        assertEquals(0, result);
+    }
+
+    @Test
+    void countSurvivingCreatureB() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException 
+    {
+        Simulation simulation = new Simulation(10, 10, 0);
+        World world = new World(10, 10, new CreatureA[]{}, new CreatureB[]{});
+
+        Method method = Simulation.class.getDeclaredMethod("countSurvivingCreatureB");
+        method.setAccessible(true);
+
+        int result = (int) method.invoke(simulation);
+
+        assertEquals(0, result);
+    }
+
+    @Test
+    void computeOffspring() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException 
+    {
+        Simulation simulation = new Simulation(10, 10, 0);
+        ArrayList<Chromosome> parentGeneration = new ArrayList<>();
+        parentGeneration.add(new Chromosome(new int[]{1, 2, 3}));
+        parentGeneration.add(new Chromosome(new int[]{4, 5, 6}));
+
+        Method method = Simulation.class.getDeclaredMethod("computeOffspring", ArrayList.class, int.class);
+        method.setAccessible(true);
+
+        Chromosome[] result = (Chromosome[]) method.invoke(simulation, parentGeneration, 2);
+
+        assertEquals(2, result.length);
     }
 }
