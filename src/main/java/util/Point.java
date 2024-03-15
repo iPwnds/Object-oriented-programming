@@ -3,22 +3,20 @@ package util;
 
 public class Point
 {
-	
     private int x;
-
     private int y;
 	
-	
+    
     /**
      * Gives random point x,y such that 0 <= x < maxX
      * and 0 <= y < maxY.
      */
     public static Point createRandom(int maxX, int maxY)
     {
-    	return null;
+    	int randomX = RandomUtil.integer(maxX);
+        int randomY = RandomUtil.integer(maxY);
+        return new Point(randomX, randomY);
     }
-
-
 
     public Point(int x, int y)
     {
@@ -48,7 +46,9 @@ public class Point
      */
     public Point move(Vector displacement)
     {
-       return null;
+    	int newX = this.x + displacement.getX();
+        int newY = this.y + displacement.getY();
+        return new Point(newX, newY);
     }
 
     /**
@@ -68,8 +68,6 @@ public class Point
 
         return dx * dx + dy * dy;
     }
-
-
 
     @Override
     /**
@@ -99,9 +97,8 @@ public class Point
      * Determines whether `pos` is a point belonging to a rectangle with sides width, height.
      * I.e. determines if pos has an x component s.t. 0 <= x < width and analogously for y.
      */
-    public static boolean isWithin(Point pos, int width, int height) {
-    	return false;
+    public static boolean isWithin(Point pos, int width, int height) 
+    {
+    	return pos.getX() >= 0 && pos.getX() < width && pos.getY() >= 0 && pos.getY() < height;
     }
-    
-    
 }
