@@ -24,6 +24,18 @@ interface Value {
 	}
 }
 
+interface AddableValue extends Value {
+	
+	public abstract Value add(Value other);
+
+}
+
+interface AndableValue extends Value {
+	
+	/*public abstract*/ Value and(Value other);
+	
+}
+
 class IntValue implements AddableValue, AndableValue {
 	
 	public final int value;
@@ -83,17 +95,5 @@ class StringValue implements AddableValue {
 		else
 			throw new RuntimeException("Cannot add a string to this value");
 	}
-	
-}
-
-interface AddableValue extends Value {
-	
-	public abstract Value add(Value other);
-
-}
-
-interface AndableValue extends Value {
-	
-	/*public abstract*/ Value and(Value other);
 	
 }
