@@ -64,7 +64,8 @@ public class World
      * Returns true iff pos is 1 (simulation) pixel away from a wall (and inside the world)
      *
      * @pre | pos != null
-     * @post | result == isInside(pos) && (0 == pos.getX() || pos.getX() == getWidth() -1 || pos.getY() == 0 || pos.getY() == getHeight()-1)
+     * @post | result == (isInside(pos) &&
+     *       | (0 == pos.getX() || pos.getX() == getWidth() -1 || pos.getY() == 0 || pos.getY() == getHeight()-1))
      */
     public boolean isLimPos(Point pos) {
     	return isInside(pos) &&
