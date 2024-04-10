@@ -32,7 +32,7 @@ class BehaviorATest
 
     private CreatureA createDummyCreatureA() 
     {
-        Chromosome chromosome = new Chromosome(new int[]{1, 2, 3});
+        Chromosome chromosome = new Chromosome(new int[]{1, 2, 3, 4, 5, 6});
 
         BehaviorA behaviorA = new BehaviorA();
         Point point = new Point(0, 0);

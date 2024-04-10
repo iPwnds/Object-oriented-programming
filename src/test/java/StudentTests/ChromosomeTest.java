@@ -41,7 +41,7 @@ class ChromosomeTest
     @Test
     void getGene() 
     {
-        int[] genes = {1, 2, 3, 4, 5};
+        int[] genes = {1, 2, 3, 4, 5, 6};
         Chromosome chromosome = new Chromosome(genes);
 
         for (int i = 0; i < genes.length; i++) 
@@ -53,7 +53,7 @@ class ChromosomeTest
     @Test
     void setGene() 
     {
-        int[] initialGenes = {1, 2, 3, 4, 5};
+        int[] initialGenes = {1, 2, 3, 4, 5, 6};
         Chromosome chromosome = new Chromosome(initialGenes);
 
         int index = 2;
@@ -74,8 +74,8 @@ class ChromosomeTest
     @Test
     void crossover() 
     {
-        Chromosome parent1 = new Chromosome(new int[]{1, 2, 3, 4, 5});
-        Chromosome parent2 = new Chromosome(new int[]{6, 7, 8, 9, 10});
+        Chromosome parent1 = new Chromosome(new int[]{1, 2, 3, 4, 5, 6});
+        Chromosome parent2 = new Chromosome(new int[]{6, 7, 8, 9, 10, 11});
         Chromosome offspring = parent1.crossover(parent2, 2);
         
         assertNotNull(offspring);
@@ -90,7 +90,7 @@ class ChromosomeTest
     @Test
     void mutate() 
     {
-        Chromosome chromosome = new Chromosome(new int[]{1, 2, 3, 4, 5});
+        Chromosome chromosome = new Chromosome(new int[]{1, 2, 3, 4, 5, 6});
         
         chromosome.mutate(2, 10);
         
@@ -114,8 +114,8 @@ class ChromosomeTest
     @Test
     void isEqual() 
     {
-        int[] weights1 = {1, 2, 3};
-        int[] weights2 = {1, 2, 3};
+        int[] weights1 = {1, 2, 3, 4, 5, 6};
+        int[] weights2 = {1, 2, 3, 4, 5, 6};
         Chromosome chromosome1 = new Chromosome(weights1);
         Chromosome chromosome2 = new Chromosome(weights2);
 

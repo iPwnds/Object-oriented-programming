@@ -103,7 +103,7 @@ class WorldTest
 
         assertTrue(world.isFree(new Point(5, 5)));
 
-        CreatureA creatureA = new CreatureA(new BehaviorA(), new Point(5, 5), Orientation.east(), new Chromosome(new int[]{1, 2, 3}));
+        CreatureA creatureA = new CreatureA(new BehaviorA(), new Point(5, 5), Orientation.east(), new Chromosome(new int[]{1, 2, 3, 4, 5, 6}));
         world = new World(10, 20, new CreatureA[]{creatureA}, populationB);
 
         assertFalse(world.isFree(new Point(5, 5)));
