@@ -39,7 +39,7 @@ public class SimulationTest
         
         for (int i = 0; i < numA; i++) 
         {
-            chromsA[i] = new Chromosome(new int[]{1, 2, 3});
+            chromsA[i] = new Chromosome(new int[]{1, 2, 3, 4, 5, 6});
         }
 
         World world = Simulation.createRandWorldWith(size, popuSize, numA, numB, chromsA);
@@ -111,8 +111,8 @@ public class SimulationTest
     {
         Simulation simulation = new Simulation(10, 10, 0);
         ArrayList<Chromosome> parentGeneration = new ArrayList<>();
-        parentGeneration.add(new Chromosome(new int[]{1, 2, 3}));
-        parentGeneration.add(new Chromosome(new int[]{4, 5, 6}));
+        parentGeneration.add(new Chromosome(new int[]{1, 2, 3, 4, 5, 6}));
+        parentGeneration.add(new Chromosome(new int[]{4, 5, 6, 7, 8, 9}));
 
         Method method = Simulation.class.getDeclaredMethod("computeOffspring", ArrayList.class, int.class);
         method.setAccessible(true);

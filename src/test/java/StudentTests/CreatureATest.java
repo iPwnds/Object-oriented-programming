@@ -24,7 +24,7 @@ public class CreatureATest
 	{
         BehaviorA behavior = new BehaviorA();
 
-        int[] weights = {1, 2, 3};
+        int[] weights = {1, 2, 3, 4, 5, 6};
         Chromosome chromosome = new Chromosome(weights);
 
         Point position = new Point(5, 5);
@@ -47,7 +47,7 @@ public class CreatureATest
 	{
         BehaviorA behavior = new BehaviorA();
 
-        int[] weights = {1, 2, 3};
+        int[] weights = {1, 2, 3, 4, 5, 6};
         Chromosome chromosome = new Chromosome(weights);
 
         Point position = new Point(5, 5);
@@ -66,8 +66,8 @@ public class CreatureATest
 	@Test
     void isEqual() 
     {
-        int[] weights1 = {1, 2, 3};
-        int[] weights2 = {1, 2, 3};
+        int[] weights1 = {1, 2, 3, 4, 5, 6};
+        int[] weights2 = {1, 2, 3, 4, 5, 6};
         Chromosome chromosome1 = new Chromosome(weights1);
         Chromosome chromosome2 = new Chromosome(weights2);
 
