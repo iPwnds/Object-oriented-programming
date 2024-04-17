@@ -11,7 +11,6 @@ import static util.Logic.*;
 /**
  * @immutable
  * @invar | getColor() .equals( Color.BLUE )
- *
  */
 public class BehaviorB extends Behavior
 {
@@ -20,7 +19,6 @@ public class BehaviorB extends Behavior
 		super(chromosome);
 	}
 
-	
 	@Override
 	public Color getColor() {
 		return Color.BLUE;
@@ -46,21 +44,22 @@ public class BehaviorB extends Behavior
         //creatures that are not touching a wall are not done
         if (!world.isLimPos(position)) {
         	creature.moveForward(world, new Vector(0,0));
-        	//if it has not moved, it turns randomly
+        	// if it has not moved, it turns randomly
         	if (creature.getPosition().equals(position)) {
             	boolean turnleft = RandomUtil.bool();
-            	if (turnleft) { creature.turnCounterclockwise(); }
-            	else {creature.turnClockwise(); }
+            	if (turnleft) { 
+					creature.turnCounterclockwise(); 
+				}
+            	else {
+					creature.turnClockwise(); 
+				}
         	}
         }
     }
-	
 
 	@Override
 	public BehaviorB copyWithChromosome(Chromosome chromosome)
     {
     	return new BehaviorB(chromosome);
     }
-    
-
 }

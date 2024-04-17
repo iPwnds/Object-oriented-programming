@@ -1,11 +1,9 @@
 package sim.behaviors;
 
-
 import util.Color;
 import util.Orientation;
 import util.RandomUtil;
 import static util.Logic.*;
-
 import sim.Chromosome;
 import sim.Constants;
 import sim.Creature;
@@ -14,7 +12,6 @@ import sim.World;
 /**
  * @immutable
  * @invar | getColor() .equals( Color.RED)
- *
  */
 public class BehaviorA extends Behavior
 {
@@ -27,7 +24,6 @@ public class BehaviorA extends Behavior
     public Color getColor() {
     	return Color.RED;
     }
-	
 	
 	/**
 	 * @inspects | world
@@ -42,23 +38,24 @@ public class BehaviorA extends Behavior
 	 * | implies(!world.isLimPos(old(creature.getPosition())), iff(old(creature.getPosition()).equals(creature.getPosition()), !old(creature.getOrientation()).equals(creature.getOrientation())))
 	 */
 	@Override
-    public void applyBehavior(World world, Creature creature)
-    {
-        var position = creature.getPosition();
-        var drift = computeFavoriteOrientation().toVector();
+	public void applyBehavior(World world, Creature creature)
+	{
+		var position = creature.getPosition();
+		var drift = computeFavoriteOrientation().toVector();
 
-        if (!world.isLimPos(position)) {
-        	creature.moveForward(world,  drift );
-        	//if it has not moved, it turns randomly
-        	if (creature.getPosition().equals(position)) {
-            	boolean turnleft = RandomUtil.bool();
-            	if (turnleft) { creature.turnCounterclockwise(); }
-            	else {creature.turnClockwise(); }
-        	}
-        }
-    }
-    
-
+		if (!world.isLimPos(position)) {
+			creature.moveForward(world, drift);
+			// if it has not moved, it turns randomly
+			if (creature.getPosition().equals(position)) {
+				boolean turnleft = RandomUtil.bool();
+				if (turnleft) {
+					creature.turnCounterclockwise();
+				} else {
+					creature.turnClockwise();
+				}
+			}
+		}
+	}
     
 	/**
 	 * LEGIT
