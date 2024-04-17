@@ -11,12 +11,11 @@ import util.Color;
  */
 public abstract class Behavior
 {
-	private Chromosome chromosome;
+	public Chromosome chromosome;
 	
     /**
      * Constructs a new Behavior with the specified chromosome.
-     * @param The chromosome associated with this behavior.
-     *  | chromosome
+     * @param chromosome The chromosome associated with this behavior.
      * @pre | chromosome != null
      * @post | this.chromosome == null
      */
@@ -37,10 +36,8 @@ public abstract class Behavior
 	
     /**
      * Applies this behavior to the specified creature in the specified world.
-     * @param The world in which the creature exists.
-     *  | world
-     * @param The creature to which this behavior is applied.
-     *  | creature
+     * @param world The world in which the creature exists.
+     * @param creature The creature to which this behavior is applied.
      * @pre | world != null && creature != null
      */
     public abstract void applyBehavior(World world, Creature creature);
@@ -54,8 +51,7 @@ public abstract class Behavior
     
     /**
      * Returns a copy of this behavior with the specified chromosome.
-     * @param The chromosome for the copied behavior.
-     * | chromosome
+     * @param chromosome The chromosome for the copied behavior.
      * @return A copy of this behavior with the specified chromosome.
      * @pre | chromosome != null
      * @post | result != null && result.getChromosome() == chromosome

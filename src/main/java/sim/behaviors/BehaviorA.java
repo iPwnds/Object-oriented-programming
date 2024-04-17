@@ -33,9 +33,9 @@ public class BehaviorA extends Behavior
 	 * @post If the creature is located at the edge of the world, it does not change its position.
 	 * 	| implies(world.isLimPos(old(creature.getPosition())), old(creature.getPosition()).equals(creature.getPosition()))
 	 * @post If the creature is located at the edge of the world, it does not change its orientation. 
-	 * | implies(world.isLimPos(old(creature.getPosition())), old(creature.getOrientation()).equals(creature.getOrientation()))
+	 * 	| implies(world.isLimPos(old(creature.getPosition())), old(creature.getOrientation()).equals(creature.getOrientation()))
 	 * @post If the creature is not located at the edge of the world, it either moves or it turns.
-	 * | implies(!world.isLimPos(old(creature.getPosition())), iff(old(creature.getPosition()).equals(creature.getPosition()), !old(creature.getOrientation()).equals(creature.getOrientation())))
+	 * 	| implies(!world.isLimPos(old(creature.getPosition())), iff(old(creature.getPosition()).equals(creature.getPosition()), !old(creature.getOrientation()).equals(creature.getOrientation())))
 	 */
 	@Override
 	public void applyBehavior(World world, Creature creature)
