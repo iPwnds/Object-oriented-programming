@@ -3,6 +3,7 @@ package sim.neuralnet;
 import sim.Creature;
 import sim.World;
 import util.Orientation;
+import util.Point;
 
 
 public class FreePassageSensorNeuron extends BinarySensorNeuron
