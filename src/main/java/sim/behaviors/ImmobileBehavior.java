@@ -6,51 +6,54 @@ import sim.World;
 import util.Color;
 
 /**
- * Represents a behavior where the creature remains immobile.
- * 
+ * This class represents an immobile behavior exhibited by creatures in the simulation.
+ *
  * @invar | getColor().equals(Color.WHITE)
  */
 public class ImmobileBehavior extends Behavior {
-    
+
     /**
-     * Initializes an immobile behavior with the given chromosome.
-     * 
-     * @param chromosome - The chromosome representing the behavior parameters.
-     * @pre | chromosome != null
+     * Initializes an ImmobileBehavior object with the given chromosome.
+     *
+     * @param chromosome The chromosome defining the behavior.
      */
     public ImmobileBehavior(Chromosome chromosome) {
         super(chromosome);
     }
-    
+
     /**
-     * Applies the immobile behavior to the creature in the world.
-     * 
-     * @param world - The world where the creature resides.
-     * @param creature - The creature to apply the behavior to.
-     * @pre | world != null
-     * @pre | creature != null
+     * Applies the ImmobileBehavior to the given creature in the specified world.
+     * This behavior does not cause any changes to the creature.
+     *
+     * @param world The world in which the creature exists.
+     * @param creature The creature to which the behavior is applied.
      */
     @Override
     public void applyBehavior(World world, Creature creature) {
-        // NOP (No Operation) - The creature remains immobile.
+        // No operation (NOP)
     }
-    
+
     /**
-     * Creates a copy of the immobile behavior with the given chromosome.
-     * 
-     * @param chromosome - The chromosome for the copied behavior.
+     * Creates a copy of this ImmobileBehavior object with the specified chromosome.
+     *
+     * @param chromosome The chromosome for the copied behavior.
      * @return A new instance of ImmobileBehavior with the specified chromosome.
-     * @pre | chromosome != null
+     *
+     * @creates | result
+     * @post | result != null
+     * @post | result.getChromosome().equals(chromosome)
      */
     @Override
     public ImmobileBehavior copyWithChromosome(Chromosome chromosome) {
         return new ImmobileBehavior(chromosome);
     }
-    
+
     /**
-     * Gets the color of the immobile creature.
-     * 
-     * @return The color of the immobile creature, which is always white.
+     * Retrieves the color associated with this behavior, which is always white.
+     *
+     * @return The color associated with this behavior.
+     *
+     * @post | result.equals(Color.WHITE)
      */
     @Override
     public Color getColor() {

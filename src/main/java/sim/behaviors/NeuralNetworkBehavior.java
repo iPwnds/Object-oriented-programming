@@ -61,4 +61,10 @@ public class NeuralNetworkBehavior extends Behavior	{
 	{
 		return new NeuralNetworkBehavior(chromosome);
 	}
+
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
