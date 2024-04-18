@@ -20,6 +20,10 @@ public class CircularHabitableZone implements NaturalSelection
     @Override
     public boolean survives(World world, Point position)
     {
-        return false;
+    	int dx = position.getX() - center.getX();
+        int dy = position.getY() - center.getY();
+        int distanceSquared = dx * dx + dy * dy;
+
+        return distanceSquared <= radiusSquared;
     }
 }

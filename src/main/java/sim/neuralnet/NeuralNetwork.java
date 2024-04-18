@@ -59,12 +59,11 @@ public class NeuralNetwork
 
     public ActivationFunctionNeuron[] getOutputNeurons()
     {
-        return null;
-        //please use this specific order (different than the order of the fields above):
-        // - moveForwardNeuron
-        // - turnCounterclockwiseNeuron
-        // - turnClockwiseNeuron
-        
+    	return new ActivationFunctionNeuron[] {
+    			moveForwardNeuron,
+                turnCounterclockwiseNeuron,
+                turnClockwiseNeuron
+            };
     }
 
     public ActivationFunctionNeuron getMoveForwardNeuron() { return this.moveForwardNeuron; }
@@ -82,9 +81,41 @@ public class NeuralNetwork
      * - The 3 remaining genes are used as biases of
      *   getMoveForwardNeuron(), getTurnCounterclockwiseNeuron(), getTurnClockwiseNeuron()
      */
-    public static NeuralNetwork fromChromosome(Chromosome chromosome)
+    public static NeuralNetwork fromChromosome(Chromosome chromosome) 
     {
-        return null;
+    if (chromosome == null) {
+        throw new IllegalArgumentException("Chromosome cannot be null");
+    }
+
+    SensorNeuron[] inputNeurons = new SensorNeuron[7];
+    for (int i = 0; i < 7; i++) {
+        inputNeurons[i] = new FreePassageSensorNeuron(Orientation.north()); 
+    }
+
+    ActivationFunctionNeuron moveForwardNeuron = new RectifiedLinearUnitFunctionNeuron();
+    ActivationFunctionNeuron turnCounterclockwiseNeuron = new LinearFunctionNeuron();
+    ActivationFunctionNeuron turnClockwiseNeuron = new LinearFunctionNeuron();
+
+    for (int i = 0; i < 7; i++) {
+        moveForwardNeuron.connect(inputNeurons[i], chromosome.getGene(i));
+    }
+
+    for (int i = 7; i < 14; i++) {
+        turnCounterclockwiseNeuron.connect(inputNeurons[i - 7], chromosome.getGene(i));
+    }
+
+    for (int i = 14; i < 21; i++) {
+        turnClockwiseNeuron.connect(inputNeurons[i - 14], chromosome.getGene(i));
+    }
+
+    
+    moveForwardNeuron.setBias(chromosome.getGene(21));
+    turnCounterclockwiseNeuron.setBias(chromosome.getGene(22));
+    turnClockwiseNeuron.setBias(chromosome.getGene(23));
+
+    NeuralNetwork neuralNetwork = new NeuralNetwork();
+    
+    return neuralNetwork;
     }
 
 

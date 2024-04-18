@@ -9,7 +9,10 @@ public abstract class BinarySensorNeuron extends SensorNeuron
     @Override
     public int computeOutput(World world, Creature creature)
     {
-        return 0;
+        if (detect(world, creature) == true)
+        	return 750;
+        else
+        	return -750;
     }
 
     public abstract boolean detect(World world, Creature creature);
