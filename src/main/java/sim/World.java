@@ -1,17 +1,10 @@
 package sim;
 
 import java.util.Arrays;
-
 import util.Point;
 
-
-
-public class World
-{
-
+public class World {
     private final int width;
-
-
     private final int height;
 
     /**
@@ -23,29 +16,33 @@ public class World
      */
     private final Creature[] population;
 
-
-
-    public World(int width, int height, Creature[] pop)
-    {
+    public World(int width, int height, Creature[] pop) {
         this.width = width;
         this.height = height;
         this.population = new Creature[pop.length];
-        for (int i = 0 ; i < pop.length ; i++) {
-        	this.population[i] = pop[i].giveCopy();
+        for (int i = 0; i < pop.length; i++) {
+            this.population[i] = pop[i].giveCopy();
         }
     }
 
-
-    public int getWidth() { return this.width; }
-
-    public int getHeight() { return this.height; }
-
-    public Creature[] getPopulation()
-    {
-        return null;
+    public int getWidth() {
+        return this.width;
     }
 
+    public int getHeight() {
+        return this.height;
+    }
 
+    /**
+     * Retrieves a copy of the population array.
+     *
+     * @return A shallow copy of the population array.
+     * 
+     * @post | result != null
+     */
+    public Creature[] getPopulation() {
+        return Arrays.copyOf(this.population, this.population.length);
+    }
 
     /**
      * LEGIT
@@ -53,9 +50,8 @@ public class World
      * @pre | position != null
      * @post | result == (0 <= position.getX() && position.getX() < getWidth() && 0 <= position.getY() && position.getY() < getHeight())
      */
-    public boolean isInside(Point position)
-    {
-    	return Point.isWithin(position, width, height);
+    public boolean isInside(Point position) {
+        return Point.isWithin(position, width, height);
     }
 
     /**
@@ -68,8 +64,8 @@ public class World
      *       | (0 == pos.getX() || pos.getX() == getWidth() -1 || pos.getY() == 0 || pos.getY() == getHeight()-1))
      */
     public boolean isLimPos(Point pos) {
-    	return isInside(pos) &&
-    		(0 == pos.getX() || pos.getX() == getWidth() - 1 || pos.getY() == 0 || pos.getY() == getHeight()-1);
+        return isInside(pos) &&
+                (0 == pos.getX() || pos.getX() == getWidth() - 1 || pos.getY() == 0 || pos.getY() == getHeight()-1);
     }
 
     /**
@@ -79,11 +75,11 @@ public class World
      * @pre | array1.length == array2.length
      */
     public static boolean areEqualCreatureArrays(Creature[] array1, Creature[] array2) {
-    	boolean res = true;
-    	for (int i = 0 ; i < array1.length ; i++) {
-    		res = res && array1[i].isEqual(array2[i]);
-    	}
-    	return res;
+        boolean res = true;
+        for (int i = 0; i < array1.length; i++) {
+            res = res && array1[i].isEqual(array2[i]);
+        }
+        return res;
     }
 
     /**
@@ -91,24 +87,24 @@ public class World
      *
      * @pre | position != null
      */
-    public boolean isFree(Point position)
-    {
-        if ( !this.isInside(position) )
-        {
+    public boolean isFree(Point position) {
+        if (!this.isInside(position)) {
             return false;
         }
 
-        return !Arrays.stream(this.population).anyMatch(c -> c.getPosition() == position) ;
+        return !Arrays.stream(this.population).anyMatch(c -> c.getPosition() == position);
     }
 
     /**
-     * Performs the action of each creature
-     * Exceptionally, you may ignore further specifying this method.
+     * Performs the action of each creature.
      *
      * @mutates | getPopulation()
+     * 
+     * @post For each creature in the population, its action has been performed.
      */
-    public void step()
-    {
-    	
+    public void step() {
+        for (Creature creature : this.population) {
+            creature.performAction(this);
+        }
     }
 }

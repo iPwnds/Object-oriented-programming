@@ -1,6 +1,5 @@
 package sim;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,48 +10,47 @@ import util.Orientation;
 import util.Point;
 import util.RandomUtil;
 
-public class Simulation
-{
+public class Simulation {
 
-	private final NaturalSelection nsel;
-	
-	/**
-	 * not a representation object for performance
-	 */
-	private World world;
+    private final NaturalSelection nsel;
+
+    /**
+     * not a representation object for performance
+     */
+    private World world;
 
     private final int populationSize;
-    
+
     public NaturalSelection getNaturalSelection() {
-    	return nsel;
+        return nsel;
     }
 
-	public int getPopulationSize() {
-		return populationSize;
-	}
+    public int getPopulationSize() {
+        return populationSize;
+    }
 
-	/**
-	 * LEGIT
-	 * @post | result != null
-	 * @post | result.getPopulation().length == getPopulationSize()
-	 */
-	public World getWorld() {
-		return world;
-	}
+    /**
+     * LEGIT
+     * @post | result != null
+     * @post | result.getPopulation().length == getPopulationSize()
+     */
+    public World getWorld() {
+        return world;
+    }
 
-	/**
-	 * LEGIT
-	 * 
-	 * You may change this function to experiment *but*
-	 * remember to restore this function upon submitting.
-	 * 
-	 */
+    /**
+     * LEGIT
+     * 
+     * You may change this function to experiment *but*
+     * remember to restore this function upon submitting.
+     * 
+     */
     public Simulation(int size, int populationSize, NaturalSelection nsel) {
-    	this.populationSize = populationSize;
-    	this.world = createInitWorldNeuralnets(size, populationSize);
-    	this.nsel = nsel;
+        this.populationSize = populationSize;
+        this.world = createInitWorldNeuralnets(size, populationSize);
+        this.nsel = nsel;
     }
-    
+
     /**
      * LEGIT
      * 
@@ -76,29 +74,27 @@ public class Simulation
      */
     public static World createRandWorldWith(int size, int popuSize, Behavior[] behaviors) {
         Creature[] pop = new Creature[popuSize];
-        
-        for (int i = 0 ; i < popuSize ; i ++) {
-          Point position = Point.createRandom(size,size);
-          //Point position = Point.createRandom(size/2, size/2).move(new Vector(size/4, size/4));
-      	  Orientation orient = Orientation.createRandom();
-      	  var behavior = behaviors[i];
-      	  pop[i] = new Creature(behavior, position, orient);
+
+        for (int i = 0; i < popuSize; i++) {
+            Point position = Point.createRandom(size, size);
+            //Point position = Point.createRandom(size/2, size/2).move(new Vector(size/4, size/4));
+            Orientation orient = Orientation.createRandom();
+            var behavior = behaviors[i];
+            pop[i] = new Creature(behavior, position, orient);
         }
-               
+
         return new World(size, size, pop);
     }
-    
 
-    	
     /**
      * LEGIT
      */
     public static World createInitWorldNeuralnets(int size, int popuSize) {
-    	Behavior[] behaviors = new Behavior[popuSize];
-    	for (int i = 0 ; i < popuSize ; i++) {
-    		behaviors[i] = new NeuralNetworkBehavior(Chromosome.createRandom());
-    	}
-    	return createRandWorldWith(size, popuSize, behaviors);
+        Behavior[] behaviors = new Behavior[popuSize];
+        for (int i = 0; i < popuSize; i++) {
+            behaviors[i] = new NeuralNetworkBehavior(Chromosome.createRandom());
+        }
+        return createRandWorldWith(size, popuSize, behaviors);
     }
 
     /**
@@ -112,24 +108,50 @@ public class Simulation
      * - Finally the world is reset with the latter offspring behaviors using
      *   createRandWorldWith method.
      *  
+     * @mutates | this
+     * @post | this.getWorld() != null
      */
     public void nextGeneration() {
-    	
-    	ArrayList<Creature> surv = survivingCreatures();
-    	
+        ArrayList<Creature> surv = survivingCreatures();
 
+        if (surv.isEmpty()) {
+            // If no creatures survived, reset the world with new creatures
+            this.world = createInitWorldNeuralnets(this.world.getWidth(), this.populationSize);
+        } else {
+            // Compute offspring chromosomes
+            ArrayList<Chromosome> parentChromosomes = new ArrayList<>();
+            for (Creature creature : surv) {
+                parentChromosomes.add(creature.getChromosome());
+            }
+            Chromosome[] offspringChromosomes = computeOffspringWithSize(parentChromosomes, this.populationSize);
+
+            // Create new behaviors from offspring chromosomes
+            Behavior[] offspringBehaviors = new Behavior[this.populationSize];
+            for (int i = 0; i < this.populationSize; i++) {
+                offspringBehaviors[i] = surv.get(i % surv.size()).getBehavior().copyWithChromosome(offspringChromosomes[i]);
+            }
+
+            // Reset the world with the new creatures
+            this.world = createRandWorldWith(this.world.getWidth(), this.populationSize, offspringBehaviors);
+        }
     }
 
     /**
      * The list of creatures that survive, according to `nsel : NaturalSelection` field
+     * 
+     * @inspects | this
+     * @post | result != null
      */
     private ArrayList<Creature> survivingCreatures() {
-    	return null;
+        ArrayList<Creature> surv = new ArrayList<>();
+        for (Creature creature : this.world.getPopulation()) {
+            if (this.nsel.survives(this.world, creature.getPosition())) {
+                surv.add(creature);
+            }
+        }
+        return surv;
     }
-    
 
-    
-    
     /**
      * LEGIT
      * 
@@ -140,27 +162,20 @@ public class Simulation
 
         var offspringChromosomes = new Chromosome[ofSize];
 
-        for ( int i = 0; i != ofSize; ++i )
-        {
+        for (int i = 0; i != ofSize; ++i) {
             var parent1 = RandomUtil.pick(parentGeneration);
             var parent2 = RandomUtil.pick(parentGeneration);
 
             var offspring = parent1.crossover2(parent2);
 
-            if ( RandomUtil.integer(100) < Constants.MUT_RATE )
-            {
+            if (RandomUtil.integer(100) < Constants.MUT_RATE) {
                 offspring = offspring.randomlyMutate();
             }
 
             offspringChromosomes[i] = offspring;
         }
 
-        return offspringChromosomes;  
+        return offspringChromosomes;
     }
-    
 
-    
-    
-    
-    
 }
