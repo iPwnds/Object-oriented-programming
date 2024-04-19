@@ -169,4 +169,8 @@ public class Chromosome {
         }
         return res;
     }
+    
+    public int[] getWeights() {
+	    return this.weights;
+	}
 }
