@@ -20,6 +20,15 @@ public class BorderHabitableZone implements NaturalSelection {
     public BorderHabitableZone(int borderSize) {
         this.borderSize = borderSize;
     }
+    
+    /**
+     * Retrieves the size of the border zone.
+     * 
+     * @return The size of the border zone.
+     */
+    public int getBorderSize() {
+        return borderSize;
+    }
 
     /**
      * Determines if an organism survives at the specified position in the world according to the border zone.

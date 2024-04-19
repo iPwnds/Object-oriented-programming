@@ -31,10 +31,18 @@ public class NeuralNetworkBehavior extends Behavior	{
         processTurning(world, creature);
     }
 
-    private void processForwardMovement(World world, Creature creature)
-    {
-    	
-        
+    private void processForwardMovement(World world, Creature creature) {
+        // Get the output of the forward movement neuron from the neural network
+        int forwardOutput = neuralNetwork.getMoveForwardNeuron().computeOutput(world, creature);
+
+        // Define a threshold for forward movement (you may adjust this value as needed)
+        int threshold = 50;
+
+        // Check if the output exceeds the threshold
+        if (forwardOutput > threshold) {
+            // If the output is above the threshold, move the creature forward
+            creature.moveForward(world, creature.getOrientation().toVector());
+        }
     }
 
     /**
@@ -64,7 +72,6 @@ public class NeuralNetworkBehavior extends Behavior	{
 
 	@Override
 	public Color getColor() {
-		// TODO Auto-generated method stub
-		return null;
+	    return Color.GREEN;
 	}
 }

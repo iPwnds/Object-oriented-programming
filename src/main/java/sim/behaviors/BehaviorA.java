@@ -87,7 +87,7 @@ public class BehaviorA extends Behavior
      * @post | Orientation.orientations().indexOf(result) >= 0 && Orientation.orientations().indexOf(result) <= 7
      * @post | Orientation.orientations().get((Orientation.orientations().indexOf(result))) == result
      */
-    private Orientation computeFavoriteOrientation() {
+    public Orientation computeFavoriteOrientation() {
 
         int mid = Constants.GENE_MIN + ((Constants.GENE_MAX - Constants.GENE_MIN) / 2);
 

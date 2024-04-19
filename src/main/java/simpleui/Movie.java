@@ -9,6 +9,7 @@ import javax.swing.JComponent;
 import sim.Creature;
 import sim.Simulation;
 import util.Chronometer;
+import util.Color;
 import util.FrameRateTimer;
 
 @SuppressWarnings("serial")
@@ -123,10 +124,18 @@ public class Movie extends JComponent {
      * Draws survival zone and creatures on bufferedImage
      */
     private void renderSurvivalAndCreatures() {
-    	
-    	
-    }
-    
+        Graphics g = this.bufferedImage.getGraphics();
+        g.setColor(java.awt.Color.GREEN);
 
-    
+        g.drawRect(0, 0, 100, 100);
+        
+        // Draw creatures
+        for (Creature creature : sim.getWorld().getPopulation()) {
+            g.setColor(java.awt.Color.RED);
+            int x = (int) creature.getPosition().getX() * 2;
+            int y = (int) creature.getPosition().getY() * 2;
+            g.fillRect(x, y, 2, 2);
+        }
+        g.dispose();
+    }
 }
