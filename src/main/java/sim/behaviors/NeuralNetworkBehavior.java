@@ -16,7 +16,7 @@ public class NeuralNetworkBehavior extends Behavior	{
 	 * @representationObject
 	 * neuralNetwork != null
 	 */
-    private final NeuralNetwork neuralNetwork;
+    private NeuralNetwork neuralNetwork;
 
     public NeuralNetworkBehavior(Chromosome chromosome)
     {
@@ -61,9 +61,6 @@ public class NeuralNetworkBehavior extends Behavior	{
 
     }
 	
-
-
-
 	@Override
 	public NeuralNetworkBehavior copyWithChromosome(Chromosome chromosome)
 	{
@@ -74,4 +71,13 @@ public class NeuralNetworkBehavior extends Behavior	{
 	public Color getColor() {
 	    return Color.GREEN;
 	}
+	
+	/**
+     * Sets the neural network for this behavior.
+     *
+     * @param neuralNetwork The neural network to set.
+     */
+    public void setNeuralNetwork(NeuralNetwork neuralNetwork) {
+        this.neuralNetwork = neuralNetwork;
+    }
 }
