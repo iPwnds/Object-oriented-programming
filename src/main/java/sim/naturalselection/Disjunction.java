@@ -38,6 +38,10 @@ public class Disjunction implements NaturalSelection {
      */
     @Override
     public boolean survives(World world, Point position) {
+        if (world == null || position == null) {
+            throw new NullPointerException("World and position must not be null.");
+        }
+
         return area1.survives(world, position) || area2.survives(world, position);
     }
 }
