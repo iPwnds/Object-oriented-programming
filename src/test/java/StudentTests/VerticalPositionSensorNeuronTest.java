@@ -2,7 +2,6 @@ package StudentTests;
 
 import org.junit.jupiter.api.Test;
 
-import StudentTests.VerticalOrientationSensorNeuronTest.MockBehavior;
 import sim.Chromosome;
 import sim.Creature;
 import sim.World;
