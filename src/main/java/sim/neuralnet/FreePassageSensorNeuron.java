@@ -1,0 +1,32 @@
+package sim.neuralnet;
+
+import sim.entities.Prey;
+import util.Orientation;
+
+/**
+ * @immutable
+ */
+public class FreePassageSensorNeuron extends BinarySensorNeuron
+{
+    private final Orientation orientation;
+
+    public FreePassageSensorNeuron(Orientation orientation)
+    {
+    	if (orientation == null) { throw new IllegalArgumentException(); }
+        this.orientation = orientation;
+    }
+
+    @Override
+    /**
+     * LEGIT
+     */
+    public boolean detect(Prey prey)
+    {
+    	var world = prey.getWorld();
+    	var detectionOrientation = prey.getOrientation().compose(this.orientation);
+        var position = prey.getPosition();
+        var targetPosition = position.move(detectionOrientation.toVector());
+
+        return world.isFree(targetPosition);
+    }
+}
