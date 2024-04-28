@@ -1,4 +1,4 @@
-package Bigteams;
+package BigTeams;
 
 
 /**

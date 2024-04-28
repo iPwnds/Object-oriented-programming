@@ -1,4 +1,4 @@
-package Bigteams;
+package BigTeams;
 
 import java.util.HashSet;
 import java.util.Set;
