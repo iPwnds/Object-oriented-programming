@@ -38,15 +38,16 @@ public class Hunter extends Entity
 	 */
 	final Shelter shelter;
 	
-
-
-	
-	
 	Hunter(World world, Shelter shelter, Point position, Orientation orientation)
+	{
+		this(world, shelter, position, orientation, Constants.HUNTER_INITIAL_APPETITE);
+	}
+	
+	Hunter(World world, Shelter shelter, Point position, Orientation orientation, int appetite)
 	{
 		super(world, position, orientation, Constants.HUNTER_MOVE_PROBABILITY);
 		this.shelter = shelter;
-		this.appetite = Constants.HUNTER_INITIAL_APPETITE;
+		this.appetite = appetite;
 	}
 
 	@Override
@@ -99,6 +100,6 @@ public class Hunter extends Entity
 	 * LEGIT
 	 */
 	public Hunter giveCopy() {
-		return new Hunter(super.world, shelter, getPosition(), getOrientation());
+		return new Hunter(super.world, shelter, getPosition(), getOrientation(), this.appetite);
 	}
 }
