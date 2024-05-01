@@ -4,6 +4,10 @@ import sim.entities.Prey;
 
 public class ShelterSensor extends BinarySensorNeuron
 {
+	/**
+	 * @pre | prey != null	
+	 * @post | result == (prey.getOrientation() == prey.getPosition().vectorTo(prey.getShelter().getPosition()).toClosestOrientation())
+	 */
 	@Override
 	public boolean detect(Prey prey)
 	{

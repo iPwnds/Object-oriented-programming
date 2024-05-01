@@ -3,9 +3,13 @@ package sim.neuralnet;
 import sim.entities.Prey;
 
 public class HunterSensor extends BinarySensorNeuron {
-
+	
+	/**
+	 * @pre | prey != null
+	 * @post | result == prey.getWorld().hasHunterInCone(prey.getPosition(), prey.getOrientation())
+	 */
 	@Override
 	public boolean detect(Prey prey) {
-		return false;
+        return prey.getWorld().hasHunterInCone(prey.getPosition(), prey.getOrientation());
 	}
 }

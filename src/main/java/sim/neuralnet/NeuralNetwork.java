@@ -11,12 +11,21 @@ import util.Orientation;
 public class NeuralNetwork
 {
 
-
+	/**
+	 * @invar | inputLayerNeurons != null 
+	 * @invar | Arrays.stream(inputLayerNeurons).allMatch(n -> n != null) 
+	 */
     private final SensorNeuron[] inputLayerNeurons;
 
-
+    /**
+     * @invar | moveForwardNeuron != null
+     * check dependecies?
+     */
     private final ActivationFunctionNeuron moveForwardNeuron;
-    
+    /**
+     * @invar | turnNeuron != null
+     * check dependecies?
+     */
 	private final ActivationFunctionNeuron turnNeuron;
 
 	/**
@@ -24,27 +33,53 @@ public class NeuralNetwork
 	 * - 5 input neurons (3 FreePassageSensorNeuron with respectively N, NW, NE as parameters;
 	 *   1 HunterSenor neuron; 1 ShelterSensor)
 	 * - 2 output neurons (2 LinearFunctionNeuron)
+	 * 
 	 */
     public NeuralNetwork()
     {
-    	inputLayerNeurons = null;
-    	moveForwardNeuron = null;
-    	turnNeuron = null;
+    	inputLayerNeurons = new SensorNeuron[] {
+    			new FreePassageSensorNeuron(Orientation.north()),
+    			new FreePassageSensorNeuron(Orientation.northWest()),
+    			new FreePassageSensorNeuron(Orientation.northEast()),
+    			new HunterSensor(),
+    			new ShelterSensor()
+    	};
+    	moveForwardNeuron = new LinearFunctionNeuron();
+    	turnNeuron = new LinearFunctionNeuron();
     }
-
+    /**
+     * @creates | result
+     * @post | result != null
+     * @post | Arrays.stream(result).allMatch(n -> n != null)
+     * @post | result.length == 5
+     */
 	public SensorNeuron[] getInputNeurons()
     {
-		return null;
+		return Arrays.copyOf(this.inputLayerNeurons, this.inputLayerNeurons.length);
     }
-
+	/**
+	 * @creates | result 
+	 * @post | result != null
+	 * @post | Arrays.stream(result).allMatch(n -> n!= null)
+	 * @post | result.length == 2
+	 * @post | result[0] == getMoveForwardNeuron()
+	 * @post | result[1] == getTurnNeuron()
+	 */
     public ActivationFunctionNeuron[] getOutputNeurons()
     {
-        return null;
+        return new ActivationFunctionNeuron[] {
+        	this.moveForwardNeuron,
+        	this.turnNeuron
+        };
     }
-
-    public ActivationFunctionNeuron getMoveForwardNeuron() { return null; }
-
-    public ActivationFunctionNeuron getTurnNeuron() { return null; }
+    /**
+     * @post | result != null 
+     */
+    public ActivationFunctionNeuron getMoveForwardNeuron() { return this.moveForwardNeuron; }
+    /**
+     * @post | result != null 
+     */
+    public ActivationFunctionNeuron getTurnNeuron() { return this.turnNeuron; }
 
     /**
      * LEGIT
