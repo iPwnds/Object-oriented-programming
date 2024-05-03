@@ -1,10 +1,8 @@
 package sim;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
 import sim.entities.World;
 import util.Orientation;
 import util.Point;
@@ -27,19 +25,37 @@ public class Simulation
     
     private final int shelterCount;
     
+    /**
+     * Initializes a new simulation with the specified parameters.
+     * 
+     * @param worldSize The length of side of the square world.
+     * @param shelterCount The number of shelters in the world.
+     * @param inhabitantsPerShelter The number of inhabitants per shelter.
+     * @param huntersPerShelter The number of hunters per shelter.
+     * 
+     * @pre | worldSize > 0
+     * @pre | shelterCount > 0
+     * @pre | inhabitantsPerShelter > 0
+     * @pre | huntersPerShelter >= 0
+     */
     public Simulation(int worldSize, int shelterCount, int inhabitantsPerShelter, int huntersPerShelter)
     {
-    	this.worldSize = 0;
-    	this.shelterCount = 0;
+    	this.worldSize = worldSize;
+    	this.shelterCount = shelterCount;
     	this.preyCount = 0;
-    	this.inhabitantsPerShelter = 0;
-    	this.huntersPerShelter = 0;
+    	this.inhabitantsPerShelter = inhabitantsPerShelter;
+    	this.huntersPerShelter = huntersPerShelter;
     	this.world = null;
     }
     
-
-	public World getWorld() {
-		return null;
+    /**
+     * Gets the current world in the simulation.
+     * 
+     * @return The current world in the simulation.
+     */
+	public World getWorld() 
+	{
+        return world;
 	}
 	
 	/**
@@ -48,7 +64,15 @@ public class Simulation
 	 * Their positions/orientations etc are picked randomly.
 	 * No 2 entities have the same position.
 	 * 
+	 * Creates a new world with randomly placed shelters, preys, and hunters.
 	 * 
+	 * @param chromosomes The list of chromosomes representing the genetic makeup of the entities.
+	 * @return The newly created world.
+	 * 
+	 * @pre | chromosomes != null
+	 * @post | result != null
+	 * @post | result.getPreys().size() == shelterCount * inhabitantsPerShelter
+	 * @post | result.getHunters().size() == shelterCount * huntersPerShelter
 	 */
 	private World createRandomWorldWith(ArrayList<Chromosome> chromosomes)
 	{
@@ -56,7 +80,7 @@ public class Simulation
 		
 		ArrayList<Point> positions = new ArrayList<Point>(world.givePositionStream().toList());
 		RandomUtil.shuffle(positions);
-		return null;
+		return world;
 	}
     
 	/**
@@ -71,6 +95,11 @@ public class Simulation
     /**
      * Compute the list of surviving chromosomes, the list of offspring chromosomes,
      * and returns a new world based on that latter list.
+     * 
+     * Advances the simulation to the next generation.
+     * This method computes the survival of preys, generates offspring, and updates the world.
+     * 
+     * @post | this.getWorld() != null
      */
     public void nextGeneration()
     {
@@ -78,13 +107,17 @@ public class Simulation
     	var offspringChromosomes = computeOffspring(survivingChromosomes);
     	
     	createRandomWorldWith(new ArrayList<>(offspringChromosomes));
-    	
     }
     
+    /**
+     * Computes the list of surviving chromosomes based on the current state of the world.
+     * 
+     * @return The list of surviving chromosomes.
+     * 
+     * @post | result != null
+     */
     private ArrayList<Chromosome> getSurvivingChromosomes()
     {
-
-    	
     	ArrayList<Chromosome> res = null; //todo
     	
     	//will display how many preys survive at each generation
@@ -95,6 +128,14 @@ public class Simulation
     
     /**
      * If parentGeneration is empty, returns a random list of chromosomes of size preyCount.
+     * 
+     * Computes the offspring chromosomes based on the list of surviving chromosomes.
+     * 
+     * @param parentGeneration The list of surviving chromosomes.
+     * @return The list of offspring chromosomes.
+     * 
+     * @pre | parentGeneration != null
+     * @post | result != null
      */
     private ArrayList<Chromosome> computeOffspring(ArrayList<Chromosome> parentGeneration)
     {

@@ -1,11 +1,9 @@
 package sim;
 
 import static util.Logic.implies;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
-
 import util.RandomUtil;
 
 /**
@@ -13,7 +11,6 @@ import util.RandomUtil;
  */
 public class Chromosome
 {
-
     private final int[] weights;
 
     /**
