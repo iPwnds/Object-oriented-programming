@@ -26,11 +26,11 @@ public class Hunter extends Entity
 		Prey closestPrey = null;
 		int closestDistanceSquared = Integer.MAX_VALUE;
 	
-		for (var prey : preys)
+		for (Prey prey : preys)
 		{
 			var distanceSquared = this.getPosition().distanceSquared(prey.getPosition());
 	
-			if (distanceSquared < closestDistanceSquared)
+			if (distanceSquared < closestDistanceSquared && prey.getShelter() == this.shelter)
 			{
 				closestPrey = prey;
 				closestDistanceSquared = distanceSquared;
@@ -175,10 +175,14 @@ public class Hunter extends Entity
 	    
 	    if (closestPrey != null) 
 	    {
-	        Vector targetDirection = this.getPosition().vectorTo(closestPrey.getPosition());
-	        Orientation newOrientation = targetDirection.toClosestOrientation();
-	        setOrientation(newOrientation);
-	    }
+            Vector targetDirection = this.getPosition().vectorTo(closestPrey.getPosition());
+            Orientation newOrientation = targetDirection.toClosestOrientation();
+            setOrientation(newOrientation);
+            moveTowardsPrey(closestPrey);
+        } 
+	    else {
+            setMoveProbability(0);
+        }
 	}
 	
 	@Override
@@ -189,4 +193,49 @@ public class Hunter extends Entity
 	{
 		return new Hunter(super.world, shelter, getPosition(), getOrientation(), this.appetite);
 	}
+	
+	/**
+     * Moves the hunter towards the specified prey and eats it if within reach.
+     * 
+     * @param prey The prey to move towards and potentially eat.
+     * 
+     * @post If the prey is within reach and belongs to the same shelter, it gets eaten, and the hunter's appetite decreases.
+     * 
+     * @post If the hunter's appetite reaches zero, its move probability is set to zero, making it immobile.
+     */
+	private void moveTowardsPrey(Prey prey) 
+	{
+        Point destination = destination();
+        if (destination.equals(prey.getPosition()) && prey.getShelter() == this.shelter) 
+        {
+            prey.die();
+            this.appetite--;
+            if (this.appetite <= 0) 
+            {
+                setMoveProbability(0);
+            }
+        } 
+        else if (this.getWorld().isFree(destination)) 
+        {
+            moveForward();
+        } 
+        else 
+        {
+            setMoveProbability(0);
+        }
+    }
+	
+    protected int moveProbability;
+	
+    /**
+     * Sets the probability of the hunter's movement.
+     * 
+     * @param probability The new move probability for the hunter.
+     * 
+     * @post The moveProbability of the hunter is set to the given probability.
+     */
+    public void setMoveProbability(int probability) 
+    {
+        this.moveProbability = probability;
+    }
 }
