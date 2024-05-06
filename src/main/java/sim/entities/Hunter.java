@@ -138,12 +138,12 @@ public class Hunter extends Entity
      *
      * @return The color of this entity.
      * 
-     * @post | result == null
+     * @post | result == Color.RED
      */
 	@Override
 	public Color getColor()
 	{
-		return null;
+		return Color.RED;
 	}
 
 	/**
