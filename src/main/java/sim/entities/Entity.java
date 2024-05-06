@@ -12,7 +12,6 @@ import static util.Logic.*;
  * Supertype for all entities.
  * 
  * An entity resides in a world, has a position, an orientation and a move probability.
- * 
  */
 public abstract class Entity
 {
@@ -178,10 +177,7 @@ public abstract class Entity
      * 
      * Moves the entity one step forward in its current orientation if the new position is free.
      * 
-     * This method calculates the new position of the entity based on its current position and orientation.
-     * If the new position is within the bounds of the world and is not occupied by another entity,
-     * the entity moves to the new position. If the new position is occupied, the entity remains in its
-     * current position.
+     * @pre | getPosition() != null && getOrientation() != null && destination() != null
      */
     public void moveForward()
     {
@@ -197,10 +193,6 @@ public abstract class Entity
     /**
      * Samples using moveProbability and attempts to move if the latter result is true
      * See RandomUtil.unfairBool
-     * 
-     * This method uses RandomUtil.unfairBool to sample the moveProbability of the entity. If the sampled
-     * result is true, indicating that the entity should move, the moveForward method is called to move
-     * the entity one step forward in its current orientation.
      * 
      * @pre | getMoveProbability() >= 0 && getMoveProbability() <= 100     
      */

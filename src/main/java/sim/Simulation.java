@@ -96,9 +96,6 @@ public class Simulation
      * Compute the list of surviving chromosomes, the list of offspring chromosomes,
      * and returns a new world based on that latter list.
      * 
-     * Advances the simulation to the next generation.
-     * This method computes the survival of preys, generates offspring, and updates the world.
-     * 
      * @post | this.getWorld() != null
      */
     public void nextGeneration()
@@ -128,9 +125,7 @@ public class Simulation
     
     /**
      * If parentGeneration is empty, returns a random list of chromosomes of size preyCount.
-     * 
-     * Computes the offspring chromosomes based on the list of surviving chromosomes.
-     * 
+     *  
      * @param parentGeneration The list of surviving chromosomes.
      * @return The list of offspring chromosomes.
      * 
