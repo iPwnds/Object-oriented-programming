@@ -51,15 +51,35 @@ public abstract class Entity
     	this.world = world;
     	this.position = position;
     	this.orientation = orientation;
-    	this.moveProbability = 0;
+    	this.moveProbability = moveProbability;
     }
     
+	/**
+     * Abstract method indicating whether the entity is alive.
+     *
+     * @return True if the entity is alive, false otherwise.
+     */
     boolean isAlivePkg() { return true; }
-
+    
+    /**
+     * Abstract method indicating whether the entity is a hunter.
+     *
+     * @return True if the entity is a hunter, false otherwise.
+     */
 	abstract boolean isHunterPkg();
 
+	/**
+     * Abstract method indicating whether the entity is a prey.
+     *
+     * @return True if the entity is a prey, false otherwise.
+     */
 	abstract boolean isPreyPkg();
 
+	/**
+     * Abstract method indicating whether the entity is a shelter.
+     *
+     * @return True if the entity is a shelter, false otherwise.
+     */
 	abstract boolean isShelterPkg();
 
 	/**
@@ -166,9 +186,7 @@ public abstract class Entity
 	    Point currentPosition = getPosition();
 	    Orientation currentOrientation = getOrientation();
 	    Vector movementVector = currentOrientation.toVector();
-	    Point newPosition = new Point(currentPosition.getX() + movementVector.getX(), currentPosition.getY() + movementVector.getY());
-
-	    return newPosition;
+	    return new Point(currentPosition.getX() + movementVector.getX(), currentPosition.getY() + movementVector.getY());
 	}
 
     /**
@@ -181,7 +199,6 @@ public abstract class Entity
      */
     public void moveForward()
     {
-        var oldPosition = this.position;
         var newPosition = destination();
 
         if ( world.isFree(newPosition) )
