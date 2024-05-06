@@ -51,7 +51,7 @@ public abstract class Entity
     	this.world = world;
     	this.position = position;
     	this.orientation = orientation;
-    	this.moveProbability = 0;
+    	this.moveProbability = moveProbability;
     }
     
     boolean isAlivePkg() { return true; }
@@ -181,7 +181,6 @@ public abstract class Entity
      */
     public void moveForward()
     {
-        var oldPosition = this.position;
         var newPosition = destination();
 
         if ( world.isFree(newPosition) )

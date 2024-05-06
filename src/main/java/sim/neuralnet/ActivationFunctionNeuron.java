@@ -73,7 +73,7 @@ public abstract class ActivationFunctionNeuron implements Neuron
      * 
      * @mutates | this 
      * @pre | dependency != null
-     * kijken dat ze equal / niet equal zijn
+ //   * @post | ((old(dependencies.size()) == 7) && (old(dependecies) == dependencies)) || (old(dependecies) == dependencies + 1)
      */
     public boolean connect(Neuron dependency, int weight)
     {
