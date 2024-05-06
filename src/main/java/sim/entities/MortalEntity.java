@@ -12,8 +12,25 @@ public abstract class MortalEntity extends Entity
 {
     private boolean dead;
     
-    
-
+    /**
+     * Initializes a new MortalEntity with the given parameters.
+     *
+     * @param world The world in which the entity exists.
+     * @param position The initial position of the entity.
+     * @param orientation The initial orientation of the entity.
+     * @param moveProbability The move probability of the entity.
+     * 
+     * @pre | world != null
+     * @pre | position != null
+     * @pre | orientation != null
+     * @pre | moveProbability >= 0 && moveProbability <= 100
+     * 
+     * @post | getWorld() == world
+     * @post | getPosition() == position
+     * @post | getOrientation() == orientation
+     * @post | getMoveProbability() == moveProbability
+     * @post | !isDead()
+     */
     MortalEntity(World world, Point position, Orientation orientation, int moveProbability)
     {
         super(world, position, orientation, moveProbability);
@@ -21,10 +38,26 @@ public abstract class MortalEntity extends Entity
         this.dead = false;
     }
     
+    /**
+     * Checks if the entity is alive.
+     *
+     * @return true if the entity is alive, false otherwise.
+     * 
+     * @post | result == !isDead()
+     */
     @Override
-	boolean isAlivePkg() { return !dead; }
+	boolean isAlivePkg() 
+    { 
+    	return !dead; 
+    }
 
-	void diePkg() {
+    /**
+     * Marks the entity as dead.
+     * 
+     * @post | isDead()
+     */
+	void diePkg() 
+	{
 	    this.dead = true;
 	}
 
@@ -50,8 +83,18 @@ public abstract class MortalEntity extends Entity
         }
     }
     
+    /**
+     * Performs the action of the entity if it's alive.
+     */
     public abstract void performActionIfAlive();
     
+    /**
+     * Checks if the entity is dead.
+     *
+     * @return true if the entity is dead, false otherwise.
+     * 
+     * @post | result == isDead()
+     */
     public boolean isDead()
     {
         return dead;
@@ -64,5 +107,4 @@ public abstract class MortalEntity extends Entity
     {
     	diePkg();
     }
-    
 }
