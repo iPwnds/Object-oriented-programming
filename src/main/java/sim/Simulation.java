@@ -94,7 +94,7 @@ public class Simulation
     
     /**
      * Compute the list of surviving chromosomes, the list of offspring chromosomes,
-     * and returns a new world based on that latter list.
+     * and creates a new world based on that latter list.
      * 
      * @post | this.getWorld() != null
      */
