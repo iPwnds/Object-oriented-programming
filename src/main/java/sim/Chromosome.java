@@ -7,20 +7,26 @@ import java.util.stream.IntStream;
 import util.RandomUtil;
 
 /**
+ * The Chromosome class represents a chromosome in a genetic algorithm.
+ * 
  * @immutable
  */
 public class Chromosome
 {
+	/**
+	 * Array to store the gene weights of the chromosome
+	 */
     private final int[] weights;
 
     /**
-     * Constructs a new chromosome with the given array of weights as genes.
+     * Constructs a new Chromosome object with the given gene weights.
      * 
-     * @param weights An array of integers representing the genes of the chromosome.
-     * 
+     * @param weights An array of integers representing the gene weights of the chromosome.
      * @pre | weights != null
      * @pre | weights.length == Constants.CHROM_SIZE
      * @pre | Arrays.stream(weights).allMatch(Chromosome::isValidGene)
+     * @post | Arrays.equals(this.getWeights(), weights)
+     * @throws IllegalArgumentException if weights is null, has a length different from Constants.CHROM_SIZE, or contains invalid genes.
      */
 	public Chromosome(int[] weights)
 	{
@@ -29,7 +35,7 @@ public class Chromosome
 			throw new IllegalArgumentException();
 		}
 		
-		if (weights.length != Constants.CHROM_SIZE) 
+		if (weights.length != Constants.CHROM_SIZE)
 		{ 
 			throw new IllegalArgumentException(); 
 		}
@@ -41,16 +47,15 @@ public class Chromosome
 	    
 		this.weights = Arrays.copyOf(weights, weights.length);
 	}
-	
+
 	/**
-	 * Creates a random chromosome with randomly generated genes.
-	 * 
-	 * @return A randomly generated chromosome.
-	 * 
-	 * @post | result != null
-	 * @post | result.getGene(0) == result.getGene(0)
-	 * @post | IntStream.range(0, Constants.CHROM_SIZE).allMatch(i -> Chromosome.isValidGene(result.getGene(i)))
-	 */
+     * Generates a random Chromosome object with random gene weights.
+     * 
+     * @return A randomly generated Chromosome object.
+     * @post | result != null
+     * @post | result.getWeights().length == Constants.CHROM_SIZE
+     * @post | Arrays.stream(result.getWeights()).allMatch(Chromosome::isValidGene)
+     */
 	public static Chromosome createRandom()
     {
         int[] genes =
@@ -61,17 +66,15 @@ public class Chromosome
     }
 
 	/**
-	 * Creates a list of random chromosomes with the specified count.
-	 * 
-	 * @param count The number of chromosomes to create.
-	 * @return An ArrayList containing the randomly generated chromosomes.
-	 * 
-	 * @pre | count > 0
-	 * @post | result != null
-	 * @post | result.size() == count
-	 * @post | result.stream().allMatch(c -> IntStream.range(0, Constants.CHROM_SIZE)
-	 *         |    .allMatch(i -> Chromosome.isValidGene(c.getGene(i))))
-	 */
+     * Generates a list of random Chromosome objects with specified count.
+     * 
+     * @param count The number of Chromosome objects to generate.
+     * @return An ArrayList containing randomly generated Chromosome objects.
+     * @post | result != null
+     * @post | result.size() == count
+     * @post | result.stream().allMatch(c -> c.getWeights().length == Constants.CHROM_SIZE)
+     * @post | result.stream().allMatch(c -> Arrays.stream(c.getWeights()).allMatch(Chromosome::isValidGene))
+     */
     public static ArrayList<Chromosome> createRandom(int count)
     {
     	var stream = IntStream.range(0,  count).mapToObj(i -> createRandom());
@@ -80,11 +83,10 @@ public class Chromosome
     }
     
     /**
-     * Checks if a given gene value is within the valid range.
+     * Checks if a gene value is valid.
      * 
      * @param gene The gene value to check.
-     * @return True if the gene value is valid, false otherwise.
-     * 
+     * @return True if the gene value is within the valid range, false otherwise.
      * @post | result == (gene >= Constants.GENE_MIN && gene <= Constants.GENE_MAX)
      */
     public static boolean isValidGene(int gene)
@@ -93,17 +95,123 @@ public class Chromosome
     }
 
     /**
-     * Returns the gene value at the specified index.
+     * Gets the gene weight at the specified index.
      * 
-     * @param index The index of the gene to retrieve.
-     * @return The gene value at the specified index.
-     * 
+     * @param index The index of the gene weight to retrieve.
+     * @return The gene weight at the specified index.
      * @pre | index >= 0 && index < Constants.CHROM_SIZE
-     * @post | result == getGene(index)
+     * @post | result == getWeights()[index]
      */
     public int getGene(int index)
     {
     	return weights[index];
+    }
+    
+    /**
+     * Checks whether two chromosomes match until a specified index.
+     * 
+     * @param other The other chromosome to compare.
+     * @param index The index until which to compare.
+     * @return True if the chromosomes match until the specified index, false otherwise.
+     * @pre | other != null
+     * @pre | index >= 0 && index <= Constants.CHROM_SIZE
+     * @post | result == IntStream.range(0, index).allMatch(i -> getGene(i) == other.getGene(i))
+     */
+    public boolean matchesUntil(Chromosome other, int index)
+    {
+    	return IntStream.range(0, index).allMatch(i -> getGene(i) == other.getGene(i));
+    }
+    
+    /**
+     * Checks whether two chromosomes match from a specified index until the end.
+     * 
+     * @param other The other chromosome to compare.
+     * @param index The index from which to compare.
+     * @return True if the chromosomes match from the specified index until the end, false otherwise.
+     * @pre | other != null
+     * @pre | index >= 0 && index <= Constants.CHROM_SIZE
+     * @post | result == IntStream.range(index, Constants.CHROM_SIZE).allMatch(i -> getGene(i) == other.getGene(i))
+     */
+    public boolean matchesFrom(Chromosome other, int index)
+    {
+    	return IntStream.range(index, Constants.CHROM_SIZE).allMatch(i -> getGene(i) == other.getGene(i));
+    }
+
+    /**
+     * Mutates the gene weight at the specified index by adding the given delta.
+     * 
+     * @param index The index of the gene weight to mutate.
+     * @param delta The amount to add to the gene weight.
+     * @return A new chromosome with the mutated gene weight.
+     * @pre | index >= 0 && index < Constants.CHROM_SIZE
+     * @pre | delta >= -Constants.GENE_DELTA && delta <= Constants.GENE_DELTA
+     * @post | Arrays.equals(result.getWeights(), Arrays.copyOf(getWeights(), getWeights().length))
+     * @post | result.getWeights()[index] == Math.max(Constants.GENE_MIN, Math.min(getWeights()[index] + delta, Constants.GENE_MAX))
+     */
+    public Chromosome mutate(int index, int delta)
+    {
+
+    	int[] res = new int[weights.length];
+    	for (int i = 0 ; i < weights.length ; i++) 
+    	{
+    		res[i] = weights[i];
+    	}
+    	
+    	if (Constants.GENE_MIN <= weights[index] + delta && weights[index] + delta <= Constants.GENE_MAX)
+    		res[index] += delta;
+    	
+    	return new Chromosome(res);
+    }
+
+    /**
+     * Performs a random mutation on one of the gene weights.
+     * 
+     * @return A new chromosome with a randomly mutated gene weight.
+     * @post | result != null
+     * @post | result.getWeights().length == Constants.CHROM_SIZE
+     * @post | Arrays.stream(result.getWeights()).allMatch(Chromosome::isValidGene)
+     * @post | Arrays.equals(result.getWeights(), getWeights()) || IntStream.range(0, Constants.CHROM_SIZE).anyMatch(i -> result.getWeights()[i] != getWeights()[i])
+     */
+    public Chromosome randomlyMutate()
+    {
+        var index = RandomUtil.integer(weights.length);
+        var delta = RandomUtil.integer(-Constants.GENE_DELTA, Constants.GENE_DELTA);
+
+        return mutate(index, delta);
+    }
+    
+    /**
+     * Checks whether two chromosomes only differ at a specified index.
+     * 
+     * @param other The other chromosome to compare.
+     * @param index The index at which to check for difference.
+     * @return True if the chromosomes only differ at the specified index, false otherwise.
+     * @pre | other != null
+     * @pre | index >= 0 && index <= Constants.CHROM_SIZE
+     * @post | result == IntStream.range(0, Constants.CHROM_SIZE).allMatch(i -> implies(i != index, getGene(i) == other.getGene(i)))
+     */
+    public boolean onlyDiffersAt(Chromosome other, int index)
+    {
+    	return IntStream.range(0, Constants.CHROM_SIZE)
+    			.allMatch(i -> implies(i != index, getGene(i) == other.getGene(i)));
+    }
+    
+    /**
+     * Checks whether this chromosome is equal to another chromosome.
+     * 
+     * @param other The other chromosome to compare.
+     * @return True if the chromosomes are equal, false otherwise.
+     * @pre | other != null
+     * @post | result == Arrays.equals(getWeights(), other.getWeights())
+     */
+    public boolean isEqual(Chromosome other) {
+    	boolean res = (other != null);
+    	for (int i = 0 ; i < weights.length ; i ++) 
+    	{
+    		res = res && (weights[i] == other.getGene(i));
+    	}
+    	
+    	return res;
     }
     
     /**
@@ -134,117 +242,12 @@ public class Chromosome
     }
     
     /**
-     * Determines whether this chromosome matches another chromosome up to a specified index.
+     * Gets the gene weights array of the chromosome.
+     * Used for documentation ONLY
      * 
-     * @param other The other chromosome to compare against.
-     * @param index The index up to which to compare the genes.
-     * @return True if the chromosomes match up to the specified index, false otherwise.
-     * 
-     * @pre | other != null
-     * @pre | index >= 0 && index < Constants.CHROM_SIZE
-     * @post | result == IntStream.range(0, index).allMatch(i -> this.getGene(i) == other.getGene(i))
+     * @return An array of integers representing the gene weights.
      */
-    public boolean matchesUntil(Chromosome other, int index)
-    {
-    	return IntStream.range(0, index).allMatch(i -> getGene(i) == other.getGene(i));
-    }
-    
-    /**
-     * Determines whether this chromosome matches another chromosome from a specified index.
-     * 
-     * @param other The other chromosome to compare against.
-     * @param index The index from which to compare the genes.
-     * @return True if the chromosomes match from the specified index, false otherwise.
-     * 
-     * @pre | other != null
-     * @pre | index >= 0 && index < Constants.CHROM_SIZE
-     * @post | result == IntStream.range(index, Constants.CHROM_SIZE).allMatch(i -> this.getGene(i) == other.getGene(i))
-     */
-    public boolean matchesFrom(Chromosome other, int index)
-    {
-    	return IntStream.range(index, Constants.CHROM_SIZE).allMatch(i -> getGene(i) == other.getGene(i));
-    }
-
-    /**
-     * Mutates a gene at a specified index by adding a delta value to the current gene value.
-     * 
-     * @param index The index of the gene to mutate.
-     * @param delta The value to add to the current gene value.
-     * @return A new chromosome with the mutated gene.
-     * 
-     * @pre | index >= 0 && index < Constants.CHROM_SIZE
-     * @pre | Constants.GENE_MIN <= this.getGene(index) + delta &&
-     *       | Constants.GENE_MAX >= this.getGene(index) + delta
-     * @post | result != null
-     * @post | result.getGene(index) == this.getGene(index) + delta
-     */
-    public Chromosome mutate(int index, int delta)
-    {
-
-    	int[] res = new int[weights.length];
-    	for (int i = 0 ; i < weights.length ; i++) 
-    	{
-    		res[i] = weights[i];
-    	}
-    	
-    	if (Constants.GENE_MIN <= weights[index] + delta && weights[index] + delta <= Constants.GENE_MAX)
-    		res[index] += delta;
-    	return new Chromosome(res);
-    }
-
-    /**
-     * Mutates a randomly selected gene in the chromosome by adding a delta value to it.
-     * 
-     * @return A new chromosome with the randomly mutated gene.
-     * 
-     * @post | result != null
-     * @post | result.getGene(0) == result.getGene(0)
-     * @post | IntStream.range(0, Constants.CHROM_SIZE).allMatch(i -> Chromosome.isValidGene(result.getGene(i)))
-     */
-    public Chromosome randomlyMutate()
-    {
-        var index = RandomUtil.integer(weights.length);
-        var delta = RandomUtil.integer(-Constants.GENE_DELTA, Constants.GENE_DELTA);
-
-        return mutate(index, delta);
-    }
-    
-    /**
-     * Determines whether this chromosome only differs from another chromosome at a specified index.
-     * 
-     * @param other The other chromosome to compare against.
-     * @param index The index at which to compare genes.
-     * @return True if the chromosomes only differ at the specified index, false otherwise.
-     * 
-     * @pre | other != null
-     * @pre | index >= 0 && index < Constants.CHROM_SIZE
-     * @post | result == (IntStream.range(0, Constants.CHROM_SIZE)
-     *         |           .allMatch(i -> i != index ? this.getGene(i) == other.getGene(i) : true))
-     */
-    public boolean onlyDiffersAt(Chromosome other, int index)
-    {
-    	return IntStream.range(0, Constants.CHROM_SIZE).allMatch(i -> implies(i != index, getGene(i) == other.getGene(i)));
-    }
-    
-    /**
-     * Determines whether this chromosome is equal to another chromosome.
-     * Two chromosomes are considered equal if they have the same genes in the same order.
-     * 
-     * @param other The other chromosome to compare against.
-     * @return True if the chromosomes are equal, false otherwise.
-     * 
-     * @pre | other != null
-     * @post | result == IntStream.range(0, Constants.CHROM_SIZE)
-     *         |           .allMatch(i -> this.getGene(i) == other.getGene(i))
-     */
-    public boolean isEqual(Chromosome other) 
-    {
-    	boolean res = (other != null);
-    	for (int i = 0 ; i < weights.length ; i ++) 
-    	{
-    		res = res && (weights[i] == other.getGene(i));
-    	}
-    	
-    	return res;
+    public int[] getWeights() {
+        return Arrays.copyOf(weights, weights.length);
     }
 }
