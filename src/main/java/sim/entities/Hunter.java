@@ -7,30 +7,37 @@ import util.Logic;
 import util.Orientation;
 import util.Point;
 import util.RandomUtil;
-import util.Vector;
 
+/**
+ * Represents a hunter entity in the simulation.
+ */
 public class Hunter extends Entity
 {
 	private int appetite;
+	
+	/**
+	 * The shelter associated with the hunter.
+	 * 
+	 * @peerObject
+	 */
+	final Shelter shelter;
 
 	/**
      * Finds the closest prey among the given list of preys.
-     *
-     * @param preys The list of preys to search from.
-     * @return The closest prey, or null if no prey is found.
      * 
      * @pre | preys != null
+     * @post | result == null || preys.contains(result)
      */
 	private Prey findClosestPrey(ArrayList<Prey> preys)
 	{
 		Prey closestPrey = null;
 		int closestDistanceSquared = Integer.MAX_VALUE;
 	
-		for (Prey prey : preys)
+		for (var prey : preys)
 		{
 			var distanceSquared = this.getPosition().distanceSquared(prey.getPosition());
 	
-			if (distanceSquared < closestDistanceSquared && prey.getShelter() == this.shelter)
+			if (distanceSquared < closestDistanceSquared)
 			{
 				closestPrey = prey;
 				closestDistanceSquared = distanceSquared;
@@ -39,29 +46,15 @@ public class Hunter extends Entity
 	
 		return closestPrey;
 	}
-
-	/**
-	 * The shelter where the hunter belongs.
-	 * @peerObject
-	 */
-	final Shelter shelter;
 	
 	/**
-     * Initializes a new hunter with the given parameters.
-     *
-     * @param world The world in which the hunter exists.
-     * @param shelter The shelter where the hunter resides.
-     * @param position The initial position of the hunter.
-     * @param orientation The initial orientation of the hunter.
+     * Initializes a new hunter with the specified world, shelter, position, and orientation,
+     * and the default initial appetite.
      * 
-     * @pre | world != null
-     * @pre | position != null
-     * @pre | orientation != null
-     * 
-     * @post | getWorld() == world
-     * @post | getPosition() == position
-     * @post | getOrientation() == orientation
-     * @post | getMoveProbability() == Constants.HUNTER_MOVE_PROBABILITY
+     * @throws IllegalArgumentException if the shelter is null
+     * @post | getPosition().equals(position)
+     * @post | getOrientation().equals(orientation)
+     * @post | getAppetite() == Constants.HUNTER_INITIAL_APPETITE
      */
 	Hunter(World world, Shelter shelter, Point position, Orientation orientation)
 	{
@@ -69,23 +62,13 @@ public class Hunter extends Entity
 	}
 	
 	/**
-     * Initializes a new hunter with the given parameters.
-     *
-     * @param world The world in which the hunter exists.
-     * @param shelter The shelter where the hunter resides.
-     * @param position The initial position of the hunter.
-     * @param orientation The initial orientation of the hunter.
-     * @param appetite The initial appetite of the hunter.
+     * Initializes a new hunter with the specified world, shelter, position, orientation,
+     * and appetite.
      * 
-     * @pre | world != null
-     * @pre | position != null
-     * @pre | orientation != null
-     * @pre | appetite >= 0
-     * 
-     * @post | getWorld() == world
-     * @post | getPosition() == position
-     * @post | getOrientation() == orientation
-     * @post | getMoveProbability() == Constants.HUNTER_MOVE_PROBABILITY
+     * @throws IllegalArgumentException if the shelter is null
+     * @post | getPosition().equals(position)
+     * @post | getOrientation().equals(orientation)
+     * @post | getAppetite() == appetite
      */
 	Hunter(World world, Shelter shelter, Point position, Orientation orientation, int appetite)
 	{
@@ -93,11 +76,9 @@ public class Hunter extends Entity
 		this.shelter = shelter;
 		this.appetite = appetite;
 	}
-	
+
 	/**
-     * Indicates whether this entity is considered a prey.
-     *
-     * @return true if this entity is a prey, false otherwise.
+     * Returns true indicating that this entity is not a prey.
      * 
      * @post | result == false
      */
@@ -108,9 +89,7 @@ public class Hunter extends Entity
 	}
 
 	/**
-     * Indicates whether this entity is considered a hunter.
-     *
-     * @return true if this entity is a hunter, false otherwise.
+     * Returns true indicating that this entity is a hunter.
      * 
      * @post | result == true
      */
@@ -119,11 +98,9 @@ public class Hunter extends Entity
 	{
 		return true;
 	}
-	
+
 	/**
-     * Indicates whether this entity is considered a shelter.
-     *
-     * @return true if this entity is a shelter, false otherwise.
+     * Returns false indicating that this entity is not a shelter.
      * 
      * @post | result == false
      */
@@ -134,11 +111,9 @@ public class Hunter extends Entity
 	}
 
 	/**
-     * Retrieves the color associated with this entity.
-     *
-     * @return The color of this entity.
+     * Returns the color representation of the hunter.
      * 
-     * @post | result == Color.RED
+     * @post | result != null
      */
 	@Override
 	public Color getColor()
@@ -147,9 +122,7 @@ public class Hunter extends Entity
 	}
 
 	/**
-     * Retrieves a string representation of this hunter.
-     *
-     * @return A string describing the hunter.
+     * Returns a string representation of the hunter.
      * 
      * @post | result != null
      */
@@ -160,28 +133,20 @@ public class Hunter extends Entity
 	}
 
 	/**
-	 * Performs the action of the hunter.
-	 * If there are preys nearby, the hunter will orient itself towards the closest prey.
+	 * Performs the action of the hunter, which is to orient towards the closest prey.
 	 * 
-	 * @post If there are no preys nearby, the orientation remains unchanged.
-	 * 
-	 * @post If there is a closest prey, the hunter's orientation is updated to face it.
+	 * @post (closestPrey == null) or getOrientation().equals(Orientation.fromVector(getPosition().vectorTo(closestPrey.getPosition())))
 	 */
 	@Override
 	public void performAction()
 	{
-	    ArrayList<Prey> preys = this.getWorld().getPreys();
-	    Prey closestPrey = findClosestPrey(preys);
-	    
-	    if (closestPrey != null) 
-	    {
-            Vector targetDirection = this.getPosition().vectorTo(closestPrey.getPosition());
-            Orientation newOrientation = targetDirection.toClosestOrientation();
+		var preys = super.world.getPreys();
+        var closestPrey = findClosestPrey(preys);
+        if (closestPrey != null) 
+        {
+            var targetDirection = this.getPosition().vectorTo(closestPrey.getPosition());
+            var newOrientation = Orientation.fromVector(targetDirection);
             setOrientation(newOrientation);
-            moveTowardsPrey(closestPrey);
-        } 
-	    else {
-            setMoveProbability(0);
         }
 	}
 	
@@ -195,47 +160,13 @@ public class Hunter extends Entity
 	}
 	
 	/**
-     * Moves the hunter towards the specified prey and eats it if within reach.
+     * Returns the appetite of the hunter.
      * 
-     * @param prey The prey to move towards and potentially eat.
-     * 
-     * @post If the prey is within reach and belongs to the same shelter, it gets eaten, and the hunter's appetite decreases.
-     * 
-     * @post If the hunter's appetite reaches zero, its move probability is set to zero, making it immobile.
+     * @post | result >= 0
      */
-	private void moveTowardsPrey(Prey prey) 
-	{
-        Point destination = destination();
-        if (destination.equals(prey.getPosition()) && prey.getShelter() == this.shelter) 
-        {
-            prey.die();
-            this.appetite--;
-            if (this.appetite <= 0) 
-            {
-                setMoveProbability(0);
-            }
-        } 
-        else if (this.getWorld().isFree(destination)) 
-        {
-            moveForward();
-        } 
-        else 
-        {
-            setMoveProbability(0);
-        }
-    }
-	
-    protected int moveProbability;
-	
-    /**
-     * Sets the probability of the hunter's movement.
-     * 
-     * @param probability The new move probability for the hunter.
-     * 
-     * @post The moveProbability of the hunter is set to the given probability.
-     */
-    public void setMoveProbability(int probability) 
+    public int getAppetite() 
     {
-        this.moveProbability = probability;
+    	int clone = this.appetite;
+        return clone;
     }
 }
