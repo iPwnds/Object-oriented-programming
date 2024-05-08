@@ -59,27 +59,6 @@ public abstract class Entity
     { 
     	return true; 
     }
-    
-    /**
-     * Checks whether the entity is a hunter.
-     * 
-     * @return true if the entity is a hunter, false otherwise.
-     */
-	abstract boolean isHunterPkg();
-
-	/**
-     * Checks whether the entity is a prey.
-     * 
-     * @return true if the entity is a prey, false otherwise.
-     */
-	abstract boolean isPreyPkg();
-
-	/**
-     * Checks whether the entity is a shelter.
-     * 
-     * @return true if the entity is a shelter, false otherwise.
-     */
-	abstract boolean isShelterPkg();
 
 	/**
      * Returns the world which this entity inhabits.
@@ -207,20 +186,6 @@ public abstract class Entity
     }
     
     /**
-     * Performs an action specific to the entity.
-     */
-    public abstract void performAction();
-
-	/**
-     * Returns the color of the entity.
-     * 
-     * @return The color of the entity as a Color object.
-     * 
-     * @post | result != null
-     */
-    public abstract Color getColor();
-    
-    /**
      * Checks whether this entity is a prey.
      * 
      * @return true if the entity is a prey, false otherwise.
@@ -255,6 +220,41 @@ public abstract class Entity
     {
         return isShelterPkg();
     }
+    
+    /**
+     * Checks whether the entity is a hunter.
+     * 
+     * @return true if the entity is a hunter, false otherwise.
+     */
+	abstract boolean isHunterPkg();
+
+	/**
+     * Checks whether the entity is a prey.
+     * 
+     * @return true if the entity is a prey, false otherwise.
+     */
+	abstract boolean isPreyPkg();
+
+	/**
+     * Checks whether the entity is a shelter.
+     * 
+     * @return true if the entity is a shelter, false otherwise.
+     */
+	abstract boolean isShelterPkg();
+    
+    /**
+     * Performs an action specific to the entity.
+     */
+    public abstract void performAction();
+
+	/**
+     * Returns the color of the entity.
+     * 
+     * @return The color of the entity as a Color object.
+     * 
+     * @post | result != null
+     */
+    public abstract Color getColor();
     
     /**
      * Hint: only flawed methods use this method (or its children).

@@ -10,26 +10,23 @@ import util.Point;
  */
 public abstract class MortalEntity extends Entity
 {
+	/**
+     * Represents whether the entity is dead or alive.
+     */
     private boolean dead;
     
     /**
-     * Initializes a new MortalEntity with the given parameters.
+     * Constructs a MortalEntity with the specified parameters.
      *
-     * @param world The world in which the entity exists.
+     * @param world The world in which the entity resides.
      * @param position The initial position of the entity.
      * @param orientation The initial orientation of the entity.
-     * @param moveProbability The move probability of the entity.
-     * 
-     * @pre | world != null
-     * @pre | position != null
-     * @pre | orientation != null
-     * @pre | moveProbability >= 0 && moveProbability <= 100
-     * 
-     * @post | getWorld() == world
-     * @post | getPosition() == position
-     * @post | getOrientation() == orientation
+     * @param moveProbability The probability (0 to 100) that the entity moves at each step.
+     *
+     * @pre | 0 <= moveProbability && moveProbability <= 100
+     * @post | getPosition().equals(position)
+     * @post | getOrientation().equals(orientation)
      * @post | getMoveProbability() == moveProbability
-     * @post | !isDead()
      */
     MortalEntity(World world, Point position, Orientation orientation, int moveProbability)
     {
@@ -42,7 +39,7 @@ public abstract class MortalEntity extends Entity
      * Checks if the entity is alive.
      *
      * @return true if the entity is alive, false otherwise.
-     * 
+     *
      * @post | result == !isDead()
      */
     @Override
@@ -53,7 +50,7 @@ public abstract class MortalEntity extends Entity
 
     /**
      * Marks the entity as dead.
-     * 
+     *
      * @post | isDead()
      */
 	void diePkg() 
@@ -62,6 +59,24 @@ public abstract class MortalEntity extends Entity
 	}
 
 	/**
+     * Checks if the entity is dead.
+     *
+     * @return true if the entity is dead, false otherwise.
+     *
+     * @post | result == isDead()
+     */
+    public boolean isDead()
+    {
+        return dead;
+    }
+    
+    /**
+     * Performs an action specific to the entity if it's alive.
+     * Subclasses must implement this method to define the entity's behavior when alive.
+     */
+    public abstract void performActionIfAlive();
+
+    /**
 	 * LEGIT
 	 */
 	public void performAction()
@@ -81,23 +96,6 @@ public abstract class MortalEntity extends Entity
         {
             super.moveForward();
         }
-    }
-    
-    /**
-     * Performs the action of the entity if it's alive.
-     */
-    public abstract void performActionIfAlive();
-    
-    /**
-     * Checks if the entity is dead.
-     *
-     * @return true if the entity is dead, false otherwise.
-     * 
-     * @post | result == isDead()
-     */
-    public boolean isDead()
-    {
-        return dead;
     }
     
     /**
