@@ -204,7 +204,8 @@ public class Chromosome
      * @pre | other != null
      * @post | result == Arrays.equals(getWeights(), other.getWeights())
      */
-    public boolean isEqual(Chromosome other) {
+    public boolean isEqual(Chromosome other) 
+    {
     	boolean res = (other != null);
     	for (int i = 0 ; i < weights.length ; i ++) 
     	{

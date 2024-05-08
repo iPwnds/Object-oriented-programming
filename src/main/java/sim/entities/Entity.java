@@ -5,7 +5,6 @@ import util.Logic;
 import util.Orientation;
 import util.Point;
 import util.RandomUtil;
-import util.Vector;
 import static util.Logic.*;
 
 /**
@@ -28,74 +27,66 @@ public abstract class Entity
 	 * @peerObject
 	 */
 	World world;
-	
+
 	/**
-     * Initializes an entity with the specified parameters.
+     * Constructs an entity with the specified world, position, orientation, and move probability.
      * 
      * @param world The world in which the entity resides.
      * @param position The initial position of the entity.
      * @param orientation The initial orientation of the entity.
      * @param moveProbability The probability (0 to 100) that the entity moves at each step.
      * 
-     * @pre | world != null
-     * @pre | position != null
-     * @pre | orientation != null
      * @pre | 0 <= moveProbability && moveProbability <= 100
-     * @post | this.getWorld() == world
-     * @post | this.getPosition() == position
-     * @post | this.getOrientation() == orientation
-     * @post | this.getMoveProbability() == moveProbability
+     * 
+     * @post | getPosition().equals(position)
+     * @post | getOrientation().equals(orientation)
+     * @post | getMoveProbability() == moveProbability
      */
-	Entity(World world, Point position, Orientation orientation, int moveProbability)
-    {
-    	this.world = world;
-    	this.position = position;
-    	this.orientation = orientation;
-    	this.moveProbability = moveProbability;
+	Entity(World world, Point position, Orientation orientation, int moveProbability) 
+	{
+        this.world = world;
+        this.position = position;
+        this.orientation = orientation;
+        this.moveProbability = moveProbability;
     }
     
 	/**
-     * Abstract method indicating whether the entity is alive.
-     *
-     * @return True if the entity is alive, false otherwise.
+     * Returns true if the entity is alive.
+     * 
+     * @return true if the entity is alive, false otherwise.
      */
-    boolean isAlivePkg() { return true; }
+    boolean isAlivePkg() 
+    { 
+    	return true; 
+    }
     
     /**
-     * Abstract method indicating whether the entity is a hunter.
-     *
-     * @return True if the entity is a hunter, false otherwise.
+     * Checks whether the entity is a hunter.
+     * 
+     * @return true if the entity is a hunter, false otherwise.
      */
 	abstract boolean isHunterPkg();
 
 	/**
-     * Abstract method indicating whether the entity is a prey.
-     *
-     * @return True if the entity is a prey, false otherwise.
+     * Checks whether the entity is a prey.
+     * 
+     * @return true if the entity is a prey, false otherwise.
      */
 	abstract boolean isPreyPkg();
 
 	/**
-     * Abstract method indicating whether the entity is a shelter.
-     *
-     * @return True if the entity is a shelter, false otherwise.
+     * Checks whether the entity is a shelter.
+     * 
+     * @return true if the entity is a shelter, false otherwise.
      */
 	abstract boolean isShelterPkg();
 
 	/**
-	 * LEGIT
-	 */
-	Point getPositionPkg() 
-	{
-		return position;
-	}
-
-	/**
      * Returns the world which this entity inhabits.
-     *
+     * 
      * @return The world object.
      * 
-     * @post | result == this.getWorld()
+     * @post | result == getWorld()
      */
     public World getWorld()
     {
@@ -105,9 +96,9 @@ public abstract class Entity
     /**
      * Current position of this entity in the world.
      * 
-     * @return The position of the entity.
+     * @return The current position as a Point object.
      * 
-     * @post | result == this.getPosition()
+     * @post | result != null
      */
     public Point getPosition() 
     {
@@ -117,9 +108,9 @@ public abstract class Entity
     /**
      * Current orientation of this entity.
      * 
-     * @return The orientation of the entity.
+     * @return The current orientation as an Orientation object.
      * 
-     * @post | result == this.getOrientation()
+     * @post | result != null
      */
     public Orientation getOrientation() 
     {
@@ -129,9 +120,9 @@ public abstract class Entity
     /**
      * Probability (integer between 0 and 100) that the entity moves at each step.
      * 
-     * @return The move probability of the entity.
+     * @return The move probability (0 to 100).
      * 
-     * @post | result == this.getMoveProbability()
+     * @post | 0 <= result && result <= 100
      */
     public int getMoveProbability() 
     {
@@ -141,9 +132,9 @@ public abstract class Entity
     /**
      * Changes the orientation of the entity.
      * 
-     * @param orientation The new orientation of the entity.
+     * @param orientation The new orientation for the entity.
      * 
-     * @post | this.getOrientation() == orientation
+     * @post | getOrientation().equals(orientation)
      */
     public void setOrientation(Orientation orientation) 
     {
@@ -153,52 +144,46 @@ public abstract class Entity
     /**
      * Turns the entity clockwise by 90 degrees.
      * 
-     * @post | this.getOrientation() == old(this.getOrientation()).turnClockwise(1)
+     * @post | getOrientation().equals(getOrientation().turnClockwise(1))
      */
 	public void turnClockwise()
 	{
 	    this.orientation = this.orientation.turnClockwise(1);
 	}
-	
+
 	/**
-	 * Turns the entity counterclockwise by 90 degrees.
-	 * 
-	 * @post | this.getOrientation() == old(this.getOrientation()).turnCounterclockwise(1)
-	 */
+     * Turns the entity counterclockwise by 90 degrees.
+     * 
+     * @post | getOrientation().equals(getOrientation().turnCounterclockwise(1))
+     */
 	public void turnCounterclockwise()
 	{
 	    this.orientation = this.orientation.turnCounterclockwise(1);
 	}
 
 	/**
-	 * Computes the position where the entity would arrive if it were to move one step
-	 * forward in its current orientation. This does not take into account whether
-	 * this position is free or not.
-	 * 
-	 * @return The new position after moving one step forward.
-	 * 
-	 * @post | result != null
-	 * @post | result.getX() == this.getPosition().getX() + this.getOrientation().toVector().getX()
-	 * @post | result.getY() == this.getPosition().getY() + this.getOrientation().toVector().getY()
-	 */
-	public Point destination()
-	{
-	    Point currentPosition = getPosition();
-	    Orientation currentOrientation = getOrientation();
-	    Vector movementVector = currentOrientation.toVector();
-	    return new Point(currentPosition.getX() + movementVector.getX(), currentPosition.getY() + movementVector.getY());
-	}
-
+     * Computes the position where the entity would arrive if it were to move one step
+     * forward in its current orientation. This does not take into account whether
+     * this position is free or not.
+     * 
+     * @return The destination position as a Point object.
+     * 
+     * @post | result != null
+     */
+    public Point destination()
+    {
+        return position.move(orientation.toVector());
+    }
+    
     /**
      * The current position is set (if there is room) to current pos + current orientation.
      * Note: this method is not probabilistic
      * 
-     * Moves the entity one step forward in its current orientation if the new position is free.
-     * 
-     * @pre | getPosition() != null && getOrientation() != null && destination() != null
+     * @post | getPosition().equals(destination())
      */
     public void moveForward()
     {
+        //var oldPosition = this.position;
         var newPosition = destination();
 
         if ( world.isFree(newPosition) )
@@ -211,7 +196,7 @@ public abstract class Entity
      * Samples using moveProbability and attempts to move if the latter result is true
      * See RandomUtil.unfairBool
      * 
-     * @pre | getMoveProbability() >= 0 && getMoveProbability() <= 100     
+     * @post | !RandomUtil.unfairBool(getMoveProbability()) || getPosition().equals(destination())
      */
     public void moveForwardWithProbability()
     {
@@ -222,21 +207,25 @@ public abstract class Entity
     }
     
     /**
-     * Performs the action associated with the entity.
+     * Performs an action specific to the entity.
      */
     public abstract void performAction();
 
 	/**
      * Returns the color of the entity.
      * 
-     * @return The color of the entity.
+     * @return The color of the entity as a Color object.
+     * 
+     * @post | result != null
      */
     public abstract Color getColor();
     
     /**
      * Checks whether this entity is a prey.
      * 
-     * @return True if the entity is a prey, false otherwise.
+     * @return true if the entity is a prey, false otherwise.
+     * 
+     * @post | result == isPrey()
      */
     public boolean isPrey()
     {
@@ -246,7 +235,9 @@ public abstract class Entity
     /**
      * Checks whether this entity is a hunter.
      * 
-     * @return True if the entity is a hunter, false otherwise.
+     * @return true if the entity is a hunter, false otherwise.
+     * 
+     * @post | result == isHunter()
      */
     public boolean isHunter()
     {
@@ -256,7 +247,9 @@ public abstract class Entity
     /**
      * Checks whether this entity is a shelter.
      * 
-     * @return True if the entity is a shelter, false otherwise.
+     * @return true if the entity is a shelter, false otherwise.
+     * 
+     * @post | result == isShelter()
      */
     public boolean isShelter()
     {
@@ -267,7 +260,17 @@ public abstract class Entity
      * Hint: only flawed methods use this method (or its children).
      * In our implementation this method is never used.
      * 
-     * @return A copy of the entity.
+     * @return A copy of the entity as an Entity object.
+     * 
+     * @post | result != null
      */
     public abstract Entity giveCopy();
+    
+    /**
+	 * LEGIT
+	 */
+	Point getPositionPkg() 
+	{
+		return position;
+	}
 }
