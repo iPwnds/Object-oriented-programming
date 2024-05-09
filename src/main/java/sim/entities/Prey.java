@@ -37,6 +37,13 @@ public class Prey extends MortalEntity
      * @peerObject
      */
     Shelter shelter;
+    
+    /**
+     * zelf toegevoegde method
+     */
+    public int getScore() {
+    	return this.score;
+    }
 
     /**
      * Performs a turn based on the output of the turn neuron.
@@ -227,11 +234,11 @@ public class Prey extends MortalEntity
      * 
      * @return true if the prey survives, false otherwise.
      * 
-     * @post | result == (distanceSquaredToShelter() > Constants.SHELTER_SURVIVAL_DISTANCE * Constants.SHELTER_SURVIVAL_DISTANCE)
+     * @post | result == (getScore() > 0)
      */
     public boolean survives()
     {
-    	return distanceSquaredToShelter() > Constants.SHELTER_SURVIVAL_DISTANCE * Constants.SHELTER_SURVIVAL_DISTANCE;
+    	return (getScore() > 0);
     }
 
     /**
