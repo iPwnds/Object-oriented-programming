@@ -274,9 +274,18 @@ public abstract class Entity
 		return position;
 	}
 	
+	/**
+	 * Sets the position of the prey to the specified new position.
+	 * 
+	 * @param newPosition The new position to set for the prey.
+	 * 
+	 * @throws NullPointerException if newPosition is null.
+	 * 
+	 * @pre | newPosition != null
+	 * @post | this.getPosition().equals(newPosition)
+	 */
 	public void setPosition(Point newPosition) 
 	{
 	    this.position = newPosition;
 	}
-
 }

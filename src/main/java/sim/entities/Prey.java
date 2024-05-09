@@ -11,7 +11,10 @@ import util.Point;
 import util.Vector;
 import static util.Logic.*;
 
-
+/**
+ * Prey class represents an entity in the simulation that exhibits prey-like behavior.
+ * It extends the MortalEntity class.
+ */ 
 public class Prey extends MortalEntity
 {
 	private final Chromosome chromosome;
@@ -35,6 +38,12 @@ public class Prey extends MortalEntity
      */
     Shelter shelter;
 
+    /**
+     * Performs a turn based on the output of the turn neuron.
+     * 
+     * @pre | neuralNetwork != null
+     * @post The prey turns its orientation based on the output of the neural network
+     */
     private void performTurn() 
     {
         int turnOutput = neuralNetwork.getTurnNeuron().fire(neuralNetwork.getInputNeurons());
@@ -50,6 +59,12 @@ public class Prey extends MortalEntity
         setOrientation(currentOrientation);
     }
 
+    /**
+     * Moves the prey forward based on the output of the neural network.
+     * 
+     * @pre | neuralNetwork != null
+     * @post The prey moves forward if the new position is free
+     */
     private void performMove() {
         int moveOutput = neuralNetwork.getMoveForwardNeuron().fire(neuralNetwork.getInputNeurons());
         
@@ -63,12 +78,42 @@ public class Prey extends MortalEntity
         }
     }
 
+    /**
+     * Determines whether this entity is of the prey type.
+     * 
+     * @return true if this entity is a prey, false otherwise.
+     * 
+     * @post | result == true
+     */
     @Override
 	boolean isPreyPkg()
 	{
 	    return true;
 	}
 
+    /**
+     * Creates a Prey object with the specified parameters.
+     * 
+     * @param world The world in which the prey exists.
+     * @param shelter The shelter where the prey resides.
+     * @param chromosome The chromosome of the prey.
+     * @param position The initial position of the prey.
+     * @param orientation The initial orientation of the prey.
+     * 
+     * @throws IllegalArgumentException if any of the parameters are null.
+     * 
+     * @pre | chromosome != null
+     * @pre | world != null
+     * @pre | shelter != null
+     * @pre | position != null
+     * @pre | orientation != null
+     * 
+     * @post | this.getPosition().equals(position)
+     * @post | this.getOrientation().equals(orientation)
+     * @post | this.getChromosome().equals(chromosome)
+     * @post | this.getNeuralNetwork() != null
+     * @post | this.getSiblings().contains(this) && shelter.getInhabitants().contains(this)
+     */
 	Prey(World world, Shelter shelter, Chromosome chromosome, Point position, Orientation orientation)
     {
         super(world, position, orientation, Constants.PREY_MOVE_PROBABILITY);
@@ -90,40 +135,85 @@ public class Prey extends MortalEntity
         this.siblings.add(this);
     }
 
+	/**
+	 * Determines whether this entity is of the hunter type.
+	 * 
+	 * @return false since this entity is not a hunter.
+	 * 
+	 * @post | result == false
+	 */
     @Override
 	boolean isHunterPkg()
 	{
 	    return false;
 	}
 
+    /**
+     * Determines whether this entity is of the shelter type.
+     * 
+     * @return false since this entity is not a shelter.
+     * 
+     * @post | result == false
+     */
 	@Override
 	boolean isShelterPkg()
 	{
 	    return false;
 	}
 
+	/**
+	 * Removes the entity from the world upon its death.
+	 * 
+	 * @post The entity is removed from the world at its current position.
+	 */
 	@Override
 	void diePkg()
 	{
 		world.removeEntityAt(getPosition());
 	}
 
+	/**
+	 * Retrieves the chromosome associated with this prey entity.
+	 * 
+	 * @return The chromosome of this prey entity.
+	 * 
+	 * @post | result != null
+	 */
 	public Chromosome getChromosome()
     {
         return this.chromosome;
     }
 
+	/**
+	 * Retrieves the color associated with this prey entity.
+	 * 
+	 * @return The color of this prey entity (GREEN).
+	 * 
+	 * @post | result != null
+	 */
     public Color getColor()
     {
         return Color.GREEN;
     }
     
+    /**
+     * Retrieves the shelter associated with this prey entity.
+     * 
+     * @return The shelter where this prey entity resides.
+     * 
+     * @post | result != null
+     */
     public Shelter getShelter()
     {
     	return this.shelter;
     }
 
-
+    /**
+     * Performs actions for the prey if it is alive. 
+     * This includes turning, moving, and updating its score.
+     * 
+     * @post The prey performs a turn, moves, and updates its score if it is alive.
+     */
     @Override
     public void performActionIfAlive()
     {
@@ -132,17 +222,38 @@ public class Prey extends MortalEntity
         updateScore();
     }
     
+    /**
+     * Checks if the prey survives based on its distance to the shelter.
+     * 
+     * @return true if the prey survives, false otherwise.
+     * 
+     * @post | result == (distanceSquaredToShelter() > Constants.SHELTER_SURVIVAL_DISTANCE * Constants.SHELTER_SURVIVAL_DISTANCE)
+     */
     public boolean survives()
     {
     	return distanceSquaredToShelter() > Constants.SHELTER_SURVIVAL_DISTANCE * Constants.SHELTER_SURVIVAL_DISTANCE;
     }
 
+    /**
+     * Calculates the squared distance between the prey and the shelter.
+     * 
+     * @return The squared distance to the shelter.
+     * 
+     * @post | result == getPosition().distanceSquared(getShelter().getPosition())
+     */
     public int distanceSquaredToShelter()
     {
     	Point shelterPosition = shelter.getPosition();
         return getPosition().distanceSquared(shelterPosition);
     }
 
+    /**
+     * Returns a string representation of this prey entity, including its position.
+     * 
+     * @return A string containing the position of this prey entity.
+     * 
+     * @post | result != null
+     */
     @Override
     public String toString()
     {
@@ -186,5 +297,29 @@ public class Prey extends MortalEntity
     public Prey giveCopy() 
     {
     	return new Prey(super.world, shelter, chromosome, getPosition(), getOrientation());
+    }
+
+    /**
+     * Gets the neural network associated with this prey.
+     * Used for documentation ONLY
+     * Should not have representation exposure
+     * 
+     * @return The neural network of this prey.
+     */
+    public NeuralNetwork getNeuralNetwork() 
+    {
+        return this.neuralNetwork;
+    }
+
+    /**
+     * Gets the list of siblings of this prey.
+     * Used for documentation ONLY
+     * Should not have representation exposure
+     * 
+     * @return The list of siblings.
+     */
+    public ArrayList<Prey> getSiblings() 
+    {
+        return this.siblings;
     }
 }
