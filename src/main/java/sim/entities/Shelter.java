@@ -74,4 +74,13 @@ public class Shelter extends MortalEntity
     public Shelter giveCopy() {
     	return new Shelter(super.world, getPosition(), getOrientation());
     }
+    
+    /**
+     * Adds the specified prey to the list of inhabitants in the shelter.
+     * 
+     * @param prey The prey to add to the list of inhabitants.
+     */
+    public void addInhabitant(Prey prey) {
+        inhabitants.add(prey);
+    }
 }

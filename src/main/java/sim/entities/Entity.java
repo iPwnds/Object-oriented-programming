@@ -273,4 +273,10 @@ public abstract class Entity
 	{
 		return position;
 	}
+	
+	public void setPosition(Point newPosition) 
+	{
+	    this.position = newPosition;
+	}
+
 }

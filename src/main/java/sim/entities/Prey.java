@@ -1,7 +1,6 @@
 package sim.entities;
 
 import java.util.ArrayList;
-
 import sim.Chromosome;
 import sim.Constants;
 import sim.neuralnet.NeuralNetwork;
@@ -9,13 +8,12 @@ import util.Color;
 import util.Logic;
 import util.Orientation;
 import util.Point;
+import util.Vector;
 import static util.Logic.*;
 
 
 public class Prey extends MortalEntity
 {
-	
-
 	private final Chromosome chromosome;
 
 	/**
@@ -27,33 +25,6 @@ public class Prey extends MortalEntity
 	private int score;
 
 	/**
-	 * LEGIT
-	 */
-	private void updateScore()
-	{
-		if ( distanceSquaredToShelter() < Constants.SHELTER_SURVIVAL_DISTANCE * Constants.SHELTER_SURVIVAL_DISTANCE )
-		{
-			score += 1;
-		}
-		else
-		{
-			score -= 1;
-		}
-	}
-
-	private void performTurn()
-	{
-
-	}
-
-	private void performMove()
-	{
-
-	}
-	
-
-
-	/**
 	 * @peerObjects
 	 * @representationObject
 	 */
@@ -63,11 +34,34 @@ public class Prey extends MortalEntity
      * @peerObject
      */
     Shelter shelter;
-    
 
-    
+    private void performTurn() 
+    {
+        int turnOutput = neuralNetwork.getTurnNeuron().fire(neuralNetwork.getInputNeurons());
 
-    
+        Orientation currentOrientation = getOrientation();
+        int clockwiseTurns = turnOutput % 4;
+        
+        for (int i = 0; i < clockwiseTurns; i++) 
+        {
+            currentOrientation = currentOrientation.turnClockwise(1);
+        }
+
+        setOrientation(currentOrientation);
+    }
+
+    private void performMove() {
+        int moveOutput = neuralNetwork.getMoveForwardNeuron().fire(neuralNetwork.getInputNeurons());
+        
+        Vector direction = getOrientation().toVector().scaleWith(moveOutput);
+
+        Point newPosition = getPosition().move(direction);
+
+        if (world.isFree(newPosition)) 
+        {
+            setPosition(newPosition);
+        }
+    }
 
     @Override
 	boolean isPreyPkg()
@@ -78,7 +72,6 @@ public class Prey extends MortalEntity
 	Prey(World world, Shelter shelter, Chromosome chromosome, Point position, Orientation orientation)
     {
         super(world, position, orientation, Constants.PREY_MOVE_PROBABILITY);
-
 
         if ( chromosome == null || world == null || shelter == null || position == null
         		|| orientation == null )
@@ -91,8 +84,10 @@ public class Prey extends MortalEntity
         this.neuralNetwork = NeuralNetwork.fromChromosome(chromosome);
         this.siblings = this.shelter.getInhabitants();
         this.score = 0;
+        
+        shelter.addInhabitant(this);
 
-        //todo: link with siblings and shelter
+        this.siblings.add(this);
     }
 
     @Override
@@ -110,7 +105,7 @@ public class Prey extends MortalEntity
 	@Override
 	void diePkg()
 	{
-
+		world.removeEntityAt(getPosition());
 	}
 
 	public Chromosome getChromosome()
@@ -137,7 +132,39 @@ public class Prey extends MortalEntity
         updateScore();
     }
     
+    public boolean survives()
+    {
+    	return distanceSquaredToShelter() > Constants.SHELTER_SURVIVAL_DISTANCE * Constants.SHELTER_SURVIVAL_DISTANCE;
+    }
+
+    public int distanceSquaredToShelter()
+    {
+    	Point shelterPosition = shelter.getPosition();
+        return getPosition().distanceSquared(shelterPosition);
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("Prey(position=%s)", this.getPosition());
+    }
+    
     /**
+	 * LEGIT
+	 */
+	private void updateScore()
+	{
+		if ( distanceSquaredToShelter() < Constants.SHELTER_SURVIVAL_DISTANCE * Constants.SHELTER_SURVIVAL_DISTANCE )
+		{
+			score += 1;
+		}
+		else
+		{
+			score -= 1;
+		}
+	}
+	
+	/**
      * LEGIT
      * 
      * true iff same position and orient and chromosome and behavior type The
@@ -151,29 +178,13 @@ public class Prey extends MortalEntity
                 && (this.getOrientation().isEqual(other.getOrientation()))
                 && (this.getChromosome().isEqual(other.getChromosome()));
     }
-
-
-    public boolean survives()
-    {
-    	return false;
-    }
-
-    public int distanceSquaredToShelter()
-    {
-        return 0;
-    }
-
-    @Override
-    public String toString()
-    {
-        return String.format("Prey(position=%s)", this.getPosition());
-    }
     
     @Override
     /**
      * LEGIT
      */
-    public Prey giveCopy() {
+    public Prey giveCopy() 
+    {
     	return new Prey(super.world, shelter, chromosome, getPosition(), getOrientation());
     }
 }

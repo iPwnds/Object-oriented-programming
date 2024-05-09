@@ -161,6 +161,8 @@ public class Hunter extends Entity
 	
 	/**
      * Returns the appetite of the hunter.
+     * Used for documentation ONLY
+     * Should not have representation exposure
      * 
      * @post | result >= 0
      */
