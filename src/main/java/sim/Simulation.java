@@ -3,6 +3,8 @@ package sim;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import sim.entities.Shelter;
 import sim.entities.World;
 import util.Orientation;
 import util.Point;
@@ -53,7 +55,7 @@ public class Simulation
         this.preyCount = inhabitantsPerShelter * shelterCount;
         this.inhabitantsPerShelter = inhabitantsPerShelter;
         this.huntersPerShelter = huntersPerShelter;
-        this.world = null;
+        this.world = this.createRandomWorld(getPreyCount());
     }
     
     /**
@@ -79,31 +81,45 @@ public class Simulation
 	 */
 	private World createRandomWorldWith(ArrayList<Chromosome> chromosomes) 
 	{
-        World world = new World(worldSize, worldSize);
+	    World world = new World(worldSize, worldSize);
 
-        ArrayList<Point> positions = new ArrayList<>(world.givePositionStream().toList());
-        RandomUtil.shuffle(positions);
+	    ArrayList<Point> positions = new ArrayList<>(world.givePositionStream().toList());
+	    RandomUtil.shuffle(positions);
+	    ArrayList<Shelter> shelters = new ArrayList<>(this.shelterCount);
 
-        int preyCount = this.preyCount;
-        int huntersRemaining = huntersPerShelter * shelterCount;
+	    int preyCount = this.preyCount;
+	    int huntersRemaining = huntersPerShelter * shelterCount;
+	    int shelterCount = this.shelterCount;
 
-        for (Point position : positions) 
-        {
-            if (preyCount > 0 && RandomUtil.unfairBool(50)) 
-            {
-                world.createPrey(null, chromosomes.get(--preyCount), position, Orientation.createRandom());
-            } 
-            
-            else if (huntersRemaining > 0 && RandomUtil.unfairBool(50)) 
-            {
-                world.createHunter(null, position, Orientation.createRandom());
-                huntersRemaining--;
-            }
-        }
+	    // Create the first Shelter before the loop
+	    Shelter newShelter = world.createShelter(positions.get(0), Orientation.createRandom());
+	    shelters.add(newShelter);
+	    shelterCount--;
 
-        return world;
-    }
-    
+	    // Start the loop from the second position
+	    for (int i = 1; i < positions.size(); i++) 
+	    {
+	        Point position = positions.get(i);
+	        if (shelterCount > 0 && RandomUtil.unfairBool(33)) 
+	        {
+	            newShelter = world.createShelter(position, Orientation.createRandom());
+	            shelters.add(newShelter);
+	            shelterCount--;
+	        }
+	        else if (preyCount > 0 && RandomUtil.unfairBool(33)) 
+	        {
+	            world.createPrey(shelters.get(RandomUtil.integer(shelters.size())), chromosomes.get(--preyCount), position, Orientation.createRandom());
+	        } 
+	        else if (huntersRemaining > 0 && RandomUtil.unfairBool(100)) 
+	        {
+	            world.createHunter(shelters.get(RandomUtil.integer(shelters.size())), position, Orientation.createRandom());
+	            huntersRemaining--;
+	        }
+	    }
+
+	    return world;
+	}
+
     /**
      * Compute the list of surviving chromosomes, the list of offspring chromosomes,
      * and creates a new world based on that latter list.

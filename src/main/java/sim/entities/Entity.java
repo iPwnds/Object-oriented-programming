@@ -37,6 +37,9 @@ public abstract class Entity
      * @param moveProbability The probability (0 to 100) that the entity moves at each step.
      * 
      * @pre | 0 <= moveProbability && moveProbability <= 100
+     * @pre | world != null 
+     * @pre | position != null
+     * @pre | orientation != null
      * 
      * @post | getPosition().equals(position)
      * @post | getOrientation().equals(orientation)
@@ -65,7 +68,7 @@ public abstract class Entity
      * 
      * @return The world object.
      * 
-     * @post | result == getWorld()
+     * @post | result != null
      */
     public World getWorld()
     {
@@ -123,7 +126,7 @@ public abstract class Entity
     /**
      * Turns the entity clockwise by 90 degrees.
      * 
-     * @post | getOrientation().equals(getOrientation().turnClockwise(1))
+     * @post | getOrientation().equals(old(getOrientation()).turnClockwise(1))
      */
 	public void turnClockwise()
 	{
@@ -133,7 +136,7 @@ public abstract class Entity
 	/**
      * Turns the entity counterclockwise by 90 degrees.
      * 
-     * @post | getOrientation().equals(getOrientation().turnCounterclockwise(1))
+     * @post | getOrientation().equals(old(getOrientation()).turnCounterclockwise(1))
      */
 	public void turnCounterclockwise()
 	{
@@ -158,7 +161,8 @@ public abstract class Entity
      * The current position is set (if there is room) to current pos + current orientation.
      * Note: this method is not probabilistic
      * 
-     * @post | getPosition().equals(destination())
+     * @post | (getPosition().equals(destination()) && getWorld().isFree(destination())) 
+     * 	|| (getPosition().equals(old(getPosition())) && !getWorld().isFree(destination()))
      */
     public void moveForward()
     {
@@ -190,7 +194,6 @@ public abstract class Entity
      * 
      * @return true if the entity is a prey, false otherwise.
      * 
-     * @post | result == isPrey()
      */
     public boolean isPrey()
     {
@@ -202,7 +205,6 @@ public abstract class Entity
      * 
      * @return true if the entity is a hunter, false otherwise.
      * 
-     * @post | result == isHunter()
      */
     public boolean isHunter()
     {
@@ -214,7 +216,6 @@ public abstract class Entity
      * 
      * @return true if the entity is a shelter, false otherwise.
      * 
-     * @post | result == isShelter()
      */
     public boolean isShelter()
     {

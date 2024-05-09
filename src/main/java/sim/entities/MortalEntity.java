@@ -63,7 +63,6 @@ public abstract class MortalEntity extends Entity
      *
      * @return true if the entity is dead, false otherwise.
      *
-     * @post | result == isDead()
      */
     public boolean isDead()
     {

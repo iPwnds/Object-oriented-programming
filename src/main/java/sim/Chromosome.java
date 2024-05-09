@@ -145,7 +145,8 @@ public class Chromosome
      * @return A new chromosome with the mutated gene weight.
      * @pre | index >= 0 && index < Constants.CHROM_SIZE
      * @pre | delta >= -Constants.GENE_DELTA && delta <= Constants.GENE_DELTA
-     * @post | Arrays.equals(result.getWeights(), Arrays.copyOf(getWeights(), getWeights().length))
+//de weights van het result moeten nog 
+// geinitialiseerd worden vgm    * @post | Arrays.equals(result.getWeights(), Arrays.copyOf(getWeights(), getWeights().length))
      * @post | result.getWeights()[index] == Math.max(Constants.GENE_MIN, Math.min(getWeights()[index] + delta, Constants.GENE_MAX))
      */
     public Chromosome mutate(int index, int delta)
