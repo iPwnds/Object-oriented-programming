@@ -1,9 +1,8 @@
 package sim;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
-
+//import java.util.List;
+//import java.util.stream.IntStream;
 import sim.entities.Shelter;
 import sim.entities.World;
 import util.Orientation;
