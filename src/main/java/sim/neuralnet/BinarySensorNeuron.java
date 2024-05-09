@@ -16,6 +16,7 @@ public abstract class BinarySensorNeuron extends SensorNeuron
     {
         return this.detect(prey) ? 750 : (-750);
     }
+    
     /**
      * @pre | prey != null
      */

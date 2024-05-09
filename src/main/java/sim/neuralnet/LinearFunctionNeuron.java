@@ -10,5 +10,4 @@ public class LinearFunctionNeuron extends ActivationFunctionNeuron
     {
         return Math.min(Math.max(-1000, input), 1000);
     }
-    
 }

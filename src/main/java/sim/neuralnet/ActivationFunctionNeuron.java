@@ -1,14 +1,11 @@
 package sim.neuralnet;
 
 import java.util.ArrayList;
-
 import sim.entities.Prey;
 import util.Pair;
 
-
 public abstract class ActivationFunctionNeuron implements Neuron
 {
-
 	/**
 	 * Can be any >= 0 size
 	 * 
@@ -70,10 +67,9 @@ public abstract class ActivationFunctionNeuron implements Neuron
     }
 
     /**
-     * 
      * @mutates | this 
      * @pre | dependency != null
- //   * @post | ((old(dependencies.size()) == 7) && (old(dependecies) == dependencies)) || (old(dependecies) == dependencies + 1)
+     //* @post | ((old(dependencies.size()) == 7) && (old(dependecies) == dependencies)) || (old(dependecies) == dependencies + 1)
      */
     public boolean connect(Neuron dependency, int weight)
     {
@@ -88,6 +84,7 @@ public abstract class ActivationFunctionNeuron implements Neuron
             return true;
     	}
     }
+    
     /**
      * @post | getBias() == bias
      */
@@ -121,6 +118,18 @@ public abstract class ActivationFunctionNeuron implements Neuron
 
     public abstract int applyActivationFunction(int input);
     
+    /**
+     * Fires the neuron, computing its output based on the input neurons and weights of its dependencies.
+     * 
+     * @param inputNeurons An array of input neurons.
+     * @return The computed output of the neuron after applying the activation function.
+     * 
+     * @pre | inputNeurons != null
+     * @pre | getDependencies() != null
+     * @post | result >= 0
+     * @post | result <= Integer.MAX_VALUE
+     //* @post | result == applyActivationFunction(total)
+     */
     public int fire(SensorNeuron[] inputNeurons) {
         int total = bias;
         for (Pair<Neuron, Integer> pair : dependencies) {

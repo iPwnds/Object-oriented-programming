@@ -6,7 +6,6 @@ import sim.entities.Prey;
  * @immutable
  */
 public abstract class SensorNeuron implements Neuron {
-
 	/**
 	 * @pre | prey != null
 	 */

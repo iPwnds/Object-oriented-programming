@@ -25,6 +25,8 @@ public class FreePassageSensorNeuron extends BinarySensorNeuron
 
     /**
      * zelf toegevoegde method
+     * Should not have representation exposure
+     * 
      * @post | result != null
      */
     public Orientation getOrientation()

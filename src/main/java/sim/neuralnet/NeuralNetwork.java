@@ -1,7 +1,6 @@
 package sim.neuralnet;
 
 import java.util.Arrays;
-
 import sim.Chromosome;
 import util.Orientation;
 
@@ -10,7 +9,6 @@ import util.Orientation;
  */
 public class NeuralNetwork
 {
-
 	/**
 	 * @invar | inputLayerNeurons != null 
 	 * @invar | Arrays.stream(inputLayerNeurons).allMatch(n -> n != null) 
@@ -22,6 +20,7 @@ public class NeuralNetwork
      * check dependecies?
      */
     private final ActivationFunctionNeuron moveForwardNeuron;
+    
     /**
      * @invar | turnNeuron != null
      * check dependecies?
@@ -33,7 +32,6 @@ public class NeuralNetwork
 	 * - 5 input neurons (3 FreePassageSensorNeuron with respectively N, NW, NE as parameters;
 	 *   1 HunterSenor neuron; 1 ShelterSensor)
 	 * - 2 output neurons (2 LinearFunctionNeuron)
-	 * 
 	 */
     public NeuralNetwork()
     {
@@ -47,6 +45,7 @@ public class NeuralNetwork
     	moveForwardNeuron = new LinearFunctionNeuron();
     	turnNeuron = new LinearFunctionNeuron();
     }
+    
     /**
      * @creates | result
      * @post | result != null
@@ -57,6 +56,7 @@ public class NeuralNetwork
     {
 		return Arrays.copyOf(this.inputLayerNeurons, this.inputLayerNeurons.length);
     }
+	
 	/**
 	 * @creates | result 
 	 * @post | result != null
@@ -72,10 +72,12 @@ public class NeuralNetwork
         	this.turnNeuron
         };
     }
+    
     /**
      * @post | result != null 
      */
     public ActivationFunctionNeuron getMoveForwardNeuron() { return this.moveForwardNeuron; }
+    
     /**
      * @post | result != null 
      */
