@@ -162,13 +162,14 @@ public class Hunter extends Entity
 	/**
      * Returns the appetite of the hunter.
      * Used for documentation ONLY
-     * Should not have representation exposure
+     * 
+     * Should not be representation exposure,
+     * because object is a primitive int type
      * 
      * @post | result >= 0
      */
     public int getAppetite() 
     {
-    	int clone = this.appetite;
-        return clone;
+        return this.appetite;
     }
 }
