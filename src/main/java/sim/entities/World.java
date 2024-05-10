@@ -240,8 +240,6 @@ public class World
 	{
 		var prey = new Prey(this, shelter, chromosome, position, orientation);
 		this.entityGrid.setAt(position, prey);
-		System.out.print(prey);
-		
 		return prey;
 	}
 	

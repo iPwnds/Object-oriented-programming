@@ -40,7 +40,6 @@ public class FreePassageSensorNeuron extends BinarySensorNeuron
      */
     public boolean detect(Prey prey)
     {
-    	System.out.println(prey.getWorld());
     	var world = prey.getWorld();
     	var detectionOrientation = prey.getOrientation().compose(this.orientation);
         var position = prey.getPosition();

@@ -142,5 +142,4 @@ public abstract class ActivationFunctionNeuron implements Neuron
         
         return applyActivationFunction(total);
     }
-
 }
