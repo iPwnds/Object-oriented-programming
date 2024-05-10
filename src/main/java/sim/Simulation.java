@@ -211,7 +211,7 @@ public class Simulation
      * Used for documentation ONLY
      * 
      * Should not have representation exposure,
-     * because object is a primitive int type
+     * because object is a primitive int type & fields are final
      *
      * @return The size of the simulation world.
      */
@@ -225,7 +225,7 @@ public class Simulation
      * Used for documentation ONLY
      * 
      * Should not have representation exposure,
-     * because object is a primitive int type
+     * because object is a primitive int type & fields are final
      *
      * @return The number of shelters in the simulation.
      */
@@ -239,7 +239,7 @@ public class Simulation
      * Used for documentation ONLY
      * 
      * Should not have representation exposure,
-     * because object is a primitive int type
+     * because object is a primitive int type & fields are final
      *
      * @return The number of preys a new world should be inhabited with.
      */
@@ -253,7 +253,7 @@ public class Simulation
      * Used for documentation ONLY
      * 
      * Should not have representation exposure,
-     * because object is a primitive int type
+     * because object is a primitive int type & fields are final
      *
      * @return The number of inhabitants per shelter.
      */
@@ -267,7 +267,7 @@ public class Simulation
      * Used for documentation ONLY
      * 
      * Should not have representation exposure,
-     * because object is a primitive int type
+     * because object is a primitive int type & fields are final
      *
      * @return The number of hunters per shelter.
      */

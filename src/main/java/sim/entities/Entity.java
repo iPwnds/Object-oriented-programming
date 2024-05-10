@@ -71,7 +71,7 @@ public abstract class Entity
      * @post | result != null
      */
     public World getWorld()
-    {
+    {    	
     	return world;
     }
     
