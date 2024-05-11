@@ -246,6 +246,7 @@ public class Chromosome
     /**
      * Gets the gene weights array of the chromosome.
      * Used for documentation ONLY
+     * Should not have representation exposure
      * 
      * @return An array of integers representing the gene weights.
      */

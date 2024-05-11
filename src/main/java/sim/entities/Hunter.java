@@ -149,8 +149,8 @@ public class Hunter extends Entity
             var newOrientation = Orientation.fromVector(targetDirection);
             setOrientation(newOrientation);
         }
-        this.moveForwardWithProbability();
         
+        this.moveForwardWithProbability();
 	}
 	
 	@Override

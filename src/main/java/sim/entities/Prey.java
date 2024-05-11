@@ -44,6 +44,11 @@ public class Prey extends MortalEntity
     
     /**
      * zelf toegevoegde method
+     * 
+     * Should not be representation exposure,
+     * because object is a primitive int type
+     * 
+     * @return The score of the prey.
      */
     public int getScore() {
     	return this.score;
@@ -316,6 +321,7 @@ public class Prey extends MortalEntity
      * Should not have representation exposure
      * 
      * @return The neural network of this prey.
+     * @post | result != null
      */
     public NeuralNetwork getNeuralNetwork() 
     {
@@ -328,6 +334,7 @@ public class Prey extends MortalEntity
      * Should not have representation exposure
      * 
      * @return The list of siblings.
+     * @post | result != null
      */
     public ArrayList<Prey> getSiblings() 
     {
