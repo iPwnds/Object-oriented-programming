@@ -38,7 +38,7 @@ public class Hunter extends Entity
 		{
 			var distanceSquared = this.getPosition().distanceSquared(prey.getPosition());
 	
-			if (distanceSquared < closestDistanceSquared)
+			if (distanceSquared < closestDistanceSquared && this.shelter.getInhabitants().contains(prey))
 			{
 				closestPrey = prey;
 				closestDistanceSquared = distanceSquared;
@@ -149,6 +149,8 @@ public class Hunter extends Entity
             var newOrientation = Orientation.fromVector(targetDirection);
             setOrientation(newOrientation);
         }
+        this.moveForwardWithProbability();
+        
 	}
 	
 	@Override

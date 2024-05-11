@@ -171,9 +171,20 @@ public abstract class Entity
         //var oldPosition = this.position;
         var newPosition = destination();
 
-        if ( world.isFree(newPosition) )
+        if(this instanceof Hunter) 
         {
-            this.position = newPosition;
+        	Hunter hunter = (Hunter) this;
+        	for(Prey prey : hunter.shelter.getInhabitants()) {
+        		if(newPosition.equals(prey.getPosition())) {
+        			prey.diePkg();
+        			this.position = newPosition;
+        		}
+        	}
+        	if(newPosition != hunter.getPosition()) {
+        		if(getWorld().isFree(newPosition)) {
+        			this.position = newPosition;
+        		}
+        	}
         }
     }
     
