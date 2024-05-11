@@ -130,7 +130,7 @@ public class Simulation
     	var survivingChromosomes = getSurvivingChromosomes();
     	var offspringChromosomes = computeOffspring(survivingChromosomes);
     	
-    	createRandomWorldWith(new ArrayList<>(offspringChromosomes));
+    	world = createRandomWorldWith(new ArrayList<>(offspringChromosomes));
     }
     
     /**
