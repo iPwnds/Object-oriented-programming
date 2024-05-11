@@ -15,23 +15,11 @@ public class FreePassageSensorNeuron extends BinarySensorNeuron
     
     /**
      * @throws IllegalArgumentException | orientation == null 
-     * @post | getOrientation() == orientation
      */
     public FreePassageSensorNeuron(Orientation orientation)
     {
     	if (orientation == null) { throw new IllegalArgumentException(); }
         this.orientation = orientation;
-    }
-
-    /**
-     * zelf toegevoegde method
-     * Should not have representation exposure
-     * 
-     * @post | result != null
-     */
-    public Orientation getOrientation()
-    {
-    	return this.orientation;
     }
     
     @Override

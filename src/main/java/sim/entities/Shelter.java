@@ -20,6 +20,10 @@ public class Shelter extends MortalEntity
      * 
 	 * @peerObjects
 	 * @representationObject
+	 * @invar | inhabitants != null
+	 * @invar | inhabitants.stream().allMatch(s -> s != null && s.shelter == this)
+	 * @invar | inhabitants.size() < Constants.INHABITANTS_PER_SHELTER
+
      */
     final ArrayList<Prey> inhabitants;
 
@@ -93,6 +97,7 @@ public class Shelter extends MortalEntity
      * @return The list of inhabitants.
      * 
      * @post | result != null
+     * @post | result.size() <= Constants.INHABITANTS_PER_SHELTER
      */
 	public ArrayList<Prey> getInhabitants()
     {
