@@ -22,6 +22,8 @@ public class World
 	 * 
 	 * @representationObject
 	 * @peerObjects
+	 * @invar | entityGrid != null
+	 * @invar | getEntities().stream().allMatch(s -> s.world == this)
 	 */
 	final Grid<Entity> entityGrid;
 	
@@ -31,6 +33,8 @@ public class World
 	 * 
 	 * @representationObject
 	 * @peerObjects
+	 * 	 * @invar | hunters != null
+	 * @invar | hunters.stream().allMatch(s -> s.world == this)
 	 */
 	final List<Hunter> hunters;
 

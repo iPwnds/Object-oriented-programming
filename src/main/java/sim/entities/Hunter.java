@@ -19,6 +19,7 @@ public class Hunter extends Entity
 	 * The shelter associated with the hunter.
 	 * 
 	 * @peerObject
+	 * @invar | shelter != null
 	 */
 	final Shelter shelter;
 

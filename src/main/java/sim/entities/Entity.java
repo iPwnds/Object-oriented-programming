@@ -25,6 +25,8 @@ public abstract class Entity
 
     /**
 	 * @peerObject
+	 * @invar | world != null
+	 * @invar | world.getEntities().contains(this)
 	 */
 	World world;
 

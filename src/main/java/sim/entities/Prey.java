@@ -30,11 +30,15 @@ public class Prey extends MortalEntity
 	/**
 	 * @peerObjects
 	 * @representationObject
+	 * @invar | siblings != null
+	 * @invar | siblings.stream().allMatch(s -> s != null && s.getSiblings().contains(this))
 	 */
     final ArrayList<Prey> siblings;
 
     /**
      * @peerObject
+     * @invar | shelter != null
+     * @invar | shelter.getInhabitants().contains(this)
      */
     Shelter shelter;
     

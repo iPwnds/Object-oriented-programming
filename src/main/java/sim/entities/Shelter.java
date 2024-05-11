@@ -20,6 +20,8 @@ public class Shelter extends MortalEntity
      * 
 	 * @peerObjects
 	 * @representationObject
+	 * @invar | inhabitants != null
+	 * @invar | inhabitants.stream().allMatch(s -> s != null && s.shelter == this)
      */
     final ArrayList<Prey> inhabitants;
 
