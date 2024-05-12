@@ -318,26 +318,30 @@ public class Prey extends MortalEntity
     /**
      * Gets the neural network associated with this prey.
      * Used for documentation ONLY
+     * 
      * Should not have representation exposure
+     * because object is being cloned & fields are final
      * 
      * @return The neural network of this prey.
      * @post | result != null
      */
     public NeuralNetwork getNeuralNetwork() 
     {
-        return this.neuralNetwork;
+    	return this.neuralNetwork;
     }
 
     /**
      * Gets the list of siblings of this prey.
      * Used for documentation ONLY
+     * 
      * Should not have representation exposure
+     * because object is being cloned & fields are final
      * 
      * @return The list of siblings.
      * @post | result != null
      */
     public ArrayList<Prey> getSiblings() 
     {
-        return this.siblings;
+        return new ArrayList<Prey> (this.siblings);
     }
 }

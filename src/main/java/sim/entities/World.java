@@ -1,6 +1,7 @@
 package sim.entities;
 
 import java.util.ArrayList;
+//import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import sim.Chromosome;
@@ -106,7 +107,7 @@ public class World
      * @param position The position to check.
      * @return true if the position is inside the world, false otherwise.
      * @pre | position != null
-     * @post | result == getEntityGrid().isValidPosition(position)
+     //* @post | result == getEntityGrid().isValidPosition(position)
      */
 	public boolean isInside(Point position)
 	{
@@ -286,16 +287,18 @@ public class World
 		return giveEntityStreamPriv();
 	}
 	
-	/**
-	 * Returns the grid containing entities in the world.
-	 * Used for documentation ONLY
-     * Should not have representation exposure
-	 * 
-	 * @return The grid containing entities.
-	 * @post | result != null
-	 */
-	public Grid<Entity> getEntityGrid() 
-	{
-		return this.entityGrid;
-	}
+//	/**
+//	 * Returns the grid containing entities in the world.
+//	 * Used for documentation ONLY
+//	 * 
+//     * Should not have representation exposure
+//	 * because object is being cloned & fields are final
+//	 * 
+//	 * @return The grid containing entities.
+//	 * @post | result != null
+//	 */
+//	public Grid<Entity> getEntityGrid() 
+//	{
+//		return Grid.giveCopy(entityGrid);
+//	}
 }
