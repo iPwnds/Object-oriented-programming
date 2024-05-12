@@ -27,7 +27,7 @@ public class Exam {
 	 * @peerObjects (package-level)
 	 */
 	Set<Room> getRoomsInternal() {
-		return Set.copyOf(rooms);
+		return Set.copyOf(rooms); 
 	}
 	
 	/**
