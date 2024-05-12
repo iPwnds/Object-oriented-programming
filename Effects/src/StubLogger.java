@@ -19,12 +19,12 @@ public class StubLogger extends Log {
 	}
 	
 	public int getInput() {
-		
-		// .size() is not working
-		
-		int inputs = inputs.get(inputs.size() - 1);
-		inputs.remove(inputs.size() - 1);
-		return inputs;
+//		
+//		// .size() is not working
+//		
+//		int inputs = inputs.get(inputs.size() - 1);
+//		inputs.remove(inputs.size() - 1);
+		return 0; //inputs
 	}
 	
 }
