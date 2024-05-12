@@ -1,7 +1,9 @@
 
 public class Log {
+	private static int count = 0;
+	
 	public static void logMessage(String s) {
-		if(s.length() > 80) return;
-		System.out.println(s);
+		System.out.println("log message " + count + ": " + s);
+		count++;
 	}
 }
