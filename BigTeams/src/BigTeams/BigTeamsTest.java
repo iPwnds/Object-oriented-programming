@@ -28,7 +28,6 @@ class BigTeamsTest {
 		alice.leaveTeam();
 		assertNull(alice.getTeam());
 		assertTrue(team1.getMembers().isEmpty());
-		
 	}
 
 }
