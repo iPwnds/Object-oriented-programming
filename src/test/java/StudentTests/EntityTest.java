@@ -1,4 +1,4 @@
-package StudentTest;
+package StudentTests;
 
 public class EntityTest {
 
