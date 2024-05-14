@@ -118,28 +118,6 @@ public abstract class ActivationFunctionNeuron implements Neuron
 
     public abstract int applyActivationFunction(int input);
     
-    /**
-     * Fires the neuron, computing its output based on the input neurons and weights of its dependencies.
-     * 
-     * @param inputNeurons An array of input neurons.
-     * @return The computed output of the neuron after applying the activation function.
-     * 
-     * @pre | inputNeurons != null
-     * @pre | getDependencies() != null
-     * @post | result >= 0
-     * @post | result <= Integer.MAX_VALUE
-     //* @post | result == applyActivationFunction(total)
-     */
-    public int fire(SensorNeuron[] inputNeurons, Prey prey) 
-    {
-        int total = bias;
-        for (Pair<Neuron, Integer> pair : dependencies) 
-        {
-            Neuron dependency = pair.getFirst();
-            int weight = pair.getSecond();
-            total += dependency.computeOutput(prey) * weight;
-        }
-        
-        return applyActivationFunction(total);
-    }
+
+
 }

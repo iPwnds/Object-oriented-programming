@@ -62,16 +62,15 @@ public class Prey extends MortalEntity
      */
     private void performTurn() 
     {
-        int turnOutput = neuralNetwork.getTurnNeuron().fire(neuralNetwork.getInputNeurons(), this);
+        int turnOutput = neuralNetwork.getTurnNeuron().computeOutput(this);
 
         Orientation currentOrientation = getOrientation();
-        int clockwiseTurns = turnOutput % 4;
-        
-        for (int i = 0; i < clockwiseTurns; i++) 
-        {
-            currentOrientation = currentOrientation.turnClockwise(1);
+        if(turnOutput < -333) {
+        	currentOrientation.turnClockwise(1);
         }
-
+        else if(turnOutput > 333){
+        	currentOrientation.turnCounterclockwise(1);
+        }
         setOrientation(currentOrientation);
     }
 
@@ -82,13 +81,13 @@ public class Prey extends MortalEntity
      * @post The prey moves forward if the new position is free
      */
     private void performMove() {
-        int moveOutput = neuralNetwork.getMoveForwardNeuron().fire(neuralNetwork.getInputNeurons(), this);
-        
-        Vector direction = getOrientation().toVector().scaleWith(moveOutput);
-
-        Point newPosition = getPosition().move(direction);
-
-        if (world.isFree(newPosition)) 
+        int moveOutput = neuralNetwork.getMoveForwardNeuron().computeOutput(this);
+        var oldPosition = this.getPosition();
+        var newPosition = oldPosition
+        		.move(this.getOrientation().toVector());
+       
+     
+        if (world.isFree(newPosition) && moveOutput > 0) 
         {
             setPosition(newPosition);
         }

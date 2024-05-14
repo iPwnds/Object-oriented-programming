@@ -113,19 +113,24 @@ public class Shelter extends MortalEntity
     @Override
     public void performActionIfAlive()
     {
+    	if(getInhabitants().stream().allMatch(s -> !s.isAlivePkg())){
+    		this.die();
+    	}
+    		
+    		
     	if (!isDead()) 
     	{
             if (RandomUtil.unfairBool(Constants.SHELTER_TURN_PROBABILITY)) 
             {
                 if (RandomUtil.bool()) 
-                {
+                
                     setOrientation(getOrientation().turnClockwise(1));
                 } 
                 else 
                 {
                     setOrientation(getOrientation().turnCounterclockwise(1));
                 }
-            }
+            
             
             if (RandomUtil.unfairBool(Constants.SHELTER_MOVE_PROBABILITY)) 
             {
@@ -136,8 +141,9 @@ public class Shelter extends MortalEntity
                     setPosition(newPosition);
                 }
             }
+    	}
         }
-    }
+    
 
     /**
      * Retrieves the color associated with this shelter entity.
