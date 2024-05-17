@@ -11,11 +11,18 @@ import util.RandomUtil;
  * Supertype for all entities.
  * 
  * An entity resides in a world, has a position, an orientation and a move probability.
+ * @mutableµ
+ * @invar | 0 <= getMoveProbability() && getMoveProbability() <= 100
  */
 public abstract class Entity
 {
+	/**
+	 * @invar | position != null
+	 */
     private Point position;
-    
+    /**
+     * @invar | orientation != null
+     */
     private Orientation orientation;
     
     /**
@@ -37,10 +44,10 @@ public abstract class Entity
      * @param orientation The initial orientation of the entity.
      * @param moveProbability The probability (0 to 100) that the entity moves at each step.
      * 
-     * @pre | 0 <= moveProbability && moveProbability <= 100
-     * @pre | world != null 
-     * @pre | position != null
-     * @pre | orientation != null
+     * @throws IllegalArgumentException | 0 >= moveProbability && moveProbability <= 100
+     * @throws IllegalArgumentException | world == null 
+     * @throws IllegalArgumentException | position == null
+     * @throws IllegalArgumentException | orientation == null
      * 
      * @post | getPosition().equals(position)
      * @post | getOrientation().equals(orientation)
@@ -48,6 +55,18 @@ public abstract class Entity
      */
 	Entity(World world, Point position, Orientation orientation, int moveProbability) 
 	{
+		if(0 >= moveProbability && moveProbability <= 100) {
+			throw new IllegalArgumentException(); 
+		}
+		if(world == null) {
+			throw new IllegalArgumentException(); 
+		}
+		if(position == null) {
+			throw new IllegalArgumentException(); 
+		}
+		if(orientation == null) {
+			throw new IllegalArgumentException(); 
+		}
         this.world = world;
         this.position = position;
         this.orientation = orientation;
@@ -69,7 +88,6 @@ public abstract class Entity
      * 
      * @return The world object.
      * 
-     * @post | result != null
      */
     public World getWorld()
     {    	
@@ -81,7 +99,6 @@ public abstract class Entity
      * 
      * @return The current position as a Point object.
      * 
-     * @post | result != null
      */
     public Point getPosition() 
     {
@@ -93,7 +110,6 @@ public abstract class Entity
      * 
      * @return The current orientation as an Orientation object.
      * 
-     * @post | result != null
      */
     public Orientation getOrientation() 
     {
@@ -104,8 +120,6 @@ public abstract class Entity
      * Probability (integer between 0 and 100) that the entity moves at each step.
      * 
      * @return The move probability (0 to 100).
-     * 
-     * @post | 0 <= result && result <= 100
      */
     public int getMoveProbability() 
     {
@@ -152,6 +166,7 @@ public abstract class Entity
      * @return The destination position as a Point object.
      * 
      * @post | result != null
+
      */
     public Point destination()
     {
@@ -162,8 +177,8 @@ public abstract class Entity
      * The current position is set (if there is room) to current pos + current orientation.
      * Note: this method is not probabilistic
      * 
-     //* @post | (getPosition().equals(destination()) && getWorld().isFree(destination())) 
-     * 	|| (getPosition().equals(old(getPosition())) && !getWorld().isFree(destination()))
+     * @post | (getPosition().equals(old(destination())) && getWorld().isFree(old(destination()))) 
+     * 	|| (getPosition().equals(old(getPosition())) && !getWorld().isFree(old(destination())))
      */
     public void moveForward()
     {
@@ -191,7 +206,7 @@ public abstract class Entity
      * Samples using moveProbability and attempts to move if the latter result is true
      * See RandomUtil.unfairBool
      * 
-     //* @post | !RandomUtil.unfairBool(getMoveProbability()) || getPosition().equals(destination())
+     * @post the entity moves forward with a probability of this.moveProbability
      */
     public void moveForwardWithProbability()
     {

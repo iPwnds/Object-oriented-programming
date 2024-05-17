@@ -5,9 +5,14 @@ import util.Orientation;
 
 /**
  * @immutable
+ * @invar | getOrientation() != null
  */
 public class FreePassageSensorNeuron extends BinarySensorNeuron
 {
+	public Orientation getOrientation() {
+		return orientation;
+	}
+
 	/**
 	 * @invar | orientation != null
 	 */

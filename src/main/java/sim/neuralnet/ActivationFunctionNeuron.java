@@ -69,7 +69,8 @@ public abstract class ActivationFunctionNeuron implements Neuron
     /**
      * @mutates | this 
      * @pre | dependency != null
-     //* @post | ((old(dependencies.size()) == 7) && (old(dependecies) == dependencies)) || (old(dependecies) == dependencies + 1)
+     //maak er als dan van 
+     //zoek ook manier om neuron uit het pair te halen @post | ((old(getDependencies().size()) == 7) && (old(getDependencies()) == getDependencies())) || ((old(getDependencies()).size() == getDependencies().size() + 1) && getDependencies() == dependency)
      */
     public boolean connect(Neuron dependency, int weight)
     {
@@ -77,12 +78,11 @@ public abstract class ActivationFunctionNeuron implements Neuron
     	{
     		return false;
 		}
-    	else
-    	{
-            var pair = new Pair<Neuron, Integer>(dependency, weight);
-            dependencies.add(pair);
-            return true;
-    	}
+    	
+        var pair = new Pair<Neuron, Integer>(dependency, weight);
+        dependencies.add(pair);
+        return true;
+    	
     }
     
     /**
