@@ -114,6 +114,7 @@ public abstract class ActivationFunctionNeuron implements Neuron
         }
 
         return applyActivationFunction(total);
+
     }
 
     public abstract int applyActivationFunction(int input);

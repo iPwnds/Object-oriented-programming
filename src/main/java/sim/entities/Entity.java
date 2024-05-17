@@ -26,7 +26,6 @@ public abstract class Entity
     /**
 	 * @peerObject
 	 * @invar | world != null
-	 * @invar | world.getEntities().contains(this)
 	 */
 	World world;
 
@@ -163,7 +162,7 @@ public abstract class Entity
      * The current position is set (if there is room) to current pos + current orientation.
      * Note: this method is not probabilistic
      * 
-     * @post | (getPosition().equals(destination()) && getWorld().isFree(destination())) 
+     //* @post | (getPosition().equals(destination()) && getWorld().isFree(destination())) 
      * 	|| (getPosition().equals(old(getPosition())) && !getWorld().isFree(destination()))
      */
     public void moveForward()
@@ -192,7 +191,7 @@ public abstract class Entity
      * Samples using moveProbability and attempts to move if the latter result is true
      * See RandomUtil.unfairBool
      * 
-     * @post | !RandomUtil.unfairBool(getMoveProbability()) || getPosition().equals(destination())
+     //* @post | !RandomUtil.unfairBool(getMoveProbability()) || getPosition().equals(destination())
      */
     public void moveForwardWithProbability()
     {

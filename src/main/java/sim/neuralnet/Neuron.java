@@ -9,3 +9,4 @@ public interface Neuron
 	 */
     int computeOutput(Prey creature);
 }
+	

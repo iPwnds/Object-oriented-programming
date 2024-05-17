@@ -52,6 +52,7 @@ class ActivationFunctionNeuronTest {
             assertTrue(neuron.connect(new DummyNeuron(), 1));
         }
         assertFalse(neuron.connect(new DummyNeuron(), 1));
+        
     }
 
     @Test

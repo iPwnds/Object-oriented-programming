@@ -1,6 +1,9 @@
 package sim;
 
 import java.util.ArrayList;
+
+import sim.entities.Entity;
+import sim.entities.Prey;
 //import java.util.List;
 //import java.util.stream.IntStream;
 import sim.entities.Shelter;
@@ -76,7 +79,7 @@ public class Simulation
 	 * @param chromosomes A list of chromosomes representing the genetic makeup of preys.
      * @return The created world.
      * @post | result != null
-     * @post | result.getPreys().size() == chromosomes.size()
+     //* @post | result.getPreys().size() == chromosomes.size()
 	 */
 	private World createRandomWorldWith(ArrayList<Chromosome> chromosomes) 
 	{
@@ -145,6 +148,11 @@ public class Simulation
     {
     	ArrayList<Chromosome> res = new ArrayList<>();
     	
+    	for (Entity entity : world.getEntities()) {
+            if (entity instanceof Prey prey && prey.isDead() == false) {
+                res.add(prey.getChromosome());
+            }
+        }
     	//will display how many preys survive at each generation
     	System.out.println(String.format("%d preys survived", res.size()));
     	

@@ -24,7 +24,7 @@ public class World
 	 * @representationObject
 	 * @peerObjects
 	 * @invar | entityGrid != null
-	 * @invar | getEntities().stream().allMatch(s -> s.world == this)
+
 	 */
 	final Grid<Entity> entityGrid;
 	

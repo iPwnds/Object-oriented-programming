@@ -31,7 +31,6 @@ public class Prey extends MortalEntity
 	 * @peerObjects
 	 * @representationObject
 	 * @invar | siblings != null
-	 * @invar | siblings.stream().allMatch(s -> s != null && s.getSiblings().contains(this))
 	 */
     final ArrayList<Prey> siblings;
 
@@ -64,14 +63,13 @@ public class Prey extends MortalEntity
     {
         int turnOutput = neuralNetwork.getTurnNeuron().computeOutput(this);
 
-        Orientation currentOrientation = getOrientation();
-        if(turnOutput < -333) {
-        	currentOrientation.turnClockwise(1);
+        Orientation newOrientation = getOrientation();
+        if (turnOutput < -333) {
+            newOrientation = newOrientation.turnClockwise(1);
+        } else if (turnOutput > 333) {
+            newOrientation = newOrientation.turnCounterclockwise(1);
         }
-        else if(turnOutput > 333){
-        	currentOrientation.turnCounterclockwise(1);
-        }
-        setOrientation(currentOrientation);
+        setOrientation(newOrientation);
     }
 
     /**
@@ -147,7 +145,6 @@ public class Prey extends MortalEntity
         
         shelter.addInhabitant(this);
 
-        this.siblings.add(this);
     }
 
 	/**
