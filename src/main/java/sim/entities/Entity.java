@@ -177,8 +177,6 @@ public abstract class Entity
      * The current position is set (if there is room) to current pos + current orientation.
      * Note: this method is not probabilistic
      * 
-     * @post | (getPosition().equals(old(destination())) && getWorld().isFree(old(destination()))) 
-     * 	|| (getPosition().equals(old(getPosition())) && !getWorld().isFree(old(destination())))
      */
     public void moveForward()
     {

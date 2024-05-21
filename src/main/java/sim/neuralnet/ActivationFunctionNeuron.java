@@ -66,12 +66,13 @@ public abstract class ActivationFunctionNeuron implements Neuron
         bias = 0;
     }
 
-    /**
-     * @mutates | this 
-     * @pre | dependency != null
-     //maak er als dan van 
-     //zoek ook manier om neuron uit het pair te halen @post | ((old(getDependencies().size()) == 7) && (old(getDependencies()) == getDependencies())) || ((old(getDependencies()).size() == getDependencies().size() + 1) && getDependencies() == dependency)
-     */
+	/**
+	 * @mutates | this 
+	 * @pre | dependency != null
+	 * @pre | getDependencies().size() <= 7
+	 * @post | (getDependencies().size() == old(getDependencies()).size() + 1 && getDependencies().get(getDependencies().size()-1).getFirst() == dependency && getDependencies().get(getDependencies().size()-1).getSecond() == weight) 
+	 * || (getDependencies().size() == old(getDependencies()).size())
+	 */   
     public boolean connect(Neuron dependency, int weight)
     {
     	if (dependencies.size() == 7)
