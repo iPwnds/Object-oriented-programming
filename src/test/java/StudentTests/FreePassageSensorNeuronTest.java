@@ -1,9 +1,7 @@
 package StudentTests;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
-
 import sim.neuralnet.FreePassageSensorNeuron;
 import util.Orientation;
 
@@ -32,4 +30,5 @@ public class FreePassageSensorNeuronTest {
         FreePassageSensorNeuron neuron = new FreePassageSensorNeuron(orientation);
         assertEquals(orientation, neuron.getOrientation());
     }
+    
 }
