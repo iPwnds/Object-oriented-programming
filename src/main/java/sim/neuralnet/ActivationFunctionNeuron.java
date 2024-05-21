@@ -73,7 +73,8 @@ public abstract class ActivationFunctionNeuron implements Neuron
 	 * @post | (getDependencies().size() == old(getDependencies()).size() + 1 && getDependencies().get(getDependencies().size()-1).getFirst() == dependency && getDependencies().get(getDependencies().size()-1).getSecond() == weight) 
 	 * || (getDependencies().size() == old(getDependencies()).size())
 	 */   
-    public boolean connect(Neuron dependency, int weight)
+    @SuppressWarnings("unused")
+	public boolean connect(Neuron dependency, int weight)
     {
     	if (dependencies.size() == 7)
     	{
