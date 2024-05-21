@@ -51,7 +51,7 @@ public abstract class MortalEntity extends Entity
     /**
      * Marks the entity as dead.
      *
-     * @post | isDead()
+     * @post | isDead() == true
      */
 	void diePkg() 
 	{
