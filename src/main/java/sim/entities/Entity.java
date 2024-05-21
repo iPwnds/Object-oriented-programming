@@ -11,7 +11,7 @@ import util.RandomUtil;
  * Supertype for all entities.
  * 
  * An entity resides in a world, has a position, an orientation and a move probability.
- * @mutableµ
+ * @mutable
  * @invar | 0 <= getMoveProbability() && getMoveProbability() <= 100
  */
 public abstract class Entity

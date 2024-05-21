@@ -2,6 +2,7 @@ package StudentTests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 
@@ -62,9 +63,10 @@ public class HunterTest {
 		Orientation orientation = Orientation.createRandom();
 		Hunter hunter = world.createHunter(shelter, point, orientation);
 		Prey closestPrey = world.createPrey(shelter, Chromosome.createRandom(), new Point(3,3), Orientation.createRandom());
-		Prey fartestPrey = world.createPrey(shelter, Chromosome.createRandom(), new Point(9,9), Orientation.createRandom());
+		Prey fartestPrey = world.createPrey(shelter, Chromosome.createRandom(), new Point(6,1), Orientation.createRandom());
 		hunter.performAction();
 		assertEquals(Orientation.fromVector(hunter.getPosition().vectorTo(closestPrey.getPosition())), hunter.getOrientation());
+		assertNotEquals(Orientation.fromVector(hunter.getPosition().vectorTo(fartestPrey.getPosition())), hunter.getOrientation());
 	}
 	
 	
