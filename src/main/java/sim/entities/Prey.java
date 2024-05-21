@@ -182,6 +182,7 @@ public class Prey extends MortalEntity
 	void diePkg()
 	{
 		world.removeEntityAt(getPosition());
+		super.diePkg();
 	}
 
 	/**
