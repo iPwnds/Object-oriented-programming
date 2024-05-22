@@ -3,10 +3,8 @@ package sim.entities;
 import java.util.ArrayList;
 import sim.Constants;
 import util.Color;
-//import util.Logic;
 import util.Orientation;
 import util.Point;
-//import util.RandomUtil;
 
 /**
  * Represents a hunter entity in the simulation.

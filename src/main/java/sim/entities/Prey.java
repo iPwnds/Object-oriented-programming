@@ -5,11 +5,8 @@ import sim.Chromosome;
 import sim.Constants;
 import sim.neuralnet.NeuralNetwork;
 import util.Color;
-//import util.Logic;
 import util.Orientation;
 import util.Point;
-//import util.Vector;
-//import static util.Logic.*;
 
 /**
  * Prey class represents an entity in the simulation that exhibits prey-like behavior.

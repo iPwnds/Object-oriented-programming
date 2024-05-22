@@ -1,6 +1,5 @@
 package sim.entities;
 
-//import util.Logic;
 import util.Orientation;
 import util.Point;
 

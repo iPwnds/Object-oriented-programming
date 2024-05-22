@@ -1,11 +1,9 @@
 package sim.entities;
 
 import util.Color;
-//import util.Logic;
 import util.Orientation;
 import util.Point;
 import util.RandomUtil;
-//import static util.Logic.*;
 
 /**
  * Supertype for all entities.
