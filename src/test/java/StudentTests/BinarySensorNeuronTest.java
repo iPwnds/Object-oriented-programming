@@ -4,14 +4,11 @@ import org.junit.jupiter.api.Test;
 import sim.Chromosome;
 import sim.entities.Prey;
 import sim.entities.Shelter;
-import sim.neuralnet.ActivationFunctionNeuron;
 import sim.neuralnet.BinarySensorNeuron;
 import util.Orientation;
 import util.Point;
 import sim.entities.World;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.BeforeEach;
 
 public class BinarySensorNeuronTest {
 
