@@ -1,7 +1,9 @@
 package sim.neuralnet;
 
 import sim.entities.Prey;
-
+/**
+ * @mutable
+ */
 public class ShelterSensor extends BinarySensorNeuron
 {
 	/**

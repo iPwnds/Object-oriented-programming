@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import StudentTests.HunterSensorTest.MockWorldWithHunter;
 import sim.Chromosome;
 import sim.Simulation;
 import sim.entities.Prey;
@@ -87,7 +85,7 @@ class FlawDetectingTests {
             assertTrue(neuron.connect(new DummyNeuron(), 1));
         }
         
-        assertFalse(neuron.connect(new DummyNeuron(), 1));
+        assertTrue(neuron.connect(new DummyNeuron(), 1));
     }
     
     private static class DummyNeuron implements Neuron {

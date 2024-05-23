@@ -11,9 +11,17 @@ import util.Point;
 /**
  * Prey class represents an entity in the simulation that exhibits prey-like behavior.
  * It extends the MortalEntity class.
+ * @mutable
+ * @invar | getChromosome() != null && getChromosome().getWeights().length <= Constants.CHROM_SIZE
+ * @invar | getNeuralNetwork() != null
+ * @invar | getSiblings() != null
+ * @invar | getShelter() != null && getShelter().getInhabitants().contains(this)
  */ 
 public class Prey extends MortalEntity
 {
+	/**
+	 * @invar | chromosome != null && chromosome.getWeights().length <= Constants.CHROM_SIZE
+	 */
 	private final Chromosome chromosome;
 
 	/**
@@ -60,13 +68,14 @@ public class Prey extends MortalEntity
     {
         int turnOutput = neuralNetwork.getTurnNeuron().computeOutput(this);
 
-        Orientation newOrientation = getOrientation();
+        
         if (turnOutput < -333) {
-            newOrientation = newOrientation.turnClockwise(1);
+            this.turnClockwise();
         } else if (turnOutput > 333) {
-            newOrientation = newOrientation.turnCounterclockwise(1);
+            this.turnCounterclockwise();
         }
-        setOrientation(newOrientation);
+        
+
     }
 
     /**
@@ -77,14 +86,10 @@ public class Prey extends MortalEntity
      */
     private void performMove() {
         int moveOutput = neuralNetwork.getMoveForwardNeuron().computeOutput(this);
-        var oldPosition = this.getPosition();
-        var newPosition = oldPosition
-        		.move(this.getOrientation().toVector());
-       
-     
-        if (world.isFree(newPosition) && moveOutput > 0) 
+
+        if ( moveOutput > 0) 
         {
-            setPosition(newPosition);
+            moveForward();
         }
     }
 
@@ -112,11 +117,11 @@ public class Prey extends MortalEntity
      * 
      * @throws IllegalArgumentException if any of the parameters are null.
      * 
-     * @pre | chromosome != null
-     * @pre | world != null
-     * @pre | shelter != null
-     * @pre | position != null
-     * @pre | orientation != null
+     * @throws IllegalArgumentException | chromosome == null
+     * @throws IllegalArgumentException | world == null
+     * @throws IllegalArgumentException | shelter == null
+     * @throws IllegalArgumentException | position == null
+     * @throws IllegalArgumentException | orientation == null
      * 
      * @post | this.getPosition().equals(position)
      * @post | this.getOrientation().equals(orientation)
@@ -180,6 +185,16 @@ public class Prey extends MortalEntity
 	{
 		world.removeEntityAt(getPosition());
 		super.diePkg();
+		shelter.inhabitants.remove(this);
+		if (shelter.inhabitants.size() == 0) {
+			shelter.die();
+		} else {
+	        ArrayList<Prey> currentInhabitants = new ArrayList<>(shelter.getInhabitants());
+	        for (Prey prey : currentInhabitants) {
+	    		prey.siblings.remove(this);
+
+	        	}
+	   }
 	}
 
 	/**
@@ -227,10 +242,12 @@ public class Prey extends MortalEntity
     @Override
     public void performActionIfAlive()
     {
+
         performTurn();
         performMove();
         updateScore();
-    }
+    	}
+    
     
     /**
      * Checks if the prey survives based on its distance to the shelter.

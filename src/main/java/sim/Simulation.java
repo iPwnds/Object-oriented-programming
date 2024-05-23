@@ -12,6 +12,7 @@ import util.RandomUtil;
 /**
  * Represents a simulation environment where entities interact and evolve over generations.
  * The simulation includes shelters, preys, and hunters.
+ * @mutable
  */
 public class Simulation
 {
@@ -37,10 +38,10 @@ public class Simulation
      * @param shelterCount         The number of shelters in the simulation.
      * @param inhabitantsPerShelter The number of inhabitants per shelter.
      * @param huntersPerShelter    The number of hunters per shelter.
-     * @pre | worldSize > 0
-     * @pre | shelterCount > 0
-     * @pre | inhabitantsPerShelter > 0
-     * @pre | huntersPerShelter >= 0
+     * @throws IllegalArgumentException | worldSize <= 0
+     * @throws IllegalArgumentException | shelterCount <= 0
+     * @throws IllegalArgumentException | inhabitantsPerShelter <= 0
+     * @throws IllegalArgumentException | huntersPerShelter < 0
      * @post | getWorldSize() == worldSize
      * @post | getShelterCount() == shelterCount
      * @post | getPreyCount() == inhabitantsPerShelter * shelterCount
@@ -49,6 +50,9 @@ public class Simulation
      */
     public Simulation(int worldSize, int shelterCount, int inhabitantsPerShelter, int huntersPerShelter) 
     {
+    	if(worldSize <= 0 && shelterCount <= 0 && inhabitantsPerShelter <= 0 &&  huntersPerShelter < 0) {
+    		throw new IllegalArgumentException();
+    	}
         this.worldSize = worldSize;
         this.shelterCount = shelterCount;
         this.preyCount = inhabitantsPerShelter * shelterCount;

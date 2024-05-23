@@ -11,6 +11,9 @@ import util.Vector;
 /**
  * The Shelter class represents a shelter in the simulation, acting as a home for preys.
  * It extends the MortalEntity class.
+ * @mutable 
+ * @invar |  getInhabitants() != null
+ * @invar |  getInhabitants().size() <= Constants.INHABITANTS_PER_SHELTER*2
  */
 public class Shelter extends MortalEntity
 {
@@ -35,9 +38,9 @@ public class Shelter extends MortalEntity
      * 
      * @throws IllegalArgumentException if any of the parameters are null.
      * 
-     * @pre | world != null
-     * @pre | position != null
-     * @pre | orientation != null
+     * @throws IllegalArgumentException | world == null
+     * @throws IllegalArgumentException | position == null
+     * @throws IllegalArgumentException | orientation == null
      * 
      * @post | this.getWorld() == world
      * @post | this.getPosition().equals(position)
@@ -112,7 +115,7 @@ public class Shelter extends MortalEntity
     @Override
     public void performActionIfAlive()
     {
-    	if(getInhabitants().stream().allMatch(s -> !s.isAlivePkg())){
+    	if(getInhabitants().stream().allMatch(s -> s.isDead())){
     		this.die();
     	}
     		
@@ -123,23 +126,17 @@ public class Shelter extends MortalEntity
             {
                 if (RandomUtil.bool()) 
                 
-                    setOrientation(getOrientation().turnClockwise(1));
+                    turnClockwise();
                 } 
                 else 
                 {
-                    setOrientation(getOrientation().turnCounterclockwise(1));
+                    turnCounterclockwise();
                 }
             
             
             if (RandomUtil.unfairBool(Constants.SHELTER_MOVE_PROBABILITY)) 
             {
-                Vector movement = getOrientation().toVector();
-                Point newPosition = getPosition().move(movement);
-                if (world.isInside(newPosition) && world.isFree(newPosition)) 
-                {
-                    setPosition(newPosition);
-                }
-            }
+            	this.moveForward();            }
     	}
         }
     

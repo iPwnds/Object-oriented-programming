@@ -3,7 +3,13 @@ package sim.neuralnet;
 import java.util.ArrayList;
 import sim.entities.Prey;
 import util.Pair;
+/**
+ * @mutable
+ * @invar | getDependencies() != null
+ * @invar | getDependencies().stream().allMatch(p -> p != null)
+ * @invar | getDependencies().size() >= 0
 
+ */
 public abstract class ActivationFunctionNeuron implements Neuron
 {
 	/**
@@ -43,7 +49,6 @@ public abstract class ActivationFunctionNeuron implements Neuron
      * @inspects | deps
      * @pre | deps != null 
      * @pre | deps.stream().allMatch(p -> p != null)
-     * @pre | deps.size() <= 7
      * @post | getDependencies().size() == deps.size()
      * @mutates_properties | getDependencies()
      */
@@ -69,17 +74,14 @@ public abstract class ActivationFunctionNeuron implements Neuron
 	/**
 	 * @mutates | this 
 	 * @pre | dependency != null
-	 * @pre | getDependencies().size() <= 7
+
 	 * @post | (getDependencies().size() == old(getDependencies()).size() + 1 && getDependencies().get(getDependencies().size()-1).getFirst() == dependency && getDependencies().get(getDependencies().size()-1).getSecond() == weight) 
 	 * || (getDependencies().size() == old(getDependencies()).size())
 	 */   
     @SuppressWarnings("unused")
 	public boolean connect(Neuron dependency, int weight)
     {
-    	if (dependencies.size() == 7)
-    	{
-    		return false;
-		}
+
     	
         var pair = new Pair<Neuron, Integer>(dependency, weight);
         dependencies.add(pair);

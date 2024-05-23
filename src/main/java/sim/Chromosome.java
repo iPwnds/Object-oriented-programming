@@ -22,9 +22,9 @@ public class Chromosome
      * Constructs a new Chromosome object with the given gene weights.
      * 
      * @param weights An array of integers representing the gene weights of the chromosome.
-     * @pre | weights != null
-     * @pre | weights.length == Constants.CHROM_SIZE
-     * @pre | Arrays.stream(weights).allMatch(Chromosome::isValidGene)
+     * @throws IllegalArgumentException | weights == null
+     * @throws IllegalArgumentException | weights.length != Constants.CHROM_SIZE
+     * @throws IllegalArgumentException | Arrays.stream(weights).anyMatch(g -> !isValidGene(g))
      * @post | Arrays.equals(this.getWeights(), weights)
      * @throws IllegalArgumentException if weights is null, has a length different from Constants.CHROM_SIZE, or contains invalid genes.
      */
