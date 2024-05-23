@@ -17,6 +17,7 @@ import util.Point;
  */ 
 public class Prey extends MortalEntity
 {
+	
 	private final Chromosome chromosome;
 
 	/**
@@ -63,13 +64,13 @@ public class Prey extends MortalEntity
     {
         int turnOutput = neuralNetwork.getTurnNeuron().computeOutput(this);
 
-        Orientation newOrientation = getOrientation();
+        
         if (turnOutput < -333) {
-            newOrientation = newOrientation.turnClockwise(1);
+            this.turnClockwise();
         } else if (turnOutput > 333) {
-            newOrientation = newOrientation.turnCounterclockwise(1);
+            this.turnCounterclockwise();
         }
-        setOrientation(newOrientation);
+
     }
 
     /**
@@ -80,14 +81,12 @@ public class Prey extends MortalEntity
      */
     private void performMove() {
         int moveOutput = neuralNetwork.getMoveForwardNeuron().computeOutput(this);
-        var oldPosition = this.getPosition();
-        var newPosition = oldPosition
-        		.move(this.getOrientation().toVector());
+
        
      
-        if (world.isFree(newPosition) && moveOutput > 0) 
+        if ( moveOutput > 0) 
         {
-            setPosition(newPosition);
+            moveForward();
         }
     }
 
@@ -183,6 +182,16 @@ public class Prey extends MortalEntity
 	{
 		world.removeEntityAt(getPosition());
 		super.diePkg();
+		shelter.inhabitants.remove(this);
+		if (shelter.inhabitants.size() == 0) {
+			shelter.die();
+		} else {
+	        ArrayList<Prey> currentInhabitants = new ArrayList<>(shelter.getInhabitants());
+	        for (Prey sibling : currentInhabitants) {
+	            sibling.siblings.remove(this);
+	        }}
+
+
 	}
 
 	/**
@@ -230,10 +239,12 @@ public class Prey extends MortalEntity
     @Override
     public void performActionIfAlive()
     {
+
         performTurn();
         performMove();
         updateScore();
-    }
+    	}
+    
     
     /**
      * Checks if the prey survives based on its distance to the shelter.

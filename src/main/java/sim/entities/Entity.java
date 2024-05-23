@@ -1,5 +1,6 @@
 package sim.entities;
 
+import sim.Constants;
 import util.Color;
 //import util.Logic;
 import util.Orientation;
@@ -182,14 +183,21 @@ public abstract class Entity
     {
         //var oldPosition = this.position;
         var newPosition = destination();
-
+        if(this instanceof Prey) {
+        	if(world.isFree(newPosition)) {
+        		this.setPosition(newPosition);
+        	}
+        }
+        
         if(this instanceof Hunter) 
         {
         	Hunter hunter = (Hunter) this;
         	for(Prey prey : hunter.shelter.getInhabitants()) {
-        		if(newPosition.equals(prey.getPosition())) {
+        		if(newPosition.equals(prey.getPosition()) && hunter.getAppetite() < Constants.HUNTER_INITIAL_APPETITE) {
         			prey.diePkg();
         			this.position = newPosition;
+        			hunter.setAppetite(hunter.getAppetite() + 1);
+        			return;
         		}
         	}
         	if(newPosition != hunter.getPosition()) {

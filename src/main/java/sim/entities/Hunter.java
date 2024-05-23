@@ -15,6 +15,10 @@ public class Hunter extends Entity
 {
 	private int appetite;
 	
+	public void setAppetite(int appetite) {
+		this.appetite = appetite;
+	}
+
 	/**
 	 * The shelter associated with the hunter.
 	 * 
@@ -55,11 +59,11 @@ public class Hunter extends Entity
      * @throws IllegalArgumentException if the shelter is null
      * @post | getPosition().equals(position)
      * @post | getOrientation().equals(orientation)
-     * @post | getAppetite() == Constants.HUNTER_INITIAL_APPETITE
+     * @post | getAppetite() == 0
      */
 	Hunter(World world, Shelter shelter, Point position, Orientation orientation)
 	{
-		this(world, shelter, position, orientation, Constants.HUNTER_INITIAL_APPETITE);
+		this(world, shelter, position, orientation, 0);
 	}
 	
 	/**

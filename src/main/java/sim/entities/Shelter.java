@@ -113,7 +113,7 @@ public class Shelter extends MortalEntity
     @Override
     public void performActionIfAlive()
     {
-    	if(getInhabitants().stream().allMatch(s -> !s.isAlivePkg())){
+    	if(getInhabitants().stream().allMatch(s -> s.isDead())){
     		this.die();
     	}
     		
