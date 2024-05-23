@@ -49,7 +49,7 @@ public abstract class ActivationFunctionNeuron implements Neuron
      * @inspects | deps
      * @pre | deps != null 
      * @pre | deps.stream().allMatch(p -> p != null)
-     * @post | getDependencies().size() == deps.size()
+
      * @mutates_properties | getDependencies()
      */
     public void setDependencies(ArrayList<Pair<Neuron, Integer>> deps) {

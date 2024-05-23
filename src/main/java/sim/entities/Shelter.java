@@ -115,7 +115,8 @@ public class Shelter extends MortalEntity
     @Override
     public void performActionIfAlive()
     {
-    	if(getInhabitants().stream().allMatch(s -> s.isDead())){
+    	if(getInhabitants().size() == 0){
+    		world.removeEntityAt(this.getPosition());
     		this.die();
     	}
     		
