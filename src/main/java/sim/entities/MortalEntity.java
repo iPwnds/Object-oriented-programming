@@ -6,6 +6,7 @@ import util.Point;
 /**
  * A MortalEntity is an Entity that can die.
  * Upon death, the entity removes itself from the world.
+ * @mutable
  */
 public abstract class MortalEntity extends Entity
 {
@@ -22,7 +23,7 @@ public abstract class MortalEntity extends Entity
      * @param orientation The initial orientation of the entity.
      * @param moveProbability The probability (0 to 100) that the entity moves at each step.
      *
-     * @pre | 0 <= moveProbability && moveProbability <= 100
+     * @throws IllegalArgumentException | 0 >= moveProbability && moveProbability >= 100
      * @post | getPosition().equals(position)
      * @post | getOrientation().equals(orientation)
      * @post | getMoveProbability() == moveProbability

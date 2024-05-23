@@ -1,5 +1,7 @@
 package sim.neuralnet;
-
+/**
+ * @mutable
+ */
 public class LinearFunctionNeuron extends ActivationFunctionNeuron
 {
     @Override

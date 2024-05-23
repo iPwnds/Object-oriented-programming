@@ -5,12 +5,19 @@ import sim.Constants;
 import util.Color;
 import util.Orientation;
 import util.Point;
+import util.RandomUtil;
 
 /**
  * Represents a hunter entity in the simulation.
+ * @mutable
+ * @invar | getAppetite() >= 0
+ * @invar | getShelter() != null
  */
 public class Hunter extends Entity
 {
+	/**
+	 *  * @invar | appetite >= 0
+	 */
 	private int appetite;
 	
 	public void setAppetite(int appetite) {
@@ -54,13 +61,14 @@ public class Hunter extends Entity
      * Initializes a new hunter with the specified world, shelter, position, and orientation,
      * and the default initial appetite.
      * 
-     * @throws IllegalArgumentException if the shelter is null
+     * @throws IllegalArgumentException | shelter == null
      * @post | getPosition().equals(position)
      * @post | getOrientation().equals(orientation)
      * @post | getAppetite() == 0
      */
 	Hunter(World world, Shelter shelter, Point position, Orientation orientation)
 	{
+		
 		this(world, shelter, position, orientation, 0);
 	}
 	
@@ -68,16 +76,26 @@ public class Hunter extends Entity
      * Initializes a new hunter with the specified world, shelter, position, orientation,
      * and appetite.
      * 
-     * @throws IllegalArgumentException if the shelter is null
+     * @throws IllegalArgumentException | shelter == null
+     * @throws IllegalArgumentException | appetite < 0
      * @post | getPosition().equals(position)
      * @post | getOrientation().equals(orientation)
      * @post | getAppetite() == appetite
      */
 	Hunter(World world, Shelter shelter, Point position, Orientation orientation, int appetite)
+	
 	{
+
 		super(world, position, orientation, Constants.HUNTER_MOVE_PROBABILITY);
 		this.shelter = shelter;
 		this.appetite = appetite;
+	}
+	/**
+	 * 
+	 * @post | result != null
+	 */
+	public Shelter getShelter() {
+		return shelter;
 	}
 
 	/**
@@ -143,7 +161,10 @@ public class Hunter extends Entity
 	@Override
 	public void performAction()
 	{
-		var preys = super.world.getPreys();
+		if(getAppetite() == Constants.HUNTER_INITIAL_APPETITE) {
+			return;
+		}
+		var preys = this.shelter.getInhabitants();
         var closestPrey = findClosestPrey(preys);
         if (closestPrey != null) 
         {
@@ -151,8 +172,18 @@ public class Hunter extends Entity
             var newOrientation = Orientation.fromVector(targetDirection);
             setOrientation(newOrientation);
         }
-        
-        this.moveForwardWithProbability();
+        if (RandomUtil.unfairBool(this.getMoveProbability())) 
+    	{
+        	if (closestPrey != null) {
+	        	Point newposition = this.destination();
+	        	if(newposition.equals(closestPrey.getPosition())){
+	        		closestPrey.diePkg();
+	        		this.setAppetite(getAppetite() + 1);
+	        	}
+        	}
+            moveForward();
+        }
+		
 	}
 	
 	@Override

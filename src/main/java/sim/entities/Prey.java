@@ -11,10 +11,17 @@ import util.Point;
 /**
  * Prey class represents an entity in the simulation that exhibits prey-like behavior.
  * It extends the MortalEntity class.
+ * @mutable
+ * @invar | getChromosome() != null && getChromosome().getWeights().length <= Constants.CHROM_SIZE
+ * @invar | getNeuralNetwork() != null
+ * @invar | getSiblings() != null
+ * @invar | getShelter() != null && getShelter().getInhabitants().contains(this)
  */ 
 public class Prey extends MortalEntity
 {
-	
+	/**
+	 * @invar | chromosome != null && chromosome.getWeights().length <= Constants.CHROM_SIZE
+	 */
 	private final Chromosome chromosome;
 
 	/**
@@ -67,6 +74,7 @@ public class Prey extends MortalEntity
         } else if (turnOutput > 333) {
             this.turnCounterclockwise();
         }
+        
 
     }
 
@@ -79,8 +87,6 @@ public class Prey extends MortalEntity
     private void performMove() {
         int moveOutput = neuralNetwork.getMoveForwardNeuron().computeOutput(this);
 
-       
-     
         if ( moveOutput > 0) 
         {
             moveForward();
@@ -111,11 +117,11 @@ public class Prey extends MortalEntity
      * 
      * @throws IllegalArgumentException if any of the parameters are null.
      * 
-     * @pre | chromosome != null
-     * @pre | world != null
-     * @pre | shelter != null
-     * @pre | position != null
-     * @pre | orientation != null
+     * @throws IllegalArgumentException | chromosome == null
+     * @throws IllegalArgumentException | world == null
+     * @throws IllegalArgumentException | shelter == null
+     * @throws IllegalArgumentException | position == null
+     * @throws IllegalArgumentException | orientation == null
      * 
      * @post | this.getPosition().equals(position)
      * @post | this.getOrientation().equals(orientation)
@@ -184,11 +190,11 @@ public class Prey extends MortalEntity
 			shelter.die();
 		} else {
 	        ArrayList<Prey> currentInhabitants = new ArrayList<>(shelter.getInhabitants());
-	        for (Prey sibling : currentInhabitants) {
-	            sibling.siblings.remove(this);
-	        }}
+	        for (Prey prey : currentInhabitants) {
+	    		prey.siblings.remove(this);
 
-
+	        	}
+	   }
 	}
 
 	/**

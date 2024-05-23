@@ -11,6 +11,10 @@ import util.Vector;
 /**
  * The Shelter class represents a shelter in the simulation, acting as a home for preys.
  * It extends the MortalEntity class.
+ * @mutable 
+ * @invar | getInhabitants() != null
+ * @invar |  getInhabitants().stream().allMatch(s -> s != null && s.getShelter() == this)
+ * @invar |  getInhabitants().size() <= Constants.INHABITANTS_PER_SHELTER*2
  */
 public class Shelter extends MortalEntity
 {
@@ -35,9 +39,9 @@ public class Shelter extends MortalEntity
      * 
      * @throws IllegalArgumentException if any of the parameters are null.
      * 
-     * @pre | world != null
-     * @pre | position != null
-     * @pre | orientation != null
+     * @throws IllegalArgumentException | world == null
+     * @throws IllegalArgumentException | position == null
+     * @throws IllegalArgumentException | orientation == null
      * 
      * @post | this.getWorld() == world
      * @post | this.getPosition().equals(position)

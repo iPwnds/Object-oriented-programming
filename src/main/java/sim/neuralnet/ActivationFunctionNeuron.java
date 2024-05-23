@@ -3,7 +3,13 @@ package sim.neuralnet;
 import java.util.ArrayList;
 import sim.entities.Prey;
 import util.Pair;
+/**
+ * @mutable
+ * @invar | getDependencies() != null
+ * @invar | getDependencies().stream().allMatch(p -> p != null)
+ * @invar | getDependencies().size() >= 0
 
+ */
 public abstract class ActivationFunctionNeuron implements Neuron
 {
 	/**

@@ -11,6 +11,10 @@ import util.Point;
 /**
  * Represents the world where entities interact.
  * The world consists of a grid where entities reside and interact.
+ * @mutable
+ * @invar | getEntityGrid() != null
+ * @invar | getHunters() != null
+ * @invar | getHunters().stream().allMatch(s -> s.getWorld() == this)
  */
 public class World
 {
@@ -21,17 +25,24 @@ public class World
 	 * @representationObject
 	 * @peerObjects
 	 * @invar | entityGrid != null
-
 	 */
 	final Grid<Entity> entityGrid;
 	
+	/**
+	 * 
+	 * @post | result != null 
+	 */
+	public Grid<Entity> getEntityGrid() {
+		return entityGrid;
+	}
+
 	/**
 	 * The list of hunters present in the world.
      * This list maintains references to all hunter entities in the world.
 	 * 
 	 * @representationObject
 	 * @peerObjects
-	 * 	 * @invar | hunters != null
+	 * @invar | hunters != null
 	 * @invar | hunters.stream().allMatch(s -> s.world == this)
 	 */
 	final List<Hunter> hunters;
@@ -41,7 +52,7 @@ public class World
 	 * 
 	 * @param width The width of the world.
      * @param height The height of the world.
-     * @pre | width > 0 && height > 0
+     * @throws IllegalArgumentException | width < 0 && height < 0
      * @post | getWidth() == width && getHeight() == height
 	 */
 	public World(int width, int height)

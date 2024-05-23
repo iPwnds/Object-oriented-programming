@@ -6,9 +6,22 @@ import util.Orientation;
 
 /**
  * Neuron references are freely accesible by the client
+ * @mutable
+ * @invar | getInputLayerNeurons() != null 
+ * @invar | Arrays.stream(getInputLayerNeurons()).allMatch(n -> n != null) 
+ * @invar | getMoveForwardNeuron() != null
+ * @invar | getTurnNeuron() != null
  */
 public class NeuralNetwork
 {
+	/**
+	 * 
+	 * @post | result != null 
+	 */
+	public SensorNeuron[] getInputLayerNeurons() {
+		return inputLayerNeurons;
+	}
+
 	/**
 	 * @invar | inputLayerNeurons != null 
 	 * @invar | Arrays.stream(inputLayerNeurons).allMatch(n -> n != null) 

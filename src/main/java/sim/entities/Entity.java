@@ -12,6 +12,9 @@ import util.RandomUtil;
  * An entity resides in a world, has a position, an orientation and a move probability.
  * @mutable
  * @invar | 0 <= getMoveProbability() && getMoveProbability() <= 100
+ * @invar | getPosition() != null
+ * @invar | getOrientation() != null
+ * @invar | getWorld() != null
  */
 public abstract class Entity
 {
@@ -179,36 +182,12 @@ public abstract class Entity
      */
     public void moveForward()
     {
-        //var oldPosition = this.position;
-        var newPosition = destination();
-        if(this instanceof Prey) {
-        	if(world.isFree(newPosition) && world.isInside(newPosition)) {
-        		this.setPosition(newPosition);
-        	}
-        }
-        else if(this instanceof Shelter) {
-        	if(world.isFree(newPosition) && world.isInside(newPosition)) {
-        		this.setPosition(newPosition);
-        	}
-        }
-        
-        if(this instanceof Hunter) 
-        {
-        	Hunter hunter = (Hunter) this;
-        	for(Prey prey : hunter.shelter.getInhabitants()) {
-        		if(newPosition.equals(prey.getPosition()) && hunter.getAppetite() < Constants.HUNTER_INITIAL_APPETITE) {
-        			prey.diePkg();
-        			this.position = newPosition;
-        			hunter.setAppetite(hunter.getAppetite() + 1);
-        			return;
-        		}
-        	}
-        	if(newPosition != hunter.getPosition()) {
-        		if(getWorld().isFree(newPosition)) {
-        			this.position = newPosition;
-        		}
-        	}
-        }
+        Point newPosition = destination();
+        Point oldPosition = getPosition();
+    	if(world.isFree(newPosition) && world.isInside(newPosition)) {
+    		this.setPosition(newPosition);
+    		world.removeEntityAt(oldPosition);
+    	}
     }
     
     /**
@@ -324,5 +303,6 @@ public abstract class Entity
 	public void setPosition(Point newPosition) 
 	{
 	    this.position = newPosition;
+	    world.entityGrid.setAt(newPosition, this);
 	}
 }
