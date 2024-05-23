@@ -123,23 +123,17 @@ public class Shelter extends MortalEntity
             {
                 if (RandomUtil.bool()) 
                 
-                    setOrientation(getOrientation().turnClockwise(1));
+                    turnClockwise();
                 } 
                 else 
                 {
-                    setOrientation(getOrientation().turnCounterclockwise(1));
+                    turnCounterclockwise();
                 }
             
             
             if (RandomUtil.unfairBool(Constants.SHELTER_MOVE_PROBABILITY)) 
             {
-                Vector movement = getOrientation().toVector();
-                Point newPosition = getPosition().move(movement);
-                if (world.isInside(newPosition) && world.isFree(newPosition)) 
-                {
-                    setPosition(newPosition);
-                }
-            }
+            	this.moveForward();            }
     	}
         }
     

@@ -182,7 +182,12 @@ public abstract class Entity
         //var oldPosition = this.position;
         var newPosition = destination();
         if(this instanceof Prey) {
-        	if(world.isFree(newPosition)) {
+        	if(world.isFree(newPosition) && world.isInside(newPosition)) {
+        		this.setPosition(newPosition);
+        	}
+        }
+        else if(this instanceof Shelter) {
+        	if(world.isFree(newPosition) && world.isInside(newPosition)) {
         		this.setPosition(newPosition);
         	}
         }
