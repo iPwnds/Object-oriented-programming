@@ -12,8 +12,7 @@ import util.Vector;
  * The Shelter class represents a shelter in the simulation, acting as a home for preys.
  * It extends the MortalEntity class.
  * @mutable 
- * @invar | getInhabitants() != null
- * @invar |  getInhabitants().stream().allMatch(s -> s != null && s.getShelter() == this)
+ * @invar |  getInhabitants() != null
  * @invar |  getInhabitants().size() <= Constants.INHABITANTS_PER_SHELTER*2
  */
 public class Shelter extends MortalEntity

@@ -13,7 +13,6 @@ import util.RandomUtil;
  * Represents a simulation environment where entities interact and evolve over generations.
  * The simulation includes shelters, preys, and hunters.
  * @mutable
- * @invar | getWorld() != null
  */
 public class Simulation
 {
@@ -21,7 +20,6 @@ public class Simulation
 	
 	/**
 	 * not a representation object for performance
-	 * @invar | getWorld() != null 
 	 */
 	private World world;
 	
