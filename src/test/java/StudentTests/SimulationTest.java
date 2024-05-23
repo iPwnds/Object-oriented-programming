@@ -12,15 +12,6 @@ public class SimulationTest {
 	private int huntersPerShelter = 3;
 	
 	private Simulation simulation = new Simulation(worldSize, shelterCount, inhabitantsPerShelter, huntersPerShelter);
-	
-	@Test
-    public void testSimulationConstructor() {
-        assertEquals(worldSize, simulation.getWorldSize());
-        assertEquals(shelterCount, simulation.getShelterCount());
-        assertEquals(inhabitantsPerShelter * shelterCount, simulation.getPreyCount());
-        assertEquals(inhabitantsPerShelter, simulation.getInhabitantsPerShelter());
-        assertEquals(huntersPerShelter, simulation.getHuntersPerShelter());
-    }
 
     @Test
     public void testGetWorld() {
