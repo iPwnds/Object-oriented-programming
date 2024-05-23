@@ -48,19 +48,24 @@ public class PreyTest {
 
 	@Test
 	void performActionIfAliveTest() {
-		World world = new World(10, 10);
+		World world = new World(100, 100);
 		Shelter shelter = world.createShelter(new Point(1, 1), Orientation.createRandom());
 		Point point = new Point(5, 5);
 		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), point, Orientation.createRandom());
+		Prey prey2 = world.createPrey(shelter, Chromosome.createRandom(), new Point(99,99), Orientation.createRandom());
 		int initialScore = prey.getScore();
 		prey.performActionIfAlive();
-
-		assertNotEquals(initialScore, prey.getScore()); 
-		int distanceSquared = prey.distanceSquaredToShelter();
+		prey2.performActionIfAlive();
+		
+		for(Prey prey0 : shelter.getInhabitants()) {
+			int distanceSquared = prey0.distanceSquaredToShelter();
 		if (distanceSquared < Constants.SHELTER_SURVIVAL_DISTANCE * Constants.SHELTER_SURVIVAL_DISTANCE) {
-			assertTrue(prey.getScore() > initialScore);
+			assertTrue(prey0.getScore() > initialScore);
+			assertTrue(prey0.survives());
 		} else {
-			assertTrue(prey.getScore() < initialScore);
+			assertTrue(prey0.getScore() < initialScore);
+			assertFalse(prey0.survives());
+		}
 		}
 	}
 	
