@@ -12,6 +12,7 @@ public class FreePassageSensorNeuronTest {
         // Test with a valid orientation
         Orientation orientation = Orientation.north();
         FreePassageSensorNeuron neuron = new FreePassageSensorNeuron(orientation);
+        
         assertEquals(orientation, neuron.getOrientation());
     }
 
@@ -28,6 +29,7 @@ public class FreePassageSensorNeuronTest {
         // Test the getOrientation method
         Orientation orientation = Orientation.south();
         FreePassageSensorNeuron neuron = new FreePassageSensorNeuron(orientation);
+        
         assertEquals(orientation, neuron.getOrientation());
     }
     

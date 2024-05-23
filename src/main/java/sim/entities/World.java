@@ -1,15 +1,12 @@
 package sim.entities;
 
 import java.util.ArrayList;
-//import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import sim.Chromosome;
 import util.Grid;
-//import util.Logic;
 import util.Orientation;
 import util.Point;
-//import static util.Logic.*;
 
 /**
  * Represents the world where entities interact.
