@@ -2,10 +2,8 @@ package StudentTests;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
 import sim.Chromosome;
 import sim.Constants;
-import sim.entities.Hunter;
 import sim.entities.Prey;
 import sim.entities.Shelter;
 import sim.entities.World;
@@ -75,7 +73,20 @@ public class PreyTest {
 		Prey prey4 = world.createPrey(shelter, Chromosome.createRandom(), new Point(99,98), Orientation.south());
 		prey4.moveForward();
 		assertTrue(prey4.getPosition().equals(new Point(99,98)));
-
 	}
+	
+	@Test
+    void testToString() {
+		World world = new World(10, 10);
+		Point point =  new Point(1, 1);
+		Shelter shelter = world.createShelter(point, Orientation.createRandom());
+		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), point, Orientation.createRandom());
+
+        prey.setPosition(point);
+
+        String expectedString = String.format("Prey(position=%s)", point);
+        
+        assertEquals(expectedString, prey.toString());
+    }
 	
 }

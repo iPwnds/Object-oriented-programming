@@ -2,9 +2,7 @@ package StudentTests;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
 import sim.Chromosome;
-import sim.Constants;
 import sim.entities.Entity;
 import sim.entities.Prey;
 import sim.entities.Shelter;
@@ -42,6 +40,7 @@ public class WorldTest {
 		assertTrue(grid.at(new Point(2,2)) == prey);
 		assertTrue(grid.at(new Point(3,2)) == prey1);
 	}
+	@SuppressWarnings("unused")
 	@Test 
 	public void numberOfEntityGrid() {
 		World world = new World(10,10);

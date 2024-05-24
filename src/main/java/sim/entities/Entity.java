@@ -1,6 +1,5 @@
 package sim.entities;
 
-import sim.Constants;
 import util.Color;
 import util.Orientation;
 import util.Point;

@@ -78,8 +78,20 @@ public class HunterTest {
 		Hunter hunter = world.createHunter(shelter, point, orientation);
 		assertEquals(hunter.getShelter(), shelter);
 	}
-	
-	
+
+    @Test
+    void testToString() {
+    	World world = new World(10, 10);
+		Point point =  new Point(1, 1);
+		Shelter shelter = world.createShelter(point, Orientation.createRandom());
+		Hunter hunter = world.createHunter(shelter, point, Orientation.createRandom());
+        
+        hunter.setPosition(point);
+
+        String expectedString = String.format("Hunter(position=%s)", point);
+        
+        assertEquals(expectedString, hunter.toString());
+    }
 }
 	
 	

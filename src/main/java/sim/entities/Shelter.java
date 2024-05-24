@@ -6,7 +6,6 @@ import util.Color;
 import util.Orientation;
 import util.Point;
 import util.RandomUtil;
-import util.Vector;
 
 /**
  * The Shelter class represents a shelter in the simulation, acting as a home for preys.
