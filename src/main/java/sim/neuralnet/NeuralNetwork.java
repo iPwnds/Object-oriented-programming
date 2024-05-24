@@ -7,20 +7,14 @@ import util.Orientation;
 /**
  * Neuron references are freely accesible by the client
  * @mutable
- * @invar | getInputLayerNeurons() != null 
- * @invar | Arrays.stream(getInputLayerNeurons()).allMatch(n -> n != null) 
+ * @invar | getInputNeurons() != null 
+ * @invar | Arrays.stream(getInputNeurons()).allMatch(n -> n != null) 
+ * @invar | getMoveForwardNeuron().getDependencies().stream().allMatch(dep -> Arrays.stream(getInputNeurons()).anyMatch(sensor -> dep.getFirst() == sensor))
  * @invar | getMoveForwardNeuron() != null
  * @invar | getTurnNeuron() != null
  */
 public class NeuralNetwork
 {
-	/**
-	 * 
-	 * @post | result != null 
-	 */
-	public SensorNeuron[] getInputLayerNeurons() {
-		return inputLayerNeurons;
-	}
 
 	/**
 	 * @invar | inputLayerNeurons != null 
@@ -30,13 +24,15 @@ public class NeuralNetwork
 
     /**
      * @invar | moveForwardNeuron != null
-     * check dependecies?
+     * @invar | moveForwardNeuron.getDependencies().stream().allMatch(dep -> Arrays.stream(inputLayerNeurons).anyMatch(sensor -> dep.getFirst() == sensor))
+
      */
     private final ActivationFunctionNeuron moveForwardNeuron;
     
     /**
      * @invar | turnNeuron != null
-     * check dependecies?
+     * @invar
+     *   | turnNeuron.getDependencies().stream().allMatch(dep -> Arrays.stream(inputLayerNeurons).anyMatch(sensor -> dep.getFirst() == sensor))
      */
 	private final ActivationFunctionNeuron turnNeuron;
 

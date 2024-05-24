@@ -9,6 +9,9 @@ import util.Orientation;
  */
 public class FreePassageSensorNeuron extends BinarySensorNeuron
 {
+	/**
+     * @post | result != null
+     */
 	public Orientation getOrientation() {
 		return orientation;
 	}
@@ -20,6 +23,7 @@ public class FreePassageSensorNeuron extends BinarySensorNeuron
     
     /**
      * @throws IllegalArgumentException | orientation == null 
+     * @post | getOrientation() == orientation
      */
     public FreePassageSensorNeuron(Orientation orientation)
     {

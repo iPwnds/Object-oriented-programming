@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sim.Chromosome;
+import sim.Constants;
 import sim.Simulation;
 import sim.entities.Prey;
 import sim.entities.Shelter;
@@ -164,5 +165,22 @@ class FlawDetectingTests {
         
         assertNotNull(turnNeuron);
     }
+    @Test
+    public void testSurvives() {
+		World world = new World(100, 100);
+		Shelter shelter = world.createShelter(new Point(1, 1), Orientation.createRandom());
+		Point point = new Point(5, 5);
+		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), point, Orientation.createRandom());
+		prey.performActionIfAlive();
+		assertTrue(prey.survives());
+		}
+    @Test
+    public void testDistanceSquaredToShelter() {
+		World world = new World(100, 100);
+		Shelter shelter = world.createShelter(new Point(1, 1), Orientation.createRandom());
+		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), new Point(5, 5) , Orientation.createRandom());
+		assertEquals(prey.distanceSquaredToShelter(), 32);
+    }
 
-}
+    }
+
