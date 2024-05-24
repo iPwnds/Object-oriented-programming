@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import sim.Chromosome;
 import sim.Constants;
 import sim.Simulation;
+import sim.entities.Hunter;
 import sim.entities.Prey;
 import sim.entities.Shelter;
 import sim.entities.World;
@@ -53,6 +54,41 @@ class FlawDetectingTests {
             }
         };
     }
+    
+    @Test
+	void performActionTest() {
+		World world = new World(10,10);
+		Shelter shelter = world.createShelter(new Point(1,1), Orientation.createRandom());
+		Point point = new Point(1,1);
+		Orientation orientation = Orientation.createRandom();
+		Hunter hunter = world.createHunter(shelter, point, orientation);
+		Prey closestPrey = world.createPrey(shelter, Chromosome.createRandom(), new Point(3,3), Orientation.createRandom());
+		Prey fartestPrey = world.createPrey(shelter, Chromosome.createRandom(), new Point(6,1), Orientation.createRandom());
+		hunter.performAction();
+		assertEquals(Orientation.fromVector(hunter.getPosition().vectorTo(closestPrey.getPosition())), hunter.getOrientation());
+		assertNotEquals(Orientation.fromVector(hunter.getPosition().vectorTo(fartestPrey.getPosition())), hunter.getOrientation());
+		hunter.setAppetite(1);
+		Point oldpos = hunter.getPosition();
+		hunter.performAction();
+		assertTrue(hunter.getPosition().equals(oldpos));
+	}
+    
+    @Test 
+	void dieTest() {
+		World world = new World(10,10);
+		Shelter shelter = world.createShelter(new Point(1,1), Orientation.createRandom());
+		Point point =  new Point(2,2);
+		Prey prey = world.createPrey(shelter, Chromosome.createRandom(),point, Orientation.createRandom());
+		
+		prey.die();
+		assertEquals(null, world.getEntityAt(point));
+		Point point1 =  new Point(3,2);
+		Prey prey1 = world.createPrey(shelter, Chromosome.createRandom(),point1, Orientation.createRandom());
+		Point point2 =  new Point(2,5);
+		Prey prey2 = world.createPrey(shelter, Chromosome.createRandom(),point2, Orientation.createRandom());
+		prey1.die();
+		assertFalse(prey2.getSiblings().contains(prey1));
+	}
 	
 	@Test
     public void testSetAndGetDependencies() {
@@ -104,7 +140,7 @@ class FlawDetectingTests {
 	private Prey prey = world.createPrey(shelter, chromosome, position, orientation);
     
     @Test
-    public void testDetect_NoHunterInCone() {
+    public void testDetect() {
         HunterSensor sensor = new HunterSensor();
 
         // Act
@@ -113,7 +149,6 @@ class FlawDetectingTests {
         // Assert
         assertTrue(detected);
     }
-    
     
     private class MockWorldWithHunter extends World {
 		public MockWorldWithHunter(int width, int height) {
