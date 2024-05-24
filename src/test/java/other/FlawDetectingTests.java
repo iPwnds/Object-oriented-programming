@@ -44,16 +44,17 @@ class FlawDetectingTests {
 	@Test
     public void testDestination() {
 		World world = new World(10, 10);
-		Point position = new Point(0, 0);
-		Orientation orientation = new Orientation(4);
+		Point position = new Point(1, 1);
+		Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+		Orientation orientation = new Orientation(0);
 		Shelter shelter = world.createShelter(position, orientation);
-		Hunter hunter = world.createHunter(shelter, position, orientation);
+		Prey prey = world.createPrey(shelter, chromosome, position, orientation);
 
         // Calculate the expected destination based on current position and orientation
-        Point expectedDestination = new Point(0, 1);
+        Point expectedDestination = new Point(1, 0);
 
         // Check if the calculated destination matches the expected destination
-        assertEquals(expectedDestination, hunter.destination());
+        assertEquals(expectedDestination, prey.destination());
     }
 
     @Test
