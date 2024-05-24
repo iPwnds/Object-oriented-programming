@@ -42,5 +42,13 @@ public class WorldTest {
 		assertTrue(grid.at(new Point(2,2)) == prey);
 		assertTrue(grid.at(new Point(3,2)) == prey1);
 	}
+	@Test 
+	public void numberOfEntityGrid() {
+		World world = new World(10,10);
+		Shelter shelter = world.createShelter(new Point(1,1), Orientation.createRandom());
+		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), new Point(2,2), Orientation.createRandom());
+		Prey prey1 = world.createPrey(shelter, Chromosome.createRandom(), new Point(3,2), Orientation.createRandom());
+		assertEquals(world.numberOfEntities(), 3);
+	}
 
 }

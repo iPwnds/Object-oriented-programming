@@ -28,6 +28,7 @@ public class PreyTest {
 		Shelter shelter = world.createShelter(new Point(1,1), Orientation.createRandom());
 		Point point =  new Point(2,2);
 		Prey prey = world.createPrey(shelter, Chromosome.createRandom(),point, Orientation.createRandom());
+		
 		prey.die();
 		assertEquals(null, world.getEntityAt(point));
 		Point point1 =  new Point(3,2);
@@ -66,7 +67,15 @@ public class PreyTest {
 			assertTrue(prey0.getScore() < initialScore);
 			assertFalse(prey0.survives());
 		}
+
 		}
+		Prey prey3 = world.createPrey(shelter, Chromosome.createRandom(), new Point(99,99), Orientation.south());
+		prey3.moveForward();
+		assertTrue(prey3.getPosition().equals(new Point(99,99)));
+		Prey prey4 = world.createPrey(shelter, Chromosome.createRandom(), new Point(99,98), Orientation.south());
+		prey4.moveForward();
+		assertTrue(prey4.getPosition().equals(new Point(99,98)));
+
 	}
 	
 }

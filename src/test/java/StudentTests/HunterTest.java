@@ -64,6 +64,19 @@ public class HunterTest {
 		hunter.performAction();
 		assertEquals(Orientation.fromVector(hunter.getPosition().vectorTo(closestPrey.getPosition())), hunter.getOrientation());
 		assertNotEquals(Orientation.fromVector(hunter.getPosition().vectorTo(fartestPrey.getPosition())), hunter.getOrientation());
+		hunter.setAppetite(1);
+		Point oldpos = hunter.getPosition();
+		hunter.performAction();
+		assertTrue(hunter.getPosition().equals(oldpos));
+	}
+	@Test
+	void getSheltertest() {
+		World world = new World(10,10);
+		Shelter shelter = world.createShelter(new Point(1,1), Orientation.createRandom());
+		Point point = new Point(1,1);
+		Orientation orientation = Orientation.createRandom();
+		Hunter hunter = world.createHunter(shelter, point, orientation);
+		assertEquals(hunter.getShelter(), shelter);
 	}
 	
 	
