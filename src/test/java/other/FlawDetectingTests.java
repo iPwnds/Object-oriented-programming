@@ -106,20 +106,20 @@ class FlawDetectingTests {
 		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), new Point(5, 5) , Orientation.createRandom());
 		assertEquals(prey.distanceSquaredToShelter(), 32);
     }
-    
-    private Orientation orientationAssert;
-    
+        
     @SuppressWarnings("unused")
     private boolean unfairBoolResult;
     @SuppressWarnings("unused")
 	private boolean boolResult;
+    
+    private Orientation orientationAssert;
 
-    	private World world = new World(10, 10);
-    	private Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
-    	private Point position = new Point(1, 1);
-    	private Orientation orientation = Orientation.north();
-    	private Shelter shelter = world.createShelter(position, orientation);
-    	private Prey prey = world.createPrey(shelter, chromosome, position, orientation);
+    private World world = new World(10, 10);
+    private Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+    private Point position = new Point(1, 1);
+    private Orientation orientation = Orientation.north();
+    private Shelter shelter = world.createShelter(position, orientation);
+    private Prey prey = world.createPrey(shelter, chromosome, position, orientation);
 
     @Test
     void testPerformActionIfAliveTurn() {
@@ -196,12 +196,15 @@ class FlawDetectingTests {
         }
     }
     
+    private World worldHunter = new MockWorldWithHunter(10, 10);
+    private Prey preyHunter = worldHunter.createPrey(shelter, chromosome, position, orientation);
+    
     @Test
     public void testDetect() {
         HunterSensor sensor = new HunterSensor();
 
         // Act
-        boolean detected = sensor.detect(prey);
+        boolean detected = sensor.detect(preyHunter);
 
         // Assert
         assertTrue(detected);
