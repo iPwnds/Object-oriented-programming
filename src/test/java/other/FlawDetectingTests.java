@@ -56,39 +56,21 @@ class FlawDetectingTests {
         assertEquals(expectedDestination, hunter.destination());
     }
 
-//    @Test
-//    public void testMoveForward() {
-//    	World world = new World(10, 10);
-//		Point position = new Point(0, 0);
-//		Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
-//		Orientation orientation = new Orientation(0);
-//		Shelter shelter = world.createShelter(position, orientation);
-//		Prey prey = world.createPrey(shelter, chromosome, position, orientation);
-//
-//        // Move the entity forward
-//		prey.moveForward();
-//
-//        // Check if the entity's position has changed correctly
-//        assertEquals(new Point(0, 1), prey.getPosition());
-//    }
-//
-//    @Test
-//    public void testMoveForwardWithProbability() {
-//    	World world = new World(10, 10);
-//		Point position = new Point(0, 0);
-//		Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
-//		Orientation orientation = new Orientation(0);
-//		Shelter shelter = world.createShelter(position, orientation);
-//		Prey prey = world.createPrey(shelter, chromosome, position, orientation);
-//
-//        RandomUtil.unfairBool(100);
-//		
-//        // Move the entity forward
-//		prey.moveForward();
-//
-//        // Check if the entity's position has changed correctly
-//        assertEquals(new Point(0, 1), prey.getPosition());
-//    }
+    @Test
+    public void testMoveForward() {
+    	World world = new World(10, 10);
+		Point position = new Point(1, 1);
+		Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+		Orientation orientation = new Orientation(0);
+		Shelter shelter = world.createShelter(position, orientation);
+		Prey prey = world.createPrey(shelter, chromosome, position, orientation);
+
+        // Move the entity forward
+		prey.moveForward();
+
+        // Check if the entity's position has changed correctly
+        assertEquals(new Point(1, 0), prey.getPosition());
+    }
 	
 	private ActivationFunctionNeuron neuron;
 
@@ -165,7 +147,7 @@ class FlawDetectingTests {
 
     private World world = new World(10, 10);
     private Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
-    private Point position = new Point(1, 1);
+    private Point position = new Point(0, 0);
     private Orientation orientation = Orientation.north();
     private Shelter shelter = world.createShelter(position, orientation);
     private Prey prey = world.createPrey(shelter, chromosome, position, orientation);
