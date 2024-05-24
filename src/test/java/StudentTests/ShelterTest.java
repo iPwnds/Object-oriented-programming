@@ -9,6 +9,7 @@ import util.Orientation;
 import util.Point;
 
 public class ShelterTest {
+	
 	@Test
 	public void getColor() {
 		World world = new World(10,10);

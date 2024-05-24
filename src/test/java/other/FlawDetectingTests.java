@@ -6,7 +6,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sim.Chromosome;
-import sim.Constants;
 import sim.Simulation;
 import sim.entities.Hunter;
 import sim.entities.Prey;
@@ -89,6 +88,71 @@ class FlawDetectingTests {
 		prey1.die();
 		assertFalse(prey2.getSiblings().contains(prey1));
 	}
+    
+    @Test
+    public void testSurvives() {
+		World world = new World(100, 100);
+		Shelter shelter = world.createShelter(new Point(1, 1), Orientation.createRandom());
+		Point point = new Point(5, 5);
+		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), point, Orientation.createRandom());
+		prey.performActionIfAlive();
+		assertTrue(prey.survives());
+	}
+    
+    @Test
+    public void testDistanceSquaredToShelter() {
+		World world = new World(100, 100);
+		Shelter shelter = world.createShelter(new Point(1, 1), Orientation.createRandom());
+		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), new Point(5, 5) , Orientation.createRandom());
+		assertEquals(prey.distanceSquaredToShelter(), 32);
+    }
+    
+    private Orientation orientationAssert;
+    
+    @SuppressWarnings("unused")
+    private boolean unfairBoolResult;
+    @SuppressWarnings("unused")
+	private boolean boolResult;
+
+    	private World world = new World(10, 10);
+    	private Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+    	private Point position = new Point(1, 1);
+    	private Orientation orientation = Orientation.north();
+    	private Shelter shelter = world.createShelter(position, orientation);
+    	private Prey prey = world.createPrey(shelter, chromosome, position, orientation);
+
+    @Test
+    void testPerformActionIfAliveTurn() {
+        shelter.addInhabitant(prey);
+        
+        this.unfairBoolResult = true;
+        this.boolResult = true;
+
+        shelter.performActionIfAlive();
+        
+        if (shelter.getOrientation() == Orientation.northEast()) {
+        	orientationAssert = Orientation.northEast();
+        }
+        else if (shelter.getOrientation() == Orientation.northWest()) {
+        	orientationAssert = Orientation.northWest();
+        }
+        else {
+        	orientationAssert = Orientation.north();
+        }
+        
+        assertEquals(orientationAssert, shelter.getOrientation());
+    }
+
+    @Test
+    void testPerformActionIfAliveMoveForward() {
+        shelter.addInhabitant(prey);
+
+        this.unfairBoolResult = true;
+
+        Point initialPosition = shelter.getPosition();
+        shelter.performActionIfAlive();
+        assertEquals(initialPosition, shelter.getPosition());
+    }
 	
 	@Test
     public void testSetAndGetDependencies() {
@@ -131,13 +195,6 @@ class FlawDetectingTests {
             return 1; // Dummy output for testing
         }
     }
-
-    private World world = new MockWorldWithHunter(10, 10);
-	private Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
-	private Point position = new Point(0, 0);
-	private Orientation orientation = new Orientation(0);
-	private Shelter shelter = world.createShelter(position, orientation);
-	private Prey prey = world.createPrey(shelter, chromosome, position, orientation);
     
     @Test
     public void testDetect() {
@@ -150,7 +207,8 @@ class FlawDetectingTests {
         assertTrue(detected);
     }
     
-    private class MockWorldWithHunter extends World {
+    @SuppressWarnings("unused")
+	private class MockWorldWithHunter extends World {
 		public MockWorldWithHunter(int width, int height) {
 			super(width, height);
 		}
@@ -200,22 +258,5 @@ class FlawDetectingTests {
         
         assertNotNull(turnNeuron);
     }
-    @Test
-    public void testSurvives() {
-		World world = new World(100, 100);
-		Shelter shelter = world.createShelter(new Point(1, 1), Orientation.createRandom());
-		Point point = new Point(5, 5);
-		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), point, Orientation.createRandom());
-		prey.performActionIfAlive();
-		assertTrue(prey.survives());
-		}
-    @Test
-    public void testDistanceSquaredToShelter() {
-		World world = new World(100, 100);
-		Shelter shelter = world.createShelter(new Point(1, 1), Orientation.createRandom());
-		Prey prey = world.createPrey(shelter, Chromosome.createRandom(), new Point(5, 5) , Orientation.createRandom());
-		assertEquals(prey.distanceSquaredToShelter(), 32);
-    }
-
-    }
-
+    
+}

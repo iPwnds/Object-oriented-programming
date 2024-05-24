@@ -136,9 +136,10 @@ public class Shelter extends MortalEntity
             
             if (RandomUtil.unfairBool(Constants.SHELTER_MOVE_PROBABILITY)) 
             {
-            	this.moveForward();            }
+            	this.moveForward();            
+            }
     	}
-        }
+    }
     
 
     /**

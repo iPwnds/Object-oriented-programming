@@ -11,8 +11,8 @@ import util.Grid;
 import util.Orientation;
 import util.Point;
 
-
 public class WorldTest {
+	
 	@Test 
 	public void getwidhtandheigthtest() {
 		World world = new World(10,10);
@@ -20,6 +20,7 @@ public class WorldTest {
 		assertEquals(world.getHeight(), 10);
 
 	}
+	
 	@Test 
 	public void getEntityGrid() {
 		World world = new World(10,10);
@@ -30,6 +31,7 @@ public class WorldTest {
 		assertTrue(grid.at(new Point(2,2)) == prey);
 		assertTrue(grid.at(new Point(3,2)) == prey1);
 	}
+	
 	@Test 
 	public void giveEntityGrid() {
 		World world = new World(10,10);
@@ -40,6 +42,7 @@ public class WorldTest {
 		assertTrue(grid.at(new Point(2,2)) == prey);
 		assertTrue(grid.at(new Point(3,2)) == prey1);
 	}
+	
 	@SuppressWarnings("unused")
 	@Test 
 	public void numberOfEntityGrid() {
