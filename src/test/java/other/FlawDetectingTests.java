@@ -41,6 +41,55 @@ class FlawDetectingTests {
         assertEquals(huntersPerShelter, simulation.getHuntersPerShelter());
     }
 	
+	@Test
+    public void testDestination() {
+		World world = new World(10, 10);
+		Point position = new Point(0, 0);
+		Orientation orientation = new Orientation(4);
+		Shelter shelter = world.createShelter(position, orientation);
+		Hunter hunter = world.createHunter(shelter, position, orientation);
+
+        // Calculate the expected destination based on current position and orientation
+        Point expectedDestination = new Point(0, 1);
+
+        // Check if the calculated destination matches the expected destination
+        assertEquals(expectedDestination, hunter.destination());
+    }
+
+//    @Test
+//    public void testMoveForward() {
+//    	World world = new World(10, 10);
+//		Point position = new Point(0, 0);
+//		Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+//		Orientation orientation = new Orientation(0);
+//		Shelter shelter = world.createShelter(position, orientation);
+//		Prey prey = world.createPrey(shelter, chromosome, position, orientation);
+//
+//        // Move the entity forward
+//		prey.moveForward();
+//
+//        // Check if the entity's position has changed correctly
+//        assertEquals(new Point(0, 1), prey.getPosition());
+//    }
+//
+//    @Test
+//    public void testMoveForwardWithProbability() {
+//    	World world = new World(10, 10);
+//		Point position = new Point(0, 0);
+//		Chromosome chromosome = new Chromosome(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+//		Orientation orientation = new Orientation(0);
+//		Shelter shelter = world.createShelter(position, orientation);
+//		Prey prey = world.createPrey(shelter, chromosome, position, orientation);
+//
+//        RandomUtil.unfairBool(100);
+//		
+//        // Move the entity forward
+//		prey.moveForward();
+//
+//        // Check if the entity's position has changed correctly
+//        assertEquals(new Point(0, 1), prey.getPosition());
+//    }
+	
 	private ActivationFunctionNeuron neuron;
 
     @BeforeEach
@@ -152,6 +201,39 @@ class FlawDetectingTests {
         Point initialPosition = shelter.getPosition();
         shelter.performActionIfAlive();
         assertEquals(initialPosition, shelter.getPosition());
+    }
+    
+    @Test
+    public void testNumberOfEntities() {
+        World world = new World(10, 10);
+        @SuppressWarnings("unused")
+		Hunter hunter = world.createHunter(shelter, new Point(6, 6), Orientation.east());
+        assertEquals(1, world.numberOfEntities());
+    }
+
+    @Test
+    public void testIsFree() {
+        World world = new World(10, 10);
+        @SuppressWarnings("unused")
+		Hunter hunter = world.createHunter(shelter, new Point(6, 6), Orientation.east());
+        assertFalse(world.isFree(new Point(6, 6)));
+    }
+
+    @Test
+    public void testCreateHunter() {
+        World world = new World(10, 10);
+        Shelter shelter = world.createShelter(new Point(5, 5), Orientation.north());
+        Hunter hunter = world.createHunter(shelter, new Point(6, 6), Orientation.east());
+        assertNotNull(hunter);
+        assertEquals(world.getEntityAt(new Point(6, 6)), hunter);
+    }
+
+    @Test
+    public void testCreateShelter() {
+        World world = new World(10, 10);
+        Shelter shelter = world.createShelter(new Point(5, 5), Orientation.north());
+        assertNotNull(shelter);
+        assertEquals(world.getEntityAt(new Point(5, 5)), shelter);
     }
 	
 	@Test
