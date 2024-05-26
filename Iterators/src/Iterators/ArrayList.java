@@ -15,17 +15,17 @@ public class ArrayList implements Iterable<Object> {
 			
 			@Override
 			public boolean hasNext() {
-				return i < ArrayList.this.elements.length;
+				return i < elements.length;
 			}
 			
 			@Override
 			public Object next() {
-				return ArrayList.this.elements[i++];
+				return elements[i++];
 			}
 		
 		};
 	}
 	
-	public Object[] elements;
+	private Object[] elements;
 	
 }
