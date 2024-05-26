@@ -39,17 +39,23 @@ public class ListClientTest {
 		}
 	}
 	
+//	public void printAll2(Iterable2 l) {
+//		
+//		l.forEach( new Consumer() {
+//			
+//			@Override
+//			public void comsume(Object o) {
+//				System.out.println(o);
+//			}
+//			
+//		});
+//		
+//	}
+	
 	public void printAll2(Iterable2 l) {
-		
-		l.forEach( new Consumer() {
 			
-			@Override
-			public void comsume(Object o) {
-				System.out.println(o);
-			}
-			
-		});
-		
+		l.forEach(o -> System.out.println(o));
+
 	}
 	
 	public void printBoth(ArrayList arraylist, LinkedList linkedList) {
