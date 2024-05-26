@@ -26,6 +26,6 @@ public class ArrayList implements Iterable<Object> {
 		};
 	}
 	
-	private Object[] elements;
+	public Object[] elements;
 	
 }
