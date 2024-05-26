@@ -53,8 +53,13 @@ public class ListClientTest {
 //	}
 	
 	public void printAll2(Iterable2 l) {
-			
-		l.forEach(o -> System.out.println(o));
+		
+		String prefix = "Hallo ";
+		
+//		prefix += " ";
+		
+		// Only final vars in lamda notation
+		l.forEach(o -> { System.out.println(prefix + o); });
 
 	}
 	
