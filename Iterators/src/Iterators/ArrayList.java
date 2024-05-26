@@ -8,7 +8,8 @@ public class ArrayList implements Iterable<Object> {
 	
 	@Override
 	public Iterator<Object> iterator() {
-		class ArrayListIterator implements Iterator<Object> {
+		
+		return new Iterator<Object>() {
 			
 			public int i = 0;
 			
@@ -22,9 +23,7 @@ public class ArrayList implements Iterable<Object> {
 				return ArrayList.this.elements[i++];
 			}
 		
-		}
-		
-		return new ArrayListIterator();
+		};
 	}
 	
 	public Object[] elements;
