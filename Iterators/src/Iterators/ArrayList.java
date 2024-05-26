@@ -6,29 +6,23 @@ public class ArrayList implements Iterable<Object> {
 
 	public class ArrayListIterator implements Iterator<Object> {
 		
-		public ArrayList l;
-		public int i;
-		
-		public ArrayListIterator(ArrayList l, int i) {
-			this.l = l;
-			this.i = i;
-		}
+		public int i = 0;
 		
 		@Override
 		public boolean hasNext() {
-			return i < l.elements.length;
+			return i < ArrayList.this.elements.length;
 		}
 		
 		@Override
 		public Object next() {
-			return l.elements[i++];
+			return ArrayList.this.elements[i++];
 		}
 	
 	}
 	
 	@Override
 	public Iterator<Object> iterator() {
-		return new ArrayListIterator(this, 0);
+		return new ArrayListIterator();
 	}
 	
 	public Object[] elements;
