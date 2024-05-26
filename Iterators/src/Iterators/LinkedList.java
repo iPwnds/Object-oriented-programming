@@ -2,7 +2,17 @@ package Iterators;
 
 import java.util.Iterator;
 
-public class LinkedList implements Iterable<Object> {
+public class LinkedList implements Iterable<Object>, Iterable2 {
+	
+	@Override
+	public void forEach(Consumer c) {
+		Node cn = firstNode;
+		
+		while(cn != null) {
+			c.comsume(cn.value);
+			cn = cn.next;
+		}
+	}
 	
 	public static class LLIterator implements Iterator<Object> {
 		

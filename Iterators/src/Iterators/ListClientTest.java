@@ -39,9 +39,22 @@ public class ListClientTest {
 		}
 	}
 	
-	public void printBoth(Iterable<Object> arraylist, LinkedList linkedList) {
-		printAll(arraylist);
-		printAll(linkedList);
+	public void printAll2(Iterable2 l) {
+		
+		l.forEach( new Consumer() {
+			
+			@Override
+			public void comsume(Object o) {
+				System.out.println(o);
+			}
+			
+		});
+		
+	}
+	
+	public void printBoth(ArrayList arraylist, LinkedList linkedList) {
+		printAll2(arraylist);
+		printAll2(linkedList);
 	}
 	
 	@Test
