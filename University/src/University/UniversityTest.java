@@ -1,5 +1,9 @@
 package University;
 
+import java.util.Arrays;
+
+import org.junit.Test;
+
 interface Iterator<T> {
 	boolean hasNext();
 	T next();
@@ -17,6 +21,15 @@ class LinkedList<T> {
 	}
 	
 	Node first;
+	
+	T[] toArray(T[] prototype) {
+		T[] result = prototype;
+		result = Arrays.copyOf(prototype, 100);
+		int i = 0;
+		for (Node n = first; n != null; n= n.next)
+			result[i++] = n.element;
+		return result;
+	}
 	
 	void add(T element) {
 		if (first == null)
@@ -134,5 +147,16 @@ class University {
 		LinkedList.copyInto(staffMembers, result);
 		return result;
 	}
+}
 
+class UniversutyTest {
+	
+	@Test
+	void test() {
+		LinkedList<StaffMember> myList = new LinkedList<StaffMember>();
+		myList.add(new StaffMember());
+		Object o = myList;
+		LinkedList<Student> myStudents = (LinkedList<Student>)o;
+		System.out.println(myStudents.iterator().next().nbCredits);
+	}
 }
