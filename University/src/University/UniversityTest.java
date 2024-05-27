@@ -55,73 +55,37 @@ class LinkedList<T> {
 	}
 }
 
-class Student {
+class SortedLinkedList<T extends Comparable<T>> extends LinkedList<T> {
+	public void add(T element) {
+		if (first == null)
+			first = new Node(element, null);
+		else if (element.compareTo(first.element) <= 0)
+			first = new Node(element, first);
+		else {
+			Node n = first;
+			while (n.next != null && element.compareTo(n.next.element) <= 0)
+				n = n.next;
+			n.next = new Node(element, n.next);
+		}
+	}
+}
+
+class Student implements Comparable<Student> {
 	int nbCredits;
+	
+	@Override
+	public int compareTo(Student o) {
+		return nbCredits - o.nbCredits;
+	}
 }
 
 class StaffMember {
 	int nbPubs;
 }
 
-interface StudentIterator {
-	boolean hasNext();
-	Student next();
-}
-
-
-class LinkedListOfStudents {
-	class Node {
-		Student student;
-		Node next;
-		
-		Node(Student student, Node next) {
-			this.student = student;
-			this.next = next;
-		}
-	}
-	
-	Node first;
-	
-	void add(Student student) {
-		if (first == null)
-			first = new Node(student, null);
-		else {
-			Node n = first;
-			while (n.next != null)
-				n = n.next;
-			n.next = new Node(student, null);
-		}
-	}
-	
-	boolean contains(Student student) {
-		for (Node n = first; n != null; n = n.next)
-			if (n.student == student)
-				return true;
-			return false;
-	}
-	
-	StudentIterator iterator() {
-		return new StudentIterator() {
-			Node n = first;
-			
-			@Override
-			public boolean hasNext() {
-				return n != null;
-			}
-			
-			@Override
-			public Student next() {
-				Node n = this.n;
-				this.n = n.next;
-				return n.student;
-			}
-		};
-	}
-}
-
 class University {
 
-	LinkedList<Student> students = new LinkedList<Student>();
+	LinkedList<Student> students = new SortedLinkedList<Student>();
 	LinkedList<StaffMember> staffMembers = new LinkedList<StaffMember>();
 	
 	public void addStudent(Student student) {
