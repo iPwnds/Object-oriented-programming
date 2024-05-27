@@ -53,9 +53,23 @@ class LinkedList<T> {
 			}
 		};
 	}
+	
+	void addAll(LinkedList<? extends T> other) { // upper-bound wildcard
+		for (Iterator<? extends T> i = other.iterator(); i.hasNext(); )
+			add(i.next());
+	}
+	
+	void copyInto(LinkedList<? super T> other) { // lower-bounded wildcard
+		for (Iterator<T> i =this.iterator(); i.hasNext(); )
+			other.add(i.next());
+	}
+	
+	static <T> void copyInto(LinkedList<T> from, LinkedList<? super T> to) {
+		from.copyInto(to);
+	}	
 }
 
-class SortedLinkedList<T extends Comparable<T>> extends LinkedList<T> {
+class SortedLinkedList<T extends Comparable<? super T>> extends LinkedList<T> {
 	public void add(T element) {
 		if (first == null)
 			first = new Node(element, null);
@@ -70,16 +84,20 @@ class SortedLinkedList<T extends Comparable<T>> extends LinkedList<T> {
 	}
 }
 
-class Student implements Comparable<Student> {
-	int nbCredits;
+abstract class Member implements Comparable<Member> {
+	int seniority;
 	
 	@Override
-	public int compareTo(Student o) {
-		return nbCredits - o.nbCredits;
+	public int compareTo(Member o) {
+		return seniority - o.seniority;
 	}
 }
 
-class StaffMember {
+class Student extends Member {
+	int nbCredits;
+}
+
+class StaffMember extends Member {
 	int nbPubs;
 }
 
@@ -110,4 +128,11 @@ class University {
 		return result;
 	}
 	
+	public LinkedList<Member> getAllMembers() {
+		LinkedList<Member> result = new LinkedList<Member>();
+		result.addAll(students);
+		LinkedList.copyInto(staffMembers, result);
+		return result;
+	}
+
 }
