@@ -1,4 +1,4 @@
-package IntervalPart1;
+package FirstStepsInModularPt1;
 
 class Interval {
 	private int lowerBound;

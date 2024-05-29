@@ -1,4 +1,4 @@
-package IntervalPart2;
+package FirstStepsInModularPt2;
 
 import org.junit.jupiter.api.Test;
 
