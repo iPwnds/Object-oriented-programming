@@ -1,4 +1,3 @@
-package FirstStepsInModularPt1;
 
 class Interval {
 //	int lowerBound;
