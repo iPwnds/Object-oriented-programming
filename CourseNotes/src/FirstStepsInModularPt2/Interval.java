@@ -1,4 +1,4 @@
-package IntervalPart2;
+package FirstStepsInModularPt2;
 
 /**
 * An object of this class stores an interval of integers.
