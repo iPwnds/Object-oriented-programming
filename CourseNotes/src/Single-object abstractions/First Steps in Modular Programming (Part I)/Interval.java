@@ -1,6 +1,9 @@
-package FirstStepsInModularPt1;
 
 class Interval {
+//	int lowerBound;
+//	int upperBound;
+	
+	
 	private int lowerBound;
 	private int upperBound;
 	
