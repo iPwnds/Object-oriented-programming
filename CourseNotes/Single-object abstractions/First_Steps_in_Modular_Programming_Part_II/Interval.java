@@ -87,19 +87,19 @@ class Interval {
 		upperBound = value;
 	}
 	
-	/**
-	* Sets this interval's width to the given value.
-	*
-	* @pre The given value is nonnegative.
-	* | 0 <= value
-	* @post This interval's width equals the given value.
-	* | getWidth() == value
-	* @post This interval's lower bound has remained unchanged.
-	* | getLowerBound() == old(getLowerBound())
-	*/
-	void setWidth(int value) {
-		upperBound = lowerBound + value;
-	}
+//	/**
+//	* Sets this interval's width to the given value.
+//	*
+//	* @pre The given value is nonnegative.
+//	* | 0 <= value
+//	* @post This interval's width equals the given value.
+//	* | getWidth() == value
+//	* @post This interval's lower bound has remained unchanged.
+//	* | getLowerBound() == old(getLowerBound())
+//	*/
+//	void setWidth(int value) {
+//		upperBound = lowerBound + value;
+//	}
 	
 	/**
 	* Sets this interval's width to the given value.
@@ -120,5 +120,9 @@ class Interval {
 		lowerBound = upperBound - value;
 		else
 		upperBound = lowerBound + value;
+	}
+	
+	void setWidth(int value) {
+		setWidth(value, true);
 	}
 }
