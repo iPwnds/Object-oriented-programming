@@ -1,4 +1,3 @@
-package ExamPrep;
 
 public class Calculator {
 
