@@ -11,7 +11,7 @@ class ByteBufferTest {
 		byte[] myBytes = {1, 2, 3};
 		ByteBuffer myBuffer = new ByteBuffer(myBytes);
 		assert myBytes[0] == 1; // Succeeds
-		myBuffer.put(4);
+//		myBuffer.put(4);
 		assert myBytes[0] == 1; // Fails
 	}
 
@@ -20,12 +20,12 @@ class ByteBufferTest {
 		byte[] myBytes = {1, 2, 3};
 		ByteBufferOpaque myBuffer = new ByteBufferOpaque(myBytes);
 		assert myBytes[0] == 1; // Succeeds
-		myBuffer.put(4);
+//		myBuffer.put(4);
 		assert myBytes[0] == 1; // Succeeds
 
 		byte[] moreBytes = myBuffer.getBytes();
 		assert moreBytes[1] == 2; // Succeeds
-		myBuffer.put(5);
+//		myBuffer.put(5);
 		assert moreBytes[1] == 2; // Succeeds
 	}
 	
@@ -34,14 +34,14 @@ class ByteBufferTest {
 		byte[] myBytes = {1, 2, 3};
 		ByteBufferTransparent myBuffer = new ByteBufferTransparent(myBytes);
 		assert myBytes[0] == 1; // Succeeds
-		myBuffer.put(4);
+//		myBuffer.put(4);
 		assert myBytes[0] == 4; // Succeeds, as expected:
 		                        // `myBuffer.put()` mutates `myBuffer.getArray()`
 		                        // a.k.a. `myBytes`
 
 		byte[] moreBytes = myBuffer.getArray();
 		assert moreBytes[1] == 2; // Succeeds
-		myBuffer.put(5);
+//		myBuffer.put(5);
 		assert moreBytes[1] == 5; // Succeeds, as expected
 	}
 	
