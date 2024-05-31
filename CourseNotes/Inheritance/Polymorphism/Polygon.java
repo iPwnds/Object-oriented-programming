@@ -1,6 +1,6 @@
 package Polymorphism;
 
-public class Polygon {
+public class Polygon extends Shape {
 
     private final int[] coordinates;
 

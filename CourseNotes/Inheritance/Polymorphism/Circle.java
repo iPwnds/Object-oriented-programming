@@ -1,6 +1,6 @@
 package Polymorphism;
 
-public class Circle {
+public class Circle extends Shape {
     
     private final int x;
     private final int y;
