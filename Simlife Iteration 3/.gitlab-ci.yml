@@ -1,3 +1,0 @@
-include:
-  - project: 'distrinet/education/ogp/meta/ci-resources-private'
-    file: 'scripts/2023-2024/iter2-correction.yml'
