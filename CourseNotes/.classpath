@@ -9,6 +9,7 @@
 	<classpathentry kind="src" path="Single-object abstractions"/>
 	<classpathentry kind="src" path="Inheritance"/>
 	<classpathentry kind="src" path="Multi-object abstractions"/>
+	<classpathentry kind="src" path="Advanced topics"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
