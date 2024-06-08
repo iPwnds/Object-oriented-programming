@@ -5,7 +5,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="ExamPrep"/>
 	<classpathentry kind="src" path="Single-object abstractions"/>
 	<classpathentry kind="src" path="Inheritance"/>
 	<classpathentry kind="src" path="Multi-object abstractions"/>
