@@ -30,7 +30,6 @@ public abstract class Knoop {
 	 */
 	public abstract void berekenInfo(int[] info);
 	
-	
 	public abstract boolean isIsomorfMet(Knoop andere);
 	
 	public Iterator<Knoop> getVolgendeKnopenIterator() {

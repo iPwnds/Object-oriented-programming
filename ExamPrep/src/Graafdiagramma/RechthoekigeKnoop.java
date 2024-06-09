@@ -13,26 +13,16 @@ public class RechthoekigeKnoop extends Knoop {
 		return hoogte;
 	}
 	
-	/**
-	 * @pre | breedte >= 0
-	 * @pre | hoogte >= 0
-	 * 
-	 * @param breedte
-	 * @param hoogte
-	 * @return
-	 */
 	public RechthoekigeKnoop(int breedte, int hoogte) {
+		if (breedte <= 0 || hoogte <= 0)
+			throw new IllegalArgumentException("`straal` is not greater than zero");
 		this.breedte = breedte;
 		this.hoogte = hoogte;
 	}
 	
-	/**
-	 * @pre | info.length == 2
-	 * @mutates info
-	 * 
-	 * @param info
-	 */
 	public void berekenInfo(int[] info) {
+		if (info.length < 2)
+			throw new IllegalArgumentException("`info.length` is less than 2");
 		info[0] = breedte * 2 + hoogte * 2;
 		info[1] = breedte * hoogte;
 	}
