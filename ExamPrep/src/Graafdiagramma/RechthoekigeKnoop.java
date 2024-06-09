@@ -1,0 +1,45 @@
+package Graafdiagramma;
+
+public class RechthoekigeKnoop extends Knoop {
+
+	int breedte;
+	int hoogte;
+	
+	public int getBreedte() {
+		return breedte;
+	}
+	
+	public int getHoogte() {
+		return hoogte;
+	}
+	
+	/**
+	 * @pre | breedte >= 0
+	 * @pre | hoogte >= 0
+	 * 
+	 * @param breedte
+	 * @param hoogte
+	 * @return
+	 */
+	public RechthoekigeKnoop(int breedte, int hoogte) {
+		this.breedte = breedte;
+		this.hoogte = hoogte;
+	}
+	
+	/**
+	 * @pre | info.length == 2
+	 * @mutates info
+	 * 
+	 * @param info
+	 */
+	public void berekenInfo(int[] info) {
+		info[0] = breedte * 2 + hoogte * 2;
+		info[1] = breedte * hoogte;
+	}
+	
+	
+	public boolean isIsomorfMet(Knoop andere) {
+		return andere instanceof RechthoekigeKnoop k && breedte == k.breedte && hoogte == k.hoogte;
+	}
+	
+}
